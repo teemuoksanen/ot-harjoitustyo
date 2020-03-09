@@ -1,0 +1,113 @@
+commit 91255af8f37c148d1d4746825ee8caff35839a56
+Author: Teemu Oksanen <github@teemuoksanen.fi>
+Date:   Mon Mar 9 18:05:06 2020 +0200
+
+    tiedostojen muokkaus
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 0a82d156bd2ed85bc16addbe1e551e3c96e10efc
+Author: Teemu Oksanen <github@teemuoksanen.fi>
+Date:   Mon Mar 9 18:02:57 2020 +0200
+
+    tiedostoja
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit b812f7275ad27b2555384c523c6db01cc4526126
+Author: Teemu Oksanen <github@teemuoksanen.fi>
+Date:   Mon Mar 9 17:58:46 2020 +0200
+
+    muokattu ekaa ja kolmatta
+
+ eka.txt    | 4 +++-
+ kolmas.txt | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+commit fba060df91325b13e8fdae39592c8f24ffc61a59
+Author: Teemu Oksanen <github@teemuoksanen.fi>
+Date:   Mon Mar 9 17:56:31 2020 +0200
+
+    tiedostosta eka.txt
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 0b78e195a6d782c10a2014e231af45285546835b
+Author: Teemu Oksanen <github@teemuoksanen.fi>
+Date:   Mon Mar 9 17:55:53 2020 +0200
+
+    toinen poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 0b9738c28e24478bf59df6743b518f9c61b5f57a
+Author: Teemu Oksanen <github@teemuoksanen.fi>
+Date:   Mon Mar 9 17:54:47 2020 +0200
+
+    korjattu tietoa Akatemiasta
+
+ tiedosto.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 90905865e67ed3e44668338cf12c5fc588657f05
+Author: Teemu Oksanen <github@teemuoksanen.fi>
+Date:   Mon Mar 9 17:53:45 2020 +0200
+
+    lisätty tietoa Akatemiasta
+
+ tiedosto.txt | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit ea4aaa10a3e5c1c5cbd153aa88abcae2c6786909
+Author: Teemu Oksanen <git@teemuoksanen.fi>
+Date:   Mon Mar 9 17:46:48 2020 +0200
+
+    more stuff
+
+ stuff/stuff.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 7f407287f8eecf5555540318ddf93a73aa6f83bc
+Author: Teemu Oksanen <git@teemuoksanen.fi>
+Date:   Mon Mar 9 17:46:06 2020 +0200
+
+    toinen ja kolmas muokattuna
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 79429e4c430bc59dd5ee0f66f98d5d4088024706
+Author: Teemu Oksanen <git@teemuoksanen.fi>
+Date:   Mon Mar 9 17:45:14 2020 +0200
+
+    kolmas.txt lisätty
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 09affe85e3632931f799706f60cc878eb7f8e746
+Author: Teemu Oksanen <git@teemuoksanen.fi>
+Date:   Mon Mar 9 17:36:54 2020 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 2 +-
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+commit c89bc2a3e27db73f93ce04e61255eaf8d0f95d8b
+Author: Teemu Oksanen <git@teemuoksanen.fi>
+Date:   Mon Mar 9 17:35:03 2020 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 1 +
+ 1 file changed, 1 insertion(+)
