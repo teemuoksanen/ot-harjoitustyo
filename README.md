@@ -1,6 +1,6 @@
 # Teemun OT-harjoitukset
 
-Tähän repositorioon tulevat **Ohjelmistotekniikan** kurssin (Helsingin yliopisto) harjoitukset.
+Tähän repositorioon tulevat **Ohjelmistotekniikan** kurssin (Helsingin yliopisto, tkt) harjoitukset.
 
 ## Tehtävät
 
