@@ -46,13 +46,13 @@ public class MaksukorttiTest {
     @Test
     public void palauttaaTrueKunRahaaOnTarpeeksi() {
         kortti.lataaRahaa(100);
-        assertEquals(true, kortti.otaRahaa(50));
+        assertTrue(kortti.otaRahaa(50));
     }
 
     @Test
     public void palauttaaFalseKunRahaaEiOleTarpeeksi() {
         kortti.lataaRahaa(100);
-        assertEquals(false, kortti.otaRahaa(200));
+        assertFalse(kortti.otaRahaa(200));
     }
 
     @Test
