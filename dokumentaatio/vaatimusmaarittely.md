@@ -16,10 +16,10 @@ Sovellus koostuu [...]
 
 ## Suunnitellut toiminnallisuudet
 
-- [kohta 1]
-- [kohta 2]
+- [ ] kohta 1
+- [ ] kohta 2
 
 ## Jatkokehitysideoita
 
-- [kohta 1]
-- [kohta 2]
+- [ ] kohta 1
+- [ ] kohta 2
