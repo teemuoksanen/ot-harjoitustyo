@@ -10,9 +10,9 @@ Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli (normaali käytt
 
 ## Käyttöliittymäluonnos
 
-Sovellus koostuu [...]
+Sovellus koostuu kirjautumisikkunasta, perusnäytöstä ja treenin lisäämisnäytöstä.
 
-[kuva]
+Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen aukeaa perusnäyttö. Perusnäytöllä on listattu käyttäjän treenit sekä muutamia perustilastoja, kuten treenien yhteismäärä. Uusi treeni lisätään erilliseltä näytöltä.
 
 ## Suunnitellut toiminnallisuudet
 
