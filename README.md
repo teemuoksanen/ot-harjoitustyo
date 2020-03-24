@@ -1,6 +1,6 @@
-# Teemun OT-harjoitukset
+# TreeniApp
 
-Tähän repositorioon tulevat **Ohjelmistotekniikan** kurssin (Helsingin yliopisto, tkt) harjoitukset.
+Tähän repositorioon tulevat **Ohjelmistotekniikan** kurssin (Helsingin yliopisto, tkt) harjoitukset. Tarkoituksena on tehdä treeniloki.
 
 ## Tehtävät
 
