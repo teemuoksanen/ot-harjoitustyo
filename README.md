@@ -10,6 +10,8 @@ Sovellus on Helsingin yliopiston tietojenkäsittelytieteen laitoksen **Ohjelmist
 
 [Työaikakirjanpito](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+## Komentorivitoiminnot
+
 ### Testaus
 
 Testit suoritetaan komennolla
