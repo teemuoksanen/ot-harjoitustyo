@@ -1,6 +1,8 @@
 # TreeniApp
 
-Tähän repositorioon tulevat **Ohjelmistotekniikan** kurssin (Helsingin yliopisto, tkt) harjoitukset. Tarkoituksena on tehdä treeniloki.
+Sovelluksen avulla käyttäjien on mahdollista pitää kirjaa tekemistään treeneistä sekä tarkistaa niiden tilastoja. Sovellusta voi käyttää useampi käyttäjä.
+
+Sovellus on Helsingin yliopiston tietojenkäsittelytieteen laitoksen **Ohjelmistotekniikan** kurssin harjoitustyö.
 
 ## Dokumentaatio
 
@@ -8,14 +10,18 @@ Tähän repositorioon tulevat **Ohjelmistotekniikan** kurssin (Helsingin yliopis
 
 [Työaikakirjanpito](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
-# Laskuharjoitukset
+### Testaus
 
-## Viikko 1
+Testit suoritetaan komennolla
 
-[gitlog.txt](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+```
+mvn test
+```
 
-[komentorivi.txt](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
+Testikattavuusraportti luodaan komennolla
 
-## Viikko 2
+```
+mvn jacoco:report
+```
 
-[Unicafen testauskattavuus - Screenshot](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/laskarit/viikko2/testauskattavuus-unicafe.png)
+Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/jacoco/index.html_
