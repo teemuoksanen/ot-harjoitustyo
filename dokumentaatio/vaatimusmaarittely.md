@@ -25,7 +25,7 @@ Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen au
 
 - [ ] perusnäytössä näkyy kirjatut treenit (päivä, laji, kesto)
 - [ ] uuden treenin tietojen lisääminen
-- [ ] uloskirjautuminen
+- [x] uloskirjautuminen
 
 ## Jatkokehitysideoita
 
