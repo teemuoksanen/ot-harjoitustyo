@@ -48,10 +48,7 @@ public class SQLUserDao implements UserDao {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             
-            System.out.print("Querying the user database for user '" + username + "'...");
-            
             if(!rs.next()) {
-                System.out.println(" No results.");
                 return null;
             }
             
@@ -60,8 +57,6 @@ public class SQLUserDao implements UserDao {
             stmt.close();
             rs.close();
             connection.close();
-            
-            System.out.println(" Found user.");
             
             return user;
         } catch (SQLException ex) {

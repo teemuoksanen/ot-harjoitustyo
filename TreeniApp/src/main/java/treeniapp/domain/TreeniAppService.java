@@ -20,11 +20,9 @@ public class TreeniAppService {
     */
     
     public boolean login(String username) {
-        System.out.println("Trying to find user '" + username + "'...");
         User user = userDao.findByUsername(username);
         
         if (user == null) {
-            System.out.println("User '" + username + "' not found");
             return false;
         }
         
