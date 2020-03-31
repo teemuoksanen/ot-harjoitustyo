@@ -6,5 +6,5 @@
 | 23.2. | 1      | ideointi, vaatimusmäärittelyn laatiminen, projektin alustus |
 | 28.2. | 3      | ensimmäiset UI-näkymät, olioiden alustusta |
 | 29.2. | 3      | DAO-luokkien luominen, kirjautumistoiminnon rakentaminen  |
-| 30.2. | 4      | tietokantayhteyden luominen, testien rakentaminen |
-| yht.  | 5      | | 
+| 31.2. | 4      | tietokantayhteyden luominen, testien rakentaminen |
+| yht.  | 12      | | 
