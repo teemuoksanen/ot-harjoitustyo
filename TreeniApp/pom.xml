@@ -42,10 +42,10 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.0</version>
+                <version>0.8.3</version>
                 <configuration>
                     <excludes>
-                        <exclude>treeniapp/ui/**/*</exclude>
+                        <exclude>treeniapp/ui/*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -94,8 +94,8 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-        </plugins>
+            </plugin>     
+        </plugins>   
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
