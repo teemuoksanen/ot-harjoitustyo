@@ -47,7 +47,8 @@ public class TreeniUi extends Application {
         Label loginInstruction = new Label("Anna tunnuksesi ja paina 'Kirjaudu'");
         Button loginButton = new Button("Kirjaudu");
         TextField loginUsername = new TextField();
-        Label loginNote = new Label("");
+        Label loginNote = new Label("Testikäyttäjän tunnus: 'testaaja'");
+        loginNote.setTextFill(Color.RED);
 
         GridPane loginPane = new GridPane();
         loginPane.add(loginInstruction, 0, 0);
@@ -64,7 +65,7 @@ public class TreeniUi extends Application {
         
         // Main Screen
 
-        Label welcomeLabel = new Label("Tervetuloa!");
+        Label welcomeLabel = new Label("");
         Button logoutButton = new Button("Kirjaudu ulos");
 
         GridPane mainPane = new GridPane();
@@ -87,6 +88,7 @@ public class TreeniUi extends Application {
                 // REFRESH WORKOUTS
                 primaryStage.setScene(mainScene);
                 loginUsername.setText("");
+                welcomeLabel.setText("Tervetuloa, " + treeniAppService.getLoggedInUser().getName() + "!");
             } else {
                 loginNote.setText("Käyttäjää '" + username + "' ei löytynyt!");
                 loginNote.setTextFill(Color.RED);
@@ -106,7 +108,7 @@ public class TreeniUi extends Application {
 
     @Override
     public void stop() {
-      // tee lopetustoimenpiteet täällä
+      // Quitting the app
       System.out.println("TreeniApp closed");
     }    
     
