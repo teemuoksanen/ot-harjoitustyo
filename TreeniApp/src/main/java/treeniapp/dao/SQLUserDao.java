@@ -24,7 +24,7 @@ public class SQLUserDao implements UserDao {
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users");
         ResultSet rs = stmt.executeQuery();
 
-        if(rs.next()) {
+        if (rs.next()) {
             User user = new User(rs.getString("username"), rs.getString("name"));
             users.add(user);
         }
@@ -48,7 +48,7 @@ public class SQLUserDao implements UserDao {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             
-            if(!rs.next()) {
+            if (!rs.next()) {
                 return null;
             }
             
