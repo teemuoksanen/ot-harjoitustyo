@@ -12,6 +12,8 @@ Sovellus on Helsingin yliopiston tietojenkäsittelytieteen laitoksen **Ohjelmist
 
 ## Komentorivitoiminnot
 
+### Ajaminen
+
 Ohjelma ajetaan komennolla
 
 ```
@@ -33,3 +35,13 @@ mvn jacoco:report
 ```
 
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/jacoco/index.html_
+
+### Checkstyle
+
+Tiedoston [checkstyle.xml](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/checkstyle.xml) määrittelemät tarkistukset suoritetaan komennolla
+
+```
+ mvn jxr:jxr checkstyle:checkstyle
+```
+
+Mahdolliset virheilmoitukset selviävät avaamalla selaimella tiedosto _target/site/checkstyle.html_
