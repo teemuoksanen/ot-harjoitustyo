@@ -2,12 +2,12 @@
 package treeniapp.domain;
 
 public class User {
-    private String name;
     private String username;
+    private String name;
 
     public User(String username, String name) {
-        this.name = name;
         this.username = username;
+        this.name = name;
     }
 
     public String getName() {
@@ -16,7 +16,15 @@ public class User {
 
     public String getUsername() {
         return username;
-    }    
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @Override
     public boolean equals(Object obj) {

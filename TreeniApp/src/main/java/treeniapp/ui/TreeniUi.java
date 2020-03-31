@@ -1,6 +1,10 @@
 
 package treeniapp.ui;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,9 +14,30 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import treeniapp.dao.SQLUserDao;
+import treeniapp.domain.TreeniAppService;
 
 public class TreeniUi extends Application {
+    
+    private TreeniAppService treeniAppService;
+    
+    @Override
+    public void init() throws Exception {
+        
+        // Load properties
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("config.properties"));
+        String databaseDB = properties.getProperty("databaseDB");
+        String usernameDB = properties.getProperty("usernameDB");
+        String passwordDB = properties.getProperty("passwordDB");
+        
+        // Start services
+        SQLUserDao userDao = new SQLUserDao();
+        treeniAppService = new TreeniAppService(userDao);
+        
+    }
     
     @Override
     public void start(Stage primaryStage) {
@@ -56,16 +81,21 @@ public class TreeniUi extends Application {
         // Scene changes
         
         loginButton.setOnAction((event) -> {
-            if (!loginUsername.getText().trim().equals("teemu")) {
-                loginNote.setText("Käyttäjää ei löytynyt!");
-                return;
+            String username = loginUsername.getText();
+            if (treeniAppService.login(username)) {
+                loginNote.setText("");
+                // REFRESH WORKOUTS
+                primaryStage.setScene(mainScene);
+                loginUsername.setText("");
+            } else {
+                loginNote.setText("Käyttäjää '" + username + "' ei löytynyt!");
+                loginNote.setTextFill(Color.RED);
             }
-            primaryStage.setScene(mainScene);
         });
         
         logoutButton.setOnAction((event) -> {
+            loginNote.setTextFill(Color.BLACK);
             loginNote.setText("Uloskirjautuminen onnistui!");
-            loginUsername.setText("");
             primaryStage.setScene(loginScene);
         });
 
@@ -73,6 +103,12 @@ public class TreeniUi extends Application {
         primaryStage.setTitle("TreeniApp");
         primaryStage.show();
     }
+
+    @Override
+    public void stop() {
+      // tee lopetustoimenpiteet täällä
+      System.out.println("TreeniApp closed");
+    }    
     
     public static void main(String[] args) {
         launch(args);
