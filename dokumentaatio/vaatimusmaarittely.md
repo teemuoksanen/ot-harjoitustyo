@@ -18,8 +18,8 @@ Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen au
 
 ### Kirjautumisikkuna
 
-- [ ] käyttäjä kirjautuu omalla nimellään
-- [ ] jos käyttäjää ei ole olemassa, antaa ohjelma virheilmoituksen
+- [x] käyttäjä kirjautuu omalla käyttäjänimellään
+- [x] jos käyttäjää ei ole olemassa, antaa ohjelma virheilmoituksen
 
 ### Perusnäyttö
 
