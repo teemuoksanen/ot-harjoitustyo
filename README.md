@@ -12,6 +12,12 @@ Sovellus on Helsingin yliopiston tietojenkäsittelytieteen laitoksen **Ohjelmist
 
 ## Komentorivitoiminnot
 
+Ohjelma ajetaan komennolla
+
+```
+mvn compile exec:java -Dexec.mainClass=treeniapp.Main
+```
+
 ### Testaus
 
 Testit suoritetaan komennolla
