@@ -30,7 +30,7 @@ public class SQLUserDao implements UserDao {
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users");
         ResultSet rs = stmt.executeQuery();
 
-        if (rs.next()) {
+        while (rs.next()) {
             User user = new User(rs.getString("username"), rs.getString("name"));
             users.add(user);
         }
