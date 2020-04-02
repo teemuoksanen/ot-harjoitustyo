@@ -20,6 +20,7 @@ Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen au
 
 - [x] käyttäjä kirjautuu omalla käyttäjänimellään
 - [x] jos käyttäjää ei ole olemassa, antaa ohjelma virheilmoituksen
+- [x] mahdollisuus luoda uusi käyttäjä
 
 ### Perusnäyttö
 
@@ -31,7 +32,7 @@ Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen au
 
 Perusversion jälkeen ohjelmaa voidaan täydentää ajan salliessa uusilla ominaisuuksilla:
 
-- [ ] rekisteröityminen
+- [ ] asetusten muuttaminen (esim. oma nimi)
 - [ ] kirjautuminen salasanalla
 - [ ] tilastot treeneistä
 - [ ] mahdolliset lisäkentät treeneihin (matka, keskisyke)

@@ -15,11 +15,17 @@ import treeniapp.domain.User;
 public class SQLUserDao implements UserDao {
     
     private List<User> users;
+    private String databaseDB;
+    private String usernameDB;
+    private String passwordDB;
     
-    public SQLUserDao() throws Exception {
+    public SQLUserDao(String databaseDB, String usernameDB, String passwordDB) throws Exception {
+        this.databaseDB = databaseDB;
+        this.usernameDB = usernameDB;
+        this.passwordDB = passwordDB;
         this.users = new ArrayList<>();
         
-        Connection connection = DriverManager.getConnection("jdbc:h2:./treeniapp", "sa", "");
+        Connection connection = DriverManager.getConnection(databaseDB, usernameDB, passwordDB);
 
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users");
         ResultSet rs = stmt.executeQuery();
@@ -42,7 +48,7 @@ public class SQLUserDao implements UserDao {
     @Override
     public User findByUsername(String username) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:h2:./treeniapp", "sa", "");
+            Connection connection = DriverManager.getConnection(this.databaseDB, this.usernameDB, this.passwordDB);
             
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users WHERE username = ?");
             stmt.setString(1, username);
@@ -66,19 +72,24 @@ public class SQLUserDao implements UserDao {
     }
     
     @Override
-    public User create(User user) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:h2:./treeniapp", "sa", "");
+    public User create(User user) {
+        try {
+            Connection connection = DriverManager.getConnection(this.databaseDB, this.usernameDB, this.passwordDB);
 
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Users"
-            + " (username, name)"
-            + " VALUES (?, ?)");
-        stmt.setString(1, user.getUsername());
-        stmt.setString(2, user.getName());
-        stmt.executeUpdate();
-        stmt.close();
-        connection.close();
-        
-        return user;
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Users"
+                + " (username, name)"
+                + " VALUES (?, ?)");
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getName());
+            stmt.executeUpdate();
+            stmt.close();
+            connection.close();
+
+            return user;
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLUserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
 }

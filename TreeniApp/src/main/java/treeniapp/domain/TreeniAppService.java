@@ -26,7 +26,7 @@ public class TreeniAppService {
             return false;
         }
         
-        System.out.println("User '" + username + "' logged in.");
+        System.out.println("User '" + username + "' logged in."); //REMOVE
         userLoggedIn = user;
         
         return true;
@@ -45,8 +45,28 @@ public class TreeniAppService {
     */  
     
     public void logout() {
-        System.out.println("User '" + userLoggedIn.getUsername() + "' logged out.");
+        System.out.println("User '" + userLoggedIn.getUsername() + "' logged out."); //REMOVE
         userLoggedIn = null;
+    }
+   
+    /**
+    * Logout
+    */  
+    
+    public boolean newUser(String username, String name) {
+        System.out.print("Trying to create a new user '" + username + "'..."); //REMOVE
+        
+        // Check that there is no user with same username
+        if (userDao.findByUsername(username) != null) {
+            System.out.println("Failed - username already exists."); //REMOVE
+            return false;
+        }
+        
+        //Create a new user
+        User newUser = new User(username, name);
+        userDao.create(newUser);
+        System.out.println("Succeeded."); //REMOVE
+        return true;
     }
     
 }
