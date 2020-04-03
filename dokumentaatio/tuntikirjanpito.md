@@ -8,4 +8,5 @@
 | 29.3. | 3      | DAO-luokkien luominen, kirjautumistoiminnon rakentaminen  |
 | 31.3. | 4      | tietokantayhteyden luominen, testien rakentaminen |
 | 2.4.  | 3      | uuden käyttäjän luominen mahdollistettu, uusia testejä User-luokalle |
-| yht.  | 15      | | 
+| 3.4.  | 3      | Workout-luokan luominen |
+| yht.  | 18      | | 
