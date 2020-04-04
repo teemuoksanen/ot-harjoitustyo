@@ -1,18 +1,23 @@
 
 package treeniapp.domain;
 
-import treeniapp.dao.WorkoutDao;
+import java.util.ArrayList;
+import java.util.List;
 import treeniapp.dao.UserDao;
+import treeniapp.dao.WorkoutDao;
+import treeniapp.dao.SportDao;
 
 public class TreeniAppService {
     
-    private WorkoutDao workoutDao;
     private UserDao userDao;
+    private WorkoutDao workoutDao;
+    private SportDao sportDao;
     private User userLoggedIn;
     
-    public TreeniAppService(UserDao userDao) {
-        this.workoutDao = null;
+    public TreeniAppService(UserDao userDao, WorkoutDao workoutDao, SportDao sportDao) {
         this.userDao = userDao;
+        this.workoutDao = workoutDao;
+        this.sportDao = sportDao;
     }
     
     /**
@@ -50,7 +55,7 @@ public class TreeniAppService {
     }
    
     /**
-    * Logout
+    * Create User
     */  
     
     public boolean newUser(String username, String name) {
@@ -67,6 +72,19 @@ public class TreeniAppService {
         userDao.create(newUser);
         System.out.println("Succeeded."); //REMOVE
         return true;
+    }
+    
+    /**
+    * Workouts
+    */   
+    
+    public List<Workout> getWorkouts() {
+        List<Workout> workouts = new ArrayList<>();
+        if (userLoggedIn != null) {
+            System.out.println("Haetaan treenit: " + userLoggedIn.getUsername());
+            workouts = workoutDao.getAllByUser(userLoggedIn);
+        }
+        return workouts;
     }
     
 }

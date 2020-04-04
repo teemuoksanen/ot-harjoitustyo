@@ -2,26 +2,42 @@
 package treeniapp.ui;
 
 import java.io.FileInputStream;
+import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import treeniapp.dao.UserDao;
 import treeniapp.dao.SQLUserDao;
+import treeniapp.dao.WorkoutDao;
+import treeniapp.dao.SQLWorkoutDao;
+import treeniapp.dao.SportDao;
+import treeniapp.dao.TempSportDao;
 import treeniapp.domain.TreeniAppService;
+import treeniapp.domain.Workout;
 
 public class TreeniUi extends Application {
     
     private TreeniAppService treeniAppService;
+    private UserDao userDao;
+    private WorkoutDao workoutDao;
+    private SportDao sportDao;
+    
+    private VBox workoutNodes;
     
     @Override
     public void init() throws Exception {
@@ -34,9 +50,33 @@ public class TreeniUi extends Application {
         String passwordDB = properties.getProperty("passwordDB");
         
         // Start services
-        SQLUserDao userDao = new SQLUserDao(databaseDB, usernameDB, passwordDB);
-        treeniAppService = new TreeniAppService(userDao);
+        userDao = new SQLUserDao(databaseDB, usernameDB, passwordDB);
+        workoutDao = new SQLWorkoutDao(databaseDB, usernameDB, passwordDB);
+        sportDao = new TempSportDao(databaseDB, usernameDB, passwordDB);
+        treeniAppService = new TreeniAppService(userDao, workoutDao, sportDao);
         
+    }
+    
+    public Node createWorkoutNode(Workout workout) {
+        HBox workoutBox = new HBox(10);
+        Label workoutDate = new Label(workout.getDayMonth());
+        Label workoutSport = new Label(sportDao.findById(workout.getSport().getId()).getName());
+        Label workoutDuration = new Label(workout.getDurationFormat());
+        workoutDate.setMinHeight(20);
+        workoutSport.setMinHeight(20);
+        workoutDuration.setMinHeight(20);
+        
+        workoutBox.getChildren().addAll(workoutDate, workoutSport, workoutDuration);
+        return workoutBox;
+    }
+    
+    public void redrawWorkouts() {
+        workoutNodes.getChildren().clear();     
+
+        List<Workout> workouts = treeniAppService.getWorkouts();
+        workouts.forEach(workout->{
+            workoutNodes.getChildren().add(createWorkoutNode(workout));
+        });     
     }
     
     @Override
@@ -72,7 +112,7 @@ public class TreeniUi extends Application {
         */
         
         Label newUserInstruction = new Label("Uusi käyttäjä");
-        Label newUserUsernameInstruction = new Label("Käyttäjätunnus:");
+        Label newUserUsernameInstruction = new Label("Tunnus:");
         Label newUserNameInstruction = new Label("Nimi:");
         TextField newUserUsername = new TextField();
         TextField newUserName = new TextField();
@@ -103,18 +143,27 @@ public class TreeniUi extends Application {
         */
 
         Label welcomeLabel = new Label("");
+        Button addWorkoutButton = new Button("Lisää treeni");
         Button logoutButton = new Button("Kirjaudu ulos");
 
-        GridPane mainPane = new GridPane();
-        mainPane.setPrefSize(300, 600);
-        mainPane.add(welcomeLabel, 0, 0);
-        mainPane.add(logoutButton, 0, 1);
-        mainPane.setAlignment(Pos.CENTER);
-        mainPane.setVgap(10);
-        mainPane.setHgap(10);
-        mainPane.setPadding(new Insets(20, 20, 20, 20));
+        ScrollPane mainPaneScroller = new ScrollPane();
+        BorderPane mainPane = new BorderPane(mainPaneScroller);
+        HBox topMainPane = new HBox(10);
+        topMainPane.getChildren().addAll(welcomeLabel);
+        HBox bottomMainPane = new HBox(10);
+        Region menuSpacer = new Region();
+        HBox.setHgrow(menuSpacer, Priority.ALWAYS);
+        bottomMainPane.getChildren().addAll(addWorkoutButton, menuSpacer, logoutButton);
+        mainPane.setTop(topMainPane);
+        mainPane.setBottom(bottomMainPane);
+        
+        workoutNodes = new VBox(10);
+        workoutNodes.setMaxWidth(280);
+        workoutNodes.setMinWidth(280);
+        redrawWorkouts();
+        mainPaneScroller.setContent(workoutNodes);
 
-        Scene mainScene = new Scene(mainPane);
+        Scene mainScene = new Scene(mainPane, 300, 600);
         
         /**
         * SCENE ACTIONS
@@ -126,10 +175,14 @@ public class TreeniUi extends Application {
             String username = loginUsername.getText();
             if (treeniAppService.login(username)) {
                 loginNote.setText("");
-                // REFRESH WORKOUTS
+                welcomeLabel.setText("Tervetuloa, " + treeniAppService.getLoggedInUser().getName() + "!");
                 primaryStage.setScene(mainScene);
                 loginUsername.setText("");
-                welcomeLabel.setText("Tervetuloa, " + treeniAppService.getLoggedInUser().getName() + "!");
+                primaryStage.setScene(mainScene);
+                redrawWorkouts();
+            } else if (username.length() < 1) {
+                loginNote.setText("Anna käyttäjätunnus!");
+                loginNote.setTextFill(Color.RED);
             } else {
                 loginNote.setText("Käyttäjää '" + username + "' ei löytynyt!");
                 loginNote.setTextFill(Color.RED);

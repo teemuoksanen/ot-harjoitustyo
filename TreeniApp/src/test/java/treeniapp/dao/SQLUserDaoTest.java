@@ -25,6 +25,7 @@ public class SQLUserDaoTest {
     String databaseDB;
     String usernameDB;
     String passwordDB;
+    private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
     @Before
     public void setUp() throws Exception {
@@ -44,8 +45,9 @@ public class SQLUserDaoTest {
                     + "    name VARCHAR(20)\n"
                     + ");").executeUpdate();
             connection.prepareStatement("INSERT INTO Users (username, name) VALUES ('tester1', 'Test User 1'), ('tester2', 'Test User 2');").executeUpdate();
+            connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
         
         dao = new SQLUserDao(databaseDB, usernameDB, passwordDB);
@@ -75,7 +77,7 @@ public class SQLUserDaoTest {
     }
   
     @Test
-    public void newUserIsCreatedAndFoundFromDB() {
+    public void newUserIsCreatedAndFoundFromDB() throws Exception {
         User newUser = new User("newtest", "New Test User");
         dao.create(newUser);
         
@@ -89,8 +91,9 @@ public class SQLUserDaoTest {
         // Delete testing database
         try (Connection connection = DriverManager.getConnection(databaseDB, usernameDB, passwordDB);) {
             connection.prepareStatement("DROP TABLE Users IF EXISTS;").executeUpdate();
+            connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
     }
     

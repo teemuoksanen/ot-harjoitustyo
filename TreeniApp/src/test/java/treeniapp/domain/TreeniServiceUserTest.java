@@ -4,16 +4,23 @@ package treeniapp.domain;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import treeniapp.dao.UserDao;
+import treeniapp.dao.WorkoutDao;
+import treeniapp.dao.SportDao;
 
 public class TreeniServiceUserTest {
     
-    FakeUserDao userDao;
+    UserDao userDao;
+    WorkoutDao workoutDao;
+    SportDao sportDao;
     TreeniAppService service;
     
     @Before
     public void setUp() {
         userDao = new FakeUserDao();
-        service = new TreeniAppService(userDao);     
+        workoutDao = null;
+        sportDao = null;
+        service = new TreeniAppService(userDao, workoutDao, sportDao);     
     }
     
     @Test
