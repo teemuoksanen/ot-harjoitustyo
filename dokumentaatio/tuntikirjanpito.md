@@ -9,4 +9,5 @@
 | 31.3. | 4      | tietokantayhteyden luominen, testien rakentaminen |
 | 2.4.  | 3      | uuden käyttäjän luominen mahdollistettu, uusia testejä User-luokalle |
 | 3.4.  | 3      | Workout-luokan luominen |
+| 4.4.  | 3      | Workout-luokan kehittäminen, Workout-käyttöliittymän luominen |
 | yht.  | 18      | | 
