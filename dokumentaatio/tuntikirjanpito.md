@@ -10,4 +10,5 @@
 | 2.4.  | 3      | uuden käyttäjän luominen mahdollistettu, uusia testejä User-luokalle |
 | 3.4.  | 3      | Workout-luokan luominen |
 | 4.4.  | 3      | Workout-luokan kehittäminen, Workout-käyttöliittymän luominen |
-| yht.  | 18      | | 
+| 5.4.  | 5      | Workout-luokan testausta, pieniä korjauksia ja hiomisia |
+| yht.  | 26      | | 
