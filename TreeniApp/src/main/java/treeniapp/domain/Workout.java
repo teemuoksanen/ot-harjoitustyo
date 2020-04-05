@@ -92,11 +92,6 @@ public class Workout {
         String date = new SimpleDateFormat("H.mm").format(this.datetime);
         return date;
     }
-    
-    public String getDateMonthYear() {
-        String date = new SimpleDateFormat("d.M.yyyy").format(this.datetime);
-        return date;
-    }
 
     public int getDuration() {
         return duration;

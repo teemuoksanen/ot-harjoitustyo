@@ -6,7 +6,7 @@ import treeniapp.domain.Sport;
 
 public interface SportDao {
 
-    Sport create(Sport sport) throws Exception;
+    Sport create(Sport sport);
     Sport findById(int id);
     List<Sport> getAll();
     

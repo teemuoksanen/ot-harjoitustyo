@@ -42,7 +42,7 @@ public class TreeniUi extends Application {
     public void init() throws Exception {
         
         // Set 'clearDatabases' to true if want to clear databases
-        Boolean clearDatabases = true;
+        Boolean clearDatabases = false;
         
         // Start services
         SQLService sql = new SQLService();

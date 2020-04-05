@@ -2,16 +2,20 @@
 package treeniapp.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import treeniapp.dao.sql.SQLService;
 import treeniapp.domain.Sport;
 
 public class TempSportDao implements SportDao {
     
     List<Sport> sports;
+    Map<Integer, Sport> sportMap;
     
-    public TempSportDao(SQLService sql) throws Exception {
+    public TempSportDao(SQLService sql) {
         this.sports = new ArrayList<>();
+        this.sportMap = new HashMap<>();
         create(new Sport(1, "juoksu", "running", true));
         create(new Sport(2, "kuntosali", "gym", false));
         create(new Sport(3, "uinti", "swimming", true));
@@ -19,19 +23,15 @@ public class TempSportDao implements SportDao {
     }
 
     @Override
-    public Sport create(Sport sport) throws Exception {
+    public Sport create(Sport sport) {
         sports.add(sport);
+        sportMap.put(sport.getId(), sport);
         return sport;
     }
 
     @Override
     public Sport findById(int id) {
-        for (Sport sport : sports) {
-            if (sport.getId() == id) {
-                return sport;
-            }
-        }
-        return null;
+        return sportMap.getOrDefault(id, null);
     }
 
     @Override

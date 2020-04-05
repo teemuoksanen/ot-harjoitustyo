@@ -22,7 +22,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     private SportDao sportDao;
     private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
-    public SQLWorkoutDao(SQLService sql, UserDao userDao, SportDao sportDao) throws Exception {
+    public SQLWorkoutDao(SQLService sql, UserDao userDao, SportDao sportDao) {
         this.sql = sql;
         this.userDao = userDao;
         this.sportDao = sportDao;

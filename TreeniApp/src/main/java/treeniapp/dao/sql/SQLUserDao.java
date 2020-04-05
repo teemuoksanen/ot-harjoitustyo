@@ -18,13 +18,13 @@ public class SQLUserDao implements UserDao {
     
     private SQLService sql;
     private List<User> users;
-    private Map<String, User> userset;
+    private Map<String, User> userMap;
     private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
-    public SQLUserDao(SQLService sql) throws Exception {
+    public SQLUserDao(SQLService sql) {
         this.sql = sql;
         this.users = new ArrayList<>();
-        this.userset = new HashMap<>();
+        this.userMap = new HashMap<>();
         
         getInitialUsers();
     }
@@ -40,7 +40,7 @@ public class SQLUserDao implements UserDao {
                 String username = rs.getString("username");
                 User user = new User(username, rs.getString("name"));
                 users.add(user);
-                userset.put(username, user);
+                userMap.put(username, user);
             }
 
             stmt.close();
@@ -58,7 +58,7 @@ public class SQLUserDao implements UserDao {
     
     @Override
     public User findByUsername(String username) {
-        User user = userset.getOrDefault(username, null);
+        User user = userMap.getOrDefault(username, null);
         return user;
     }
     
@@ -77,7 +77,7 @@ public class SQLUserDao implements UserDao {
             connection.close();
             
             users.add(user);
-            userset.put(user.getUsername(), user);
+            userMap.put(user.getUsername(), user);
 
             return user;
         } catch (SQLException ex) {
