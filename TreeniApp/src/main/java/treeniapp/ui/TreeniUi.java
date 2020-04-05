@@ -59,9 +59,12 @@ public class TreeniUi extends Application {
         Label workoutDate = new Label(workout.getDayMonth());
         Label workoutSport = new Label(sportDao.findById(workout.getSport().getId()).getName());
         Label workoutDuration = new Label(workout.getDurationFormat());
-        workoutDate.setMinHeight(20);
-        workoutSport.setMinHeight(20);
-        workoutDuration.setMinHeight(20);
+        workoutDate.setMaxWidth(40);
+        workoutDate.setMinWidth(40);
+        workoutSport.setMaxWidth(150);
+        workoutSport.setMinWidth(150);
+        workoutDuration.setMaxWidth(40);
+        workoutDuration.setMinWidth(40);
         
         workoutBox.getChildren().addAll(workoutDate, workoutSport, workoutDuration);
         return workoutBox;
@@ -87,7 +90,7 @@ public class TreeniUi extends Application {
         Button loginButton = new Button("Kirjaudu");
         Button loginNewUserButton = new Button("Luo uusi käyttäjä");
         TextField loginUsername = new TextField();
-        Label loginNote = new Label("Testikäyttäjän tunnus: 'testaaja'"); //REMOVE
+        Label loginNote = new Label("Testitunnus: 'testaaja'"); //REMOVE
         loginNote.setTextFill(Color.RED);
 
         GridPane loginPane = new GridPane();
@@ -145,9 +148,13 @@ public class TreeniUi extends Application {
 
         ScrollPane mainPaneScroller = new ScrollPane();
         BorderPane mainPane = new BorderPane(mainPaneScroller);
-        HBox topMainPane = new HBox(10);
+        mainPane.setPadding(new Insets(10, 10, 10, 10));
+        HBox topMainPane = new HBox();
+        topMainPane.setPadding(new Insets(0, 0, 10, 0));
+        topMainPane.setAlignment(Pos.CENTER);
         topMainPane.getChildren().addAll(welcomeLabel);
-        HBox bottomMainPane = new HBox(10);
+        HBox bottomMainPane = new HBox();
+        bottomMainPane.setPadding(new Insets(10, 0, 0, 0));
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
         bottomMainPane.getChildren().addAll(addWorkoutButton, menuSpacer, logoutButton);
@@ -155,8 +162,9 @@ public class TreeniUi extends Application {
         mainPane.setBottom(bottomMainPane);
         
         workoutNodes = new VBox(10);
+        workoutNodes.setPadding(new Insets(10, 10, 10, 10));
         workoutNodes.setMaxWidth(280);
-        workoutNodes.setMinWidth(280);
+        workoutNodes.setMinWidth(270);
         redrawWorkouts();
         mainPaneScroller.setContent(workoutNodes);
 
@@ -211,14 +219,12 @@ public class TreeniUi extends Application {
         newUserButton.setOnAction((event) -> {
             String username = newUserUsername.getText();
             String name = newUserName.getText();
-            if (username.length() < 1) {
-                newUserNote.setText("Tunnuksen on oltava ainakin yhden merkin pituinen!");
-            } else if (name.length() < 1) {
-                newUserNote.setText("Nimen on oltava ainakin yhden merkin pituinen!");
-            } else if (username.length() > 15) {
-                newUserNote.setText("Tunnus voi olla enintään 15 merkkiä!");
-            } else if (name.length() > 20) {
-                newUserNote.setText("Nimi voi olla enintään 20 merkkiä!");
+            if (username.length() < 1 || username.length() > 15) {
+                newUserNote.setText("Tunnuksen on oltava\n"
+                        + "1-15 merkin pituinen.");
+            } else if (name.length() < 1 || name.length() > 20) {
+                newUserNote.setText("Nimen on oltava\n"
+                        + "1-20 merkin pituinen.");
             } else if (treeniAppService.newUser(username, name)) {
                 newUserUsername.setText("");
                 newUserName.setText("");
@@ -227,7 +233,8 @@ public class TreeniUi extends Application {
                 primaryStage.setScene(loginScene);
                 newUserNote.setText("");
             } else {
-                newUserNote.setText("Tunnus '" + username + "' on jo käytössä!");
+                newUserNote.setText("Tunnus '" + username + "'\n"
+                        + "on jo käytössä!");
             }
         });
         
