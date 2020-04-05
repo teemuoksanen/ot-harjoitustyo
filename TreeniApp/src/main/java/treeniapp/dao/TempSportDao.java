@@ -3,13 +3,14 @@ package treeniapp.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import treeniapp.dao.sql.SQLService;
 import treeniapp.domain.Sport;
 
 public class TempSportDao implements SportDao {
     
     List<Sport> sports;
     
-    public TempSportDao(String databaseDB, String usernameDB, String passwordDB) throws Exception {
+    public TempSportDao(SQLService sql) throws Exception {
         this.sports = new ArrayList<>();
         create(new Sport(1, "juoksu", "running", true));
         create(new Sport(2, "kuntosali", "gym", false));

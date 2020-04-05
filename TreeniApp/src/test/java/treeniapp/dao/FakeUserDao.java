@@ -1,9 +1,10 @@
 
-package treeniapp.domain;
+package treeniapp.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 import treeniapp.dao.UserDao;
+import treeniapp.domain.User;
 
 public class FakeUserDao implements UserDao {
     List<User> users = new ArrayList<>();

@@ -1,9 +1,7 @@
 
 package treeniapp.ui;
 
-import java.io.FileInputStream;
 import java.util.List;
-import java.util.Properties;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,11 +20,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import treeniapp.dao.UserDao;
-import treeniapp.dao.SQLUserDao;
+import treeniapp.dao.sql.SQLUserDao;
 import treeniapp.dao.WorkoutDao;
-import treeniapp.dao.SQLWorkoutDao;
+import treeniapp.dao.sql.SQLWorkoutDao;
 import treeniapp.dao.SportDao;
 import treeniapp.dao.TempSportDao;
+import treeniapp.dao.sql.SQLService;
 import treeniapp.domain.TreeniAppService;
 import treeniapp.domain.Workout;
 
@@ -42,17 +41,15 @@ public class TreeniUi extends Application {
     @Override
     public void init() throws Exception {
         
-        // Load properties
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("config.properties"));
-        String databaseDB = properties.getProperty("databaseDB");
-        String usernameDB = properties.getProperty("usernameDB");
-        String passwordDB = properties.getProperty("passwordDB");
+        // Set 'clearDatabases' to true if want to clear databases
+        Boolean clearDatabases = true;
         
         // Start services
-        userDao = new SQLUserDao(databaseDB, usernameDB, passwordDB);
-        workoutDao = new SQLWorkoutDao(databaseDB, usernameDB, passwordDB);
-        sportDao = new TempSportDao(databaseDB, usernameDB, passwordDB);
+        SQLService sql = new SQLService();
+        sql.initialiseDatabases(clearDatabases);
+        userDao = new SQLUserDao(sql);
+        sportDao = new TempSportDao(sql);
+        workoutDao = new SQLWorkoutDao(sql, userDao, sportDao);
         treeniAppService = new TreeniAppService(userDao, workoutDao, sportDao);
         
     }

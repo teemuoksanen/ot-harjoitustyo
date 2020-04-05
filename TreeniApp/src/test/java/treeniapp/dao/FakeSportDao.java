@@ -1,9 +1,10 @@
 
-package treeniapp.domain;
+package treeniapp.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 import treeniapp.dao.SportDao;
+import treeniapp.domain.Sport;
 
 public class FakeSportDao implements SportDao {
     

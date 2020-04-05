@@ -4,6 +4,7 @@ package treeniapp.domain;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import treeniapp.dao.FakeUserDao;
 import treeniapp.dao.UserDao;
 import treeniapp.dao.WorkoutDao;
 import treeniapp.dao.SportDao;

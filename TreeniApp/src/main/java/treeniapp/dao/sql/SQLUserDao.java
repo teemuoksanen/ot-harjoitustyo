@@ -1,8 +1,7 @@
 
-package treeniapp.dao;
+package treeniapp.dao.sql;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,39 +11,44 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import treeniapp.dao.UserDao;
 import treeniapp.domain.User;
 
 public class SQLUserDao implements UserDao {
     
+    private SQLService sql;
     private List<User> users;
     private Map<String, User> userset;
-    private String databaseDB;
-    private String usernameDB;
-    private String passwordDB;
     private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
-    public SQLUserDao(String databaseDB, String usernameDB, String passwordDB) throws Exception {
-        this.databaseDB = databaseDB;
-        this.usernameDB = usernameDB;
-        this.passwordDB = passwordDB;
+    public SQLUserDao(SQLService sql) throws Exception {
+        this.sql = sql;
         this.users = new ArrayList<>();
         this.userset = new HashMap<>();
         
-        Connection connection = DriverManager.getConnection(databaseDB, usernameDB, passwordDB);
+        getInitialUsers();
+    }
+    
+    private void getInitialUsers() {
+        try {
+            Connection connection = sql.getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users");
-        ResultSet rs = stmt.executeQuery();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users");
+            ResultSet rs = stmt.executeQuery();
 
-        while (rs.next()) {
-            String username = rs.getString("username");
-            User user = new User(username, rs.getString("name"));
-            users.add(user);
-            userset.put(username, user);
+            while (rs.next()) {
+                String username = rs.getString("username");
+                User user = new User(username, rs.getString("name"));
+                users.add(user);
+                userset.put(username, user);
+            }
+
+            stmt.close();
+            rs.close();
+            connection.close();
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
-
-        stmt.close();
-        rs.close();
-        connection.close();        
     }
     
     @Override
@@ -61,7 +65,7 @@ public class SQLUserDao implements UserDao {
     @Override
     public User create(User user) {
         try {
-            Connection connection = DriverManager.getConnection(this.databaseDB, this.usernameDB, this.passwordDB);
+            Connection connection = sql.getConnection();
 
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Users"
                 + " (username, name)"
