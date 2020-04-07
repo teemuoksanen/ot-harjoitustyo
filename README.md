@@ -1,4 +1,4 @@
-# TreeniApp
+ # TreeniApp
 
 Sovelluksen avulla käyttäjien on mahdollista pitää kirjaa tekemistään treeneistä sekä tarkistaa niiden tilastoja. Sovellusta voi käyttää useampi käyttäjä.
 
@@ -21,6 +21,7 @@ Ohjelma ajetaan komennolla
 ```
 mvn compile exec:java -Dexec.mainClass=treeniapp.Main
 ```
+__HUOM!__ Treenien lisääminen ei ole vielä mahdollista, mutta treenien listaaminen onnistuu jo käyttäjätunnuksella *testaaja*.
 
 ### Testaus
 
