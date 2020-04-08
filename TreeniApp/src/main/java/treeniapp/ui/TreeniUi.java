@@ -171,6 +171,30 @@ public class TreeniUi extends Application {
         Scene mainScene = new Scene(mainPane, 300, 600);
         
         /**
+        * ADD WORKOUT SCENE
+        */
+        
+        Label addWorkoutLabel = new Label("Lisää uusi treeni");
+        Button closeWorkoutWindowButton = new Button("Sulje");
+        
+        BorderPane workoutPane = new BorderPane();
+        HBox topWorkoutPane = new HBox();
+        topWorkoutPane.setPadding(new Insets(10, 10, 10, 10));
+        topWorkoutPane.setAlignment(Pos.CENTER);
+        topWorkoutPane.getChildren().addAll(addWorkoutLabel);
+        HBox bottomWorkoutPane = new HBox();
+        bottomWorkoutPane.setPadding(new Insets(10, 10, 10, 10));
+        Region workoutMenuSpacer = new Region();
+        HBox.setHgrow(workoutMenuSpacer, Priority.ALWAYS);
+        bottomWorkoutPane.getChildren().addAll(workoutMenuSpacer, closeWorkoutWindowButton);
+        workoutPane.setTop(topWorkoutPane);
+        workoutPane.setBottom(bottomWorkoutPane);
+        
+        Scene workoutScene = new Scene(workoutPane, 400, 400);
+        
+        Stage workoutWindow = new Stage();
+        
+        /**
         * SCENE ACTIONS
         */
         
@@ -236,6 +260,20 @@ public class TreeniUi extends Application {
                 newUserNote.setText("Tunnus '" + username + "'\n"
                         + "on jo käytössä!");
             }
+        });
+        
+        // Open Add Workout Window
+        
+        addWorkoutButton.setOnAction((event) -> {
+            workoutWindow.setTitle("Lisää treeni - TreeniApp");
+            workoutWindow.setScene(workoutScene);
+            workoutWindow.show();
+        });
+        
+        // Close Workout Window
+        
+        closeWorkoutWindowButton.setOnAction((event) -> {
+            workoutWindow.close();
         });
         
 

@@ -11,4 +11,5 @@
 | 3.4.  | 3      | Workout-luokan luominen |
 | 4.4.  | 3      | Workout-luokan kehittäminen, Workout-käyttöliittymän luominen |
 | 5.4.  | 5      | Workout-luokan testausta, pieniä korjauksia ja hiomisia |
-| yht.  | 26      | | 
+| 8.4.  | 1      | Treenin lisäysikkunan luominen |
+| yht.  | 27     | | 
