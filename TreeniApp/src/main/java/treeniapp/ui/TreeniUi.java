@@ -3,14 +3,17 @@ package treeniapp.ui;
 
 import java.util.List;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -113,8 +116,8 @@ public class TreeniUi extends Application {
         
         Label newUserInstruction = new Label("Uusi käyttäjä");
         Label newUserUsernameInstruction = new Label("Tunnus:");
-        Label newUserNameInstruction = new Label("Nimi:");
         TextField newUserUsername = new TextField();
+        Label newUserNameInstruction = new Label("Nimi:");
         TextField newUserName = new TextField();
         Button newUserButton = new Button("Luo käyttäjä");
         Button newUserBackButton = new Button("Peruuta");
@@ -177,6 +180,44 @@ public class TreeniUi extends Application {
         Label addWorkoutLabel = new Label("Lisää uusi treeni");
         Button closeWorkoutWindowButton = new Button("Sulje");
         
+        Label newWorkoutSportInstruction = new Label("Laji:");
+        ChoiceBox newWorkoutSport = new ChoiceBox(FXCollections.observableArrayList(
+            "laji1", "laji2", "laji3", "laji4")
+        );
+        newWorkoutSport.setTooltip(new Tooltip("Valitse urheilulaji"));
+        Label newWorkoutDayInstruction = new Label("Päivä:");
+        TextField newWorkoutDay = new TextField();
+        Label newWorkoutTimeInstruction = new Label("Kello:");
+        TextField newWorkoutTime = new TextField();
+        Label newWorkoutDurationInstruction = new Label("Kesto:");
+        TextField newWorkoutDuration = new TextField();
+        Label newWorkoutDistanceInstruction = new Label("Matka:");
+        TextField newWorkoutDistance = new TextField();
+        Label newWorkoutMhrInstruction = new Label("Keskisyke:");
+        TextField newWorkoutMhr = new TextField();
+        Label newWorkoutNotesInstruction = new Label("Muistiinpano:");
+        TextField newWorkoutNotes = new TextField();
+        
+        GridPane addWorkoutPane = new GridPane();
+        addWorkoutPane.add(newWorkoutSportInstruction, 0, 1);
+        addWorkoutPane.add(newWorkoutSport, 1, 1);
+        addWorkoutPane.add(newWorkoutDayInstruction, 0, 2);
+        addWorkoutPane.add(newWorkoutDay, 1, 2);
+        addWorkoutPane.add(newWorkoutTimeInstruction, 0, 3);
+        addWorkoutPane.add(newWorkoutTime, 1, 3);
+        addWorkoutPane.add(newWorkoutDurationInstruction, 0, 4);
+        addWorkoutPane.add(newWorkoutDuration, 1, 4);
+        addWorkoutPane.add(newWorkoutDistanceInstruction, 0, 5);
+        addWorkoutPane.add(newWorkoutDistance, 1, 5);
+        addWorkoutPane.add(newWorkoutMhrInstruction, 0, 6);
+        addWorkoutPane.add(newWorkoutMhr, 1, 6);
+        addWorkoutPane.add(newWorkoutNotesInstruction, 0, 7);
+        addWorkoutPane.add(newWorkoutNotes, 1, 7);
+        addWorkoutPane.setAlignment(Pos.CENTER);
+        addWorkoutPane.setVgap(10);
+        addWorkoutPane.setHgap(10);
+        addWorkoutPane.setPadding(new Insets(20, 20, 20, 20));
+        
         BorderPane workoutPane = new BorderPane();
         HBox topWorkoutPane = new HBox();
         topWorkoutPane.setPadding(new Insets(10, 10, 10, 10));
@@ -188,6 +229,7 @@ public class TreeniUi extends Application {
         HBox.setHgrow(workoutMenuSpacer, Priority.ALWAYS);
         bottomWorkoutPane.getChildren().addAll(workoutMenuSpacer, closeWorkoutWindowButton);
         workoutPane.setTop(topWorkoutPane);
+        workoutPane.setCenter(addWorkoutPane);
         workoutPane.setBottom(bottomWorkoutPane);
         
         Scene workoutScene = new Scene(workoutPane, 400, 400);
