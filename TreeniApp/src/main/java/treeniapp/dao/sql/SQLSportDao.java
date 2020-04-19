@@ -46,8 +46,6 @@ public class SQLSportDao implements SportDao {
                 sportMap.put(id, sport);
             }
 
-            stmt.close();
-            rs.close();
             connection.close();
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, null, ex);
@@ -60,8 +58,7 @@ public class SQLSportDao implements SportDao {
             Connection connection = sql.getConnection();
 
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Sports"
-                + " (id, name, icon, showdist)"
-                + " VALUES (?, ?, ?, ?)");
+                + " (id, name, icon, showdist) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, sport.getId());
             stmt.setString(2, sport.getName());
             stmt.setString(3, sport.getIcon());
