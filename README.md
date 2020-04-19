@@ -23,6 +23,16 @@ mvn compile exec:java -Dexec.mainClass=treeniapp.Main
 ```
 __HUOM!__ Treenien lisääminen ei ole vielä mahdollista, mutta treenien listaaminen onnistuu jo käyttäjätunnuksella *testaaja*.
 
+### Suoritettavan JAR-pakkauksen generointi
+
+Komento
+
+```
+mvn package
+```
+
+generoi hakemistoon _target_ suoritettavan jar-tiedoston _TreeniApp-1.0-SNAPSHOT.jar_
+
 ### Testaus
 
 Testit suoritetaan komennolla
