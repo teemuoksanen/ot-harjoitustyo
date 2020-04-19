@@ -31,7 +31,6 @@ public class TreeniAppService {
             return false;
         }
         
-        System.out.println("User '" + username + "' logged in."); //REMOVE
         userLoggedIn = user;
         
         return true;
@@ -50,7 +49,6 @@ public class TreeniAppService {
     */  
     
     public void logout() {
-        System.out.println("User '" + userLoggedIn.getUsername() + "' logged out."); //REMOVE
         userLoggedIn = null;
     }
    
@@ -59,18 +57,15 @@ public class TreeniAppService {
     */  
     
     public boolean newUser(String username, String name) {
-        System.out.print("Trying to create a new user '" + username + "'..."); //REMOVE
         
         // Check that there is no user with same username
         if (userDao.findByUsername(username) != null) {
-            System.out.println("Failed - username already exists."); //REMOVE
             return false;
         }
         
         //Create a new user
         User newUser = new User(username, name);
         userDao.create(newUser);
-        System.out.println("Succeeded."); //REMOVE
         return true;
     }
     
@@ -81,10 +76,19 @@ public class TreeniAppService {
     public List<Workout> getWorkouts() {
         List<Workout> workouts = new ArrayList<>();
         if (userLoggedIn != null) {
-            System.out.println("Haetaan treenit: " + userLoggedIn.getUsername());
             workouts = workoutDao.getAllByUser(userLoggedIn);
         }
         return workouts;
+    }
+    
+    /**
+    * Sports
+    */   
+    
+    public List<Sport> getSports() {
+        List<Sport> sports = new ArrayList<>();
+        sports = sportDao.getAll();
+        return sports;
     }
     
 }

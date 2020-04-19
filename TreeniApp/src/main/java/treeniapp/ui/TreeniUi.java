@@ -1,19 +1,28 @@
 
 package treeniapp.ui;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -27,9 +36,10 @@ import treeniapp.dao.sql.SQLUserDao;
 import treeniapp.dao.WorkoutDao;
 import treeniapp.dao.sql.SQLWorkoutDao;
 import treeniapp.dao.SportDao;
-import treeniapp.dao.TempSportDao;
+import treeniapp.dao.sql.SQLSportDao;
 import treeniapp.dao.sql.SQLService;
 import treeniapp.domain.TreeniAppService;
+import treeniapp.domain.Sport;
 import treeniapp.domain.Workout;
 
 public class TreeniUi extends Application {
@@ -51,7 +61,7 @@ public class TreeniUi extends Application {
         SQLService sql = new SQLService();
         sql.initialiseDatabases(clearDatabases);
         userDao = new SQLUserDao(sql);
-        sportDao = new TempSportDao(sql);
+        sportDao = new SQLSportDao(sql);
         workoutDao = new SQLWorkoutDao(sql, userDao, sportDao);
         treeniAppService = new TreeniAppService(userDao, workoutDao, sportDao);
         
@@ -80,6 +90,26 @@ public class TreeniUi extends Application {
         workouts.forEach(workout->{
             workoutNodes.getChildren().add(createWorkoutNode(workout));
         });     
+    }
+    
+    public ObservableList<Sport> formatSportsDropdown() {
+        ObservableList<Sport> sportsDropdown = FXCollections.observableArrayList();
+        sportsDropdown.add(new Sport(0, "Valitse laji", null, false));
+        for (Sport s : treeniAppService.getSports()) {
+            sportsDropdown.add(s);
+        }
+        return sportsDropdown;
+    }
+    
+    public Image getSportsIcon(Sport sport) {
+        String iconFileName = "resources/" + sport.getIcon() + ".png";
+        try {
+            Image icon = new Image(new FileInputStream(iconFileName));
+            return icon;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(TreeniUi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     @Override
@@ -181,14 +211,17 @@ public class TreeniUi extends Application {
         Button closeWorkoutWindowButton = new Button("Sulje");
         
         Label newWorkoutSportInstruction = new Label("Laji:");
-        ChoiceBox newWorkoutSport = new ChoiceBox(FXCollections.observableArrayList(
-            "laji1", "laji2", "laji3", "laji4")
-        );
+        ComboBox<Sport> newWorkoutSport = new ComboBox<>(formatSportsDropdown());
+        newWorkoutSport.getSelectionModel().select(0);
         newWorkoutSport.setTooltip(new Tooltip("Valitse urheilulaji"));
+        ImageView newWorkoutSportIconView = new ImageView();
+        newWorkoutSportIconView.setFitHeight(36);
+        newWorkoutSportIconView.setFitWidth(36);
         Label newWorkoutDayInstruction = new Label("Päivä:");
-        TextField newWorkoutDay = new TextField();
+        DatePicker newWorkoutDay = new DatePicker(LocalDate.now());
         Label newWorkoutTimeInstruction = new Label("Kello:");
-        TextField newWorkoutTime = new TextField();
+        TextField newWorkoutTimeHour = new TextField();
+        TextField newWorkoutTimeMin = new TextField();
         Label newWorkoutDurationInstruction = new Label("Kesto:");
         TextField newWorkoutDuration = new TextField();
         Label newWorkoutDistanceInstruction = new Label("Matka:");
@@ -201,18 +234,20 @@ public class TreeniUi extends Application {
         GridPane addWorkoutPane = new GridPane();
         addWorkoutPane.add(newWorkoutSportInstruction, 0, 1);
         addWorkoutPane.add(newWorkoutSport, 1, 1);
+        addWorkoutPane.add(newWorkoutSportIconView, 2, 1);
         addWorkoutPane.add(newWorkoutDayInstruction, 0, 2);
-        addWorkoutPane.add(newWorkoutDay, 1, 2);
+        addWorkoutPane.add(newWorkoutDay, 1, 2, 2, 1);
         addWorkoutPane.add(newWorkoutTimeInstruction, 0, 3);
-        addWorkoutPane.add(newWorkoutTime, 1, 3);
+        addWorkoutPane.add(newWorkoutTimeHour, 1, 3);
+        addWorkoutPane.add(newWorkoutTimeMin, 2, 3);
         addWorkoutPane.add(newWorkoutDurationInstruction, 0, 4);
-        addWorkoutPane.add(newWorkoutDuration, 1, 4);
+        addWorkoutPane.add(newWorkoutDuration, 1, 4, 2, 1);
         addWorkoutPane.add(newWorkoutDistanceInstruction, 0, 5);
-        addWorkoutPane.add(newWorkoutDistance, 1, 5);
+        addWorkoutPane.add(newWorkoutDistance, 1, 5, 2, 1);
         addWorkoutPane.add(newWorkoutMhrInstruction, 0, 6);
-        addWorkoutPane.add(newWorkoutMhr, 1, 6);
+        addWorkoutPane.add(newWorkoutMhr, 1, 6, 2, 1);
         addWorkoutPane.add(newWorkoutNotesInstruction, 0, 7);
-        addWorkoutPane.add(newWorkoutNotes, 1, 7);
+        addWorkoutPane.add(newWorkoutNotes, 1, 7, 2, 1);
         addWorkoutPane.setAlignment(Pos.CENTER);
         addWorkoutPane.setVgap(10);
         addWorkoutPane.setHgap(10);
@@ -310,6 +345,16 @@ public class TreeniUi extends Application {
             workoutWindow.setTitle("Lisää treeni - TreeniApp");
             workoutWindow.setScene(workoutScene);
             workoutWindow.show();
+        });
+        
+        // Choose Sport in Workout Window
+        
+        newWorkoutSport.setOnAction((event) -> {
+            Sport selectedSport = newWorkoutSport.getSelectionModel().getSelectedItem();
+            Image selectedSportIcon = getSportsIcon(selectedSport);
+            newWorkoutSportIconView.setImage(selectedSportIcon);
+            newWorkoutDistanceInstruction.setVisible(selectedSport.isShowDistance());
+            newWorkoutDistance.setVisible(selectedSport.isShowDistance());
         });
         
         // Close Workout Window
