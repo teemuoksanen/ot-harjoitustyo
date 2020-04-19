@@ -68,9 +68,18 @@ public class TreeniAppService {
         userDao.create(newUser);
         return true;
     }
+   
+    /**
+    * Create Workout
+    */  
+    
+    public boolean newWorkout(Workout workout) {
+        workoutDao.create(workout);
+        return true;
+    }
     
     /**
-    * Workouts
+    * List workouts
     */   
     
     public List<Workout> getWorkouts() {
@@ -82,13 +91,21 @@ public class TreeniAppService {
     }
     
     /**
-    * Sports
+    * List sports
     */   
     
     public List<Sport> getSports() {
         List<Sport> sports = new ArrayList<>();
         sports = sportDao.getAll();
         return sports;
+    }
+    
+    /**
+    * Get sport by ID
+    */   
+    
+    public Sport getSportById(int id) {
+        return sportDao.findById(id);
     }
     
 }

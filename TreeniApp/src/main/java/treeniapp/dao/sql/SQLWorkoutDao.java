@@ -114,7 +114,7 @@ public class SQLWorkoutDao implements WorkoutDao {
         try {
             Connection connection = sql.getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts WHERE user = ?");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts WHERE user = ? ORDER BY datetime ASC");
             stmt.setString(1, user.getUsername());
             ResultSet rs = stmt.executeQuery();
 

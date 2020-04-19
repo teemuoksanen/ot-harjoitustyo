@@ -135,6 +135,4 @@ public class Workout {
         this.notes = notes;
     }
     
-    
-    
 }
