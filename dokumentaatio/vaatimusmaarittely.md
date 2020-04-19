@@ -25,7 +25,7 @@ Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen au
 ### Perusnäyttö
 
 - [x] perusnäytössä näkyy kirjatut treenit (päivä, laji, kesto)
-- [ ] uuden treenin tietojen lisääminen
+- [x] uuden treenin tietojen lisääminen
 - [x] uloskirjautuminen
 
 ## Jatkokehitysideoita
@@ -35,6 +35,7 @@ Perusversion jälkeen ohjelmaa voidaan täydentää ajan salliessa uusilla omina
 - [ ] asetusten muuttaminen (esim. oma nimi)
 - [ ] kirjautuminen salasanalla
 - [ ] tilastot treeneistä
-- [ ] mahdolliset lisäkentät treeneihin (matka, keskisyke)
+- [x] mahdolliset lisäkentät treeneihin (matka, keskisyke)
+- [ ] yksittäisen treenin näkymä (lisäkentät mukana)
 - [ ] treenisuunnitelmien (tulevat treenit) lisääminen
 - [ ] eri käyttäjäroolit
