@@ -11,6 +11,7 @@
 | 3.4.  | 3      | Workout-luokan luominen |
 | 4.4.  | 3      | Workout-luokan kehittäminen, Workout-käyttöliittymän luominen |
 | 5.4.  | 5      | Workout-luokan testausta, pieniä korjauksia ja hiomisia |
-| 8.4.  | 1      | Treenin lisäysikkunan luominen |
-| 18.4. | 3      | Treenin lisäysikkunan työstäminen, ikonien lisääminen |
+| 8.4.  | 1      | treenin lisäysikkunan luominen |
+| 18.4. | 3      | treenin lisäysikkunan työstäminen, ikonien lisääminen |
+| 19.4. | x      | SQLSportDaon luominen ja käyttöönotto, treenin lisäysikkunan työstäminen |
 | yht.  | 30     | | 
