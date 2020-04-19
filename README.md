@@ -25,13 +25,13 @@ __HUOM!__ Treenien lisääminen ei ole vielä mahdollista, mutta treenien listaa
 
 ### Suoritettavan JAR-pakkauksen generointi
 
-Komento
+Komennolla
 
 ```
 mvn package
 ```
 
-generoi hakemistoon _target_ suoritettavan jar-tiedoston _TreeniApp-1.0-SNAPSHOT.jar_
+tehdään hakemistoon _target_ suoritettava jar-tiedosto nimellä _TreeniApp-1.0-SNAPSHOT.jar_.
 
 ### Testaus
 
