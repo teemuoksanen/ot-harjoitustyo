@@ -14,4 +14,4 @@ Ohjelman eri osien suhde on järjestetty seuraavan luokka- ja pakkauskaavion muk
 
 ![Pakkauskaavio](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/pakkauskaavio.png)
 
-Pakkauskaaviossa näkyy toistaiseksi luokka _TempSportDao_, johon on alkuvaiheessa "kovakoodattu" käytössä olevat urheilulajit (juoksu, kuntosali, uinti, koripallo). Lopullisessa versiossa ohjelmaan voi lisätä uusia lajeja, jolloin lajit tullaan tallentamaan tietokantaan.
+Pakkauskaavio päivitetty 19.4.2020: _TempSportDao_ korvattu _SQLSportDao_:lla.
