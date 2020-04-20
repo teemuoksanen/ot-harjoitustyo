@@ -14,4 +14,5 @@
 | 8.4.  | 1      | treenin lisäysikkunan luominen |
 | 18.4. | 3      | treenin lisäysikkunan työstäminen, ikonien lisääminen |
 | 19.4. | 8      | SQLSportDaon luominen ja käyttöönotto, treenin lisäysikkunan työstäminen, treenien lisääminen mahdolliseksi, dokumentaation tekeminen |
-| yht.  | 38     | | 
+| 20.4. | 4      | uusien testien rakentamista, virheiden korjausta, viikko5-releasen julkaiseminen |
+| yht.  | 42     | | 
