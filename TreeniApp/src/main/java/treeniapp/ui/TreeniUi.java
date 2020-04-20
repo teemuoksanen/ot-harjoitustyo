@@ -1,17 +1,12 @@
 
 package treeniapp.ui;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.UnaryOperator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -122,14 +117,9 @@ public class TreeniUi extends Application {
     }
     
     public Image getSportsIcon(Sport sport) {
-        String iconFileName = "resources/sporticons/" + sport.getIcon() + ".png";
-        try {
-            Image icon = new Image(new FileInputStream(iconFileName));
-            return icon;
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(TreeniUi.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        String iconFileName = "/sporticons/" + sport.getIcon() + ".png";
+        Image icon = new Image(getClass().getResourceAsStream(iconFileName));
+        return icon;
     }
     
     public ObservableList generateNumberList(int start, int last) {
