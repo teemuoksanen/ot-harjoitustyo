@@ -12,6 +12,10 @@ Sovellus on Helsingin yliopiston tietojenkäsittelytieteen laitoksen **Ohjelmist
 
 [Työaikakirjanpito](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+## Releaset
+
+[Viikko 5](https://github.com/teemuoksanen/ot-harjoitustyo/releases/tag/viikko5)
+
 ## Komentorivitoiminnot
 
 ### Ajaminen
