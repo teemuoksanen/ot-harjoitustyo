@@ -21,9 +21,12 @@ public class TreeniAppService {
     }
     
     /**
-    * Login
+    * Method is used to check if the user is found and, if found, to set that user as logged in.
+    *
+    * @param   username   username of the user to be logged in
+    *
+    * @return <code>true</code> if username is found; <code>false</code> otherwise.
     */
-    
     public boolean login(String username) {
         User user = userDao.findByUsername(username);
         
@@ -37,25 +40,29 @@ public class TreeniAppService {
     }
     
     /**
-    * User currently logged in
-    */   
-    
+    * Method returns the user that is currently logged in.
+    *
+    * @return The <code>User</code> object for the user currently logged in.
+    */
     public User getLoggedInUser() {
         return userLoggedIn;
     }
    
     /**
-    * Logout
-    */  
-    
+    * Method is used to log out any users by setting <code>userLoggedIn</code> as <code>null</code>.
+    */
     public void logout() {
         userLoggedIn = null;
     }
    
     /**
-    * Create User
-    */  
-    
+    * Method is used to create a new user. 
+    *
+    * @param    username    username of the new user
+    * @param    name        real name of the new user
+    *
+    * @return <code>false</code> if username is already in use; <code>true</code> if the new user is created.
+    */
     public boolean newUser(String username, String name) {
         
         // Check that there is no user with same username
@@ -70,18 +77,22 @@ public class TreeniAppService {
     }
    
     /**
-    * Create Workout
-    */  
-    
+    * Method to create a new workout. 
+    *
+    * @param    workout     <code>Workout</code> object for the new workout
+    *
+    * @return <code>true</code> if the workout was created.
+    */
     public boolean newWorkout(Workout workout) {
         workoutDao.create(workout);
         return true;
     }
     
     /**
-    * List workouts
-    */   
-    
+    * Method to list all workouts for the user who is currently logged in.
+    * 
+    * @return ArrayList of <code>Workout</code> objects for the user who is logged in. Empty list, if no user is logged in.
+    */
     public List<Workout> getWorkouts() {
         List<Workout> workouts = new ArrayList<>();
         if (userLoggedIn != null) {
@@ -91,9 +102,10 @@ public class TreeniAppService {
     }
     
     /**
-    * List sports
-    */   
-    
+    * Method to list all sport types.
+    * 
+    * @return ArrayList of <code>Sport</code> objects.
+    */
     public List<Sport> getSports() {
         List<Sport> sports = new ArrayList<>();
         sports = sportDao.getAll();
@@ -101,9 +113,12 @@ public class TreeniAppService {
     }
     
     /**
-    * Get sport by ID
-    */   
-    
+    * Method to get a sport by its id number.
+    * 
+    * @param    id     id number of the sport
+    * 
+    * @return <code>Sport</code> object.
+    */
     public Sport getSportById(int id) {
         return sportDao.findById(id);
     }
