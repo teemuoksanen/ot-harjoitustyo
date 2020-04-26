@@ -34,8 +34,8 @@ Perusversion jälkeen ohjelmaa voidaan täydentää ajan salliessa uusilla omina
 
 - [ ] asetusten muuttaminen (esim. oma nimi)
 - [ ] kirjautuminen salasanalla
-- [ ] tilastot treeneistä
+- [x] tilastot treeneistä
 - [x] mahdolliset lisäkentät treeneihin (matka, keskisyke)
-- [ ] yksittäisen treenin näkymä (lisäkentät mukana)
+- [x] yksittäisen treenin näkymä (lisäkentät mukana)
 - [ ] treenisuunnitelmien (tulevat treenit) lisääminen
 - [ ] eri käyttäjäroolit
