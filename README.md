@@ -66,3 +66,12 @@ Tiedoston [checkstyle.xml](https://github.com/teemuoksanen/ot-harjoitustyo/blob/
 ```
 
 Mahdolliset virheilmoitukset selviävät avaamalla selaimella tiedosto _target/site/checkstyle.html_
+
+### JavaDoc
+
+JavaDoc luodaan komennolla
+
+```
+mvn javadoc:javadoc
+```
+JavaDoc-dokumentaatiota voi tarkastella avaamalla selaimella tiedosto _target/site/apidocs/index.html_
