@@ -37,5 +37,7 @@ Perusversion jälkeen ohjelmaa voidaan täydentää ajan salliessa uusilla omina
 - [x] tilastot treeneistä
 - [x] mahdolliset lisäkentät treeneihin (matka, keskisyke)
 - [x] yksittäisen treenin näkymä (lisäkentät mukana)
+- [ ] treenin poistaminen
 - [ ] treenisuunnitelmien (tulevat treenit) lisääminen
 - [ ] eri käyttäjäroolit
+- [ ] uuden lajin lisääminen
