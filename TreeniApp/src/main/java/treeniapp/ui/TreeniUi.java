@@ -66,7 +66,6 @@ public class TreeniUi extends Application {
     private Scene loginScene;
     private Scene newUserScene;
     private Scene addWorkoutScene;
-    private Scene viewWorkoutScene;
     
     // Services
     private TreeniAppService treeniAppService;
@@ -116,7 +115,7 @@ public class TreeniUi extends Application {
         Image moreIcon = new Image(getClass().getResourceAsStream("/more.png"));
         ImageView workoutMore = new ImageView(moreIcon);
         
-        viewWorkoutScene = viewWorkout(workout);
+        Scene viewWorkoutScene = viewWorkout(workout);
         
         workoutMore.setOnMouseClicked((event) -> {
             pStage.setScene(viewWorkoutScene);
