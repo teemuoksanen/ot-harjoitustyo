@@ -7,21 +7,26 @@ import treeniapp.dao.UserDao;
 import treeniapp.dao.WorkoutDao;
 import treeniapp.dao.SportDao;
 
+/**
+ * Class handles the application logic
+ */
 public class TreeniAppService {
     
     private UserDao userDao;
     private WorkoutDao workoutDao;
     private SportDao sportDao;
     private User userLoggedIn;
+    private Formatter format;
     
     public TreeniAppService(UserDao userDao, WorkoutDao workoutDao, SportDao sportDao) {
         this.userDao = userDao;
         this.workoutDao = workoutDao;
         this.sportDao = sportDao;
+        this.format = new Formatter();
     }
     
     /**
-    * Method is used to check if the user is found and, if found, to set that user as logged in.
+    * Method to check if the user is found and, if found, to set that user as logged in.
     *
     * @param   username   username of the user to be logged in
     *
@@ -49,7 +54,7 @@ public class TreeniAppService {
     }
    
     /**
-    * Method is used to log out any users by setting <code>userLoggedIn</code> as <code>null</code>.
+    * Method to log out any users by setting <code>userLoggedIn</code> as <code>null</code>.
     */
     public void logout() {
         userLoggedIn = null;
@@ -89,16 +94,55 @@ public class TreeniAppService {
     }
     
     /**
-    * Method to list all workouts for the user who is currently logged in.
+    * Method to list all workouts for the named user.
     * 
-    * @return ArrayList of <code>Workout</code> objects for the user who is logged in. Empty list, if no user is logged in.
+    * @param    user     <code>User</code> object for which workouts should be listed
+    * 
+    * @return ArrayList of <code>Workout</code> objects for the user; empty list is <code>User</code> is null.
     */
-    public List<Workout> getWorkouts() {
+    public List<Workout> getWorkouts(User user) {
         List<Workout> workouts = new ArrayList<>();
-        if (userLoggedIn != null) {
-            workouts = workoutDao.getAllByUser(userLoggedIn);
+        if (user != null) {
+            workouts = workoutDao.getAllByUser(user);
         }
         return workouts;
+    }
+    
+    /**
+    * Method to return a workout by its id number.
+    * 
+    * @param    id     id number of the <code>Workout</code> object
+    * 
+    * @return <code>Workout</code> object for the given id.
+    */
+    public Workout getWorkoutById(int id) {
+        return workoutDao.findById(id);
+    }
+    
+    /**
+    * Method to get total workout time for a named user.
+    * 
+    * @param    user     <code>User</code> object for which total workout time should be fetched
+    * 
+    * @return Total amount of workout minutes for the user.
+    */
+    public int getTotalTime(User user) {
+        List<Workout> workouts = getWorkouts(user);
+        int total = 0;
+        total = workouts.stream().map((w) -> w.getDuration()).reduce(total, Integer::sum);
+        return total;
+    }
+    
+    /**
+    * Method to get total workout time for a named user.
+    * 
+    * @param    user     <code>User</code> object for which total workout time should be fetched
+    * 
+    * @return Total amount of workout minutes for the user.
+    */
+    public String getTotalTimeFormatted(User user) {
+        int total = getTotalTime(user);
+        return format.minutesIntoHoursAndMinutes(total);
     }
     
     /**

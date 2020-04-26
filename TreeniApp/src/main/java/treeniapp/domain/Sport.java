@@ -1,6 +1,9 @@
 
 package treeniapp.domain;
 
+/**
+ * Class handles the Sport objects available for Workout objects
+ */
 public class Sport {
     
     private int id;

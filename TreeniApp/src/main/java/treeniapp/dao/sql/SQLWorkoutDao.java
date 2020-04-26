@@ -15,6 +15,9 @@ import treeniapp.dao.WorkoutDao;
 import treeniapp.domain.User;
 import treeniapp.domain.Workout;
 
+/**
+ * Class contains methods to get and store <code>Workout</code> objects from and into SQL database
+ */
 public class SQLWorkoutDao implements WorkoutDao {
     
     private SQLService sql;
@@ -28,6 +31,13 @@ public class SQLWorkoutDao implements WorkoutDao {
         this.sportDao = sportDao;
     }
 
+    /**
+    * Method to store a new workout to the database.
+    * 
+    * @param    workout   The <code>Workout</code> object to be stored to the database.
+    * 
+    * @return <code>Workout</code> object that was stored to the database.
+    */
     @Override
     public Workout create(Workout workout) {
         try {
@@ -50,11 +60,25 @@ public class SQLWorkoutDao implements WorkoutDao {
         return null;
     }
 
+    /**
+    * Method to update a workout in the database.
+    * 
+    * @param    workout   The <code>Workout</code> object to be updated.
+    * 
+    * @return <code>Workout</code> object of the updated workout.
+    */
     @Override
     public Workout update(Workout workout) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+    * Method to find a workout by its id number.
+    * 
+    * @param    id   The id number of the <code>Workout</code> object to be fetched.
+    * 
+    * @return <code>Workout</code> object with the named id; <code>null</code> if not found.
+    */
     @Override
     public Workout findById(int id) {
         try {
@@ -80,6 +104,11 @@ public class SQLWorkoutDao implements WorkoutDao {
         return null;
     }
 
+    /**
+    * Method to list all workouts.
+    * 
+    * @return ArrayList containing all <code>Workout</code> objects; <code>null</code> if cannot be listed.
+    */
     @Override
     public List<Workout> getAll() {
         List<Workout> workouts = new ArrayList<>();
@@ -107,6 +136,13 @@ public class SQLWorkoutDao implements WorkoutDao {
         return null;
     }
 
+    /**
+    * Method to list all workouts of a <code>User</code>.
+    * 
+    * @param user   The <code>User</code> object of the user whose workouts should be listed.
+    * 
+    * @return ArrayList containing all <code>Workout</code> objects by a <code>User</code>; <code>null</code> if cannot be listed.
+    */
     @Override
     public List<Workout> getAllByUser(User user) {
         List<Workout> workouts = new ArrayList<>();

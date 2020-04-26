@@ -1,6 +1,9 @@
 
 package treeniapp.domain;
 
+/**
+ * Class handles the User objects representing the application's registered users
+ */
 public class User {
     
     private String username;

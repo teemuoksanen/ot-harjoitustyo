@@ -14,6 +14,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
@@ -35,6 +37,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import treeniapp.dao.UserDao;
@@ -48,6 +52,9 @@ import treeniapp.domain.TreeniAppService;
 import treeniapp.domain.Sport;
 import treeniapp.domain.Workout;
 
+/**
+ * Class handles the GUI of the application
+ */
 public class TreeniUi extends Application {
     
     private TreeniAppService treeniAppService;
@@ -56,6 +63,7 @@ public class TreeniUi extends Application {
     private SportDao sportDao;
     
     private VBox workoutNodes;
+    private Label workoutsTotal;
     private ObservableList hours;
     private ObservableList mins;
     
@@ -78,41 +86,55 @@ public class TreeniUi extends Application {
         mins = generateNumberList(0, 59);
     }
     
-    public Node createWorkoutNode(Workout workout) {
+    public Node createWorkoutNode(Workout workout, Stage primaryStage, Scene mainScene) {
         HBox workoutBox = new HBox(10);
         Label workoutDate = new Label(workout.getDayMonth());
         Image workoutIcon = getSportsIcon(workout.getSport());
         ImageView workoutIconView = new ImageView(workoutIcon);
         Label workoutSport = new Label(treeniAppService.getSportById(workout.getSport().getId()).getName());
-        Label workoutDuration = new Label(workout.getDurationFormat());
+        Label workoutDuration = new Label(workout.getDurationFormatted());
+        Image moreIcon = new Image(getClass().getResourceAsStream("/more.png"));
+        ImageView workoutMore = new ImageView(moreIcon);
+        
+        Scene viewWorkoutScene = viewWorkout(workout, primaryStage, mainScene);
+        
+        workoutMore.setOnMouseClicked((event) -> {
+            primaryStage.setScene(viewWorkoutScene);
+        });
+        
         workoutDate.setMaxWidth(40);
         workoutDate.setMinWidth(40);
         workoutIconView.setFitHeight(20);
         workoutIconView.setFitWidth(20);
-        workoutSport.setMaxWidth(150);
-        workoutSport.setMinWidth(150);
+        workoutSport.setMaxWidth(125);
+        workoutSport.setMinWidth(125);
         workoutDuration.setMaxWidth(40);
         workoutDuration.setMinWidth(40);
+        workoutMore.setFitHeight(20);
+        workoutMore.setFitWidth(20);
         
-        workoutBox.getChildren().addAll(workoutDate, workoutIconView, workoutSport, workoutDuration);
+        workoutBox.getChildren().addAll(workoutDate, workoutIconView, workoutSport, workoutDuration, workoutMore);
         return workoutBox;
     }
     
-    public void redrawWorkouts() {
-        workoutNodes.getChildren().clear();     
-
-        List<Workout> workouts = treeniAppService.getWorkouts();
-        workouts.forEach(workout->{
-            workoutNodes.getChildren().add(createWorkoutNode(workout));
-        });     
+    public void redrawWorkouts(Stage primaryStage, Scene mainScene) {
+        workoutNodes.getChildren().clear();
+        
+        if (treeniAppService.getLoggedInUser() != null) {
+            List<Workout> workouts = treeniAppService.getWorkouts(treeniAppService.getLoggedInUser());
+            workouts.forEach(workout->{
+                workoutNodes.getChildren().add(createWorkoutNode(workout, primaryStage, mainScene));
+            }); 
+            workoutsTotal.setText(treeniAppService.getTotalTimeFormatted(treeniAppService.getLoggedInUser()));
+        }
     }
     
     public ObservableList<Sport> formatSportsDropdown() {
         ObservableList<Sport> sportsDropdown = FXCollections.observableArrayList();
         sportsDropdown.add(new Sport(0, "Valitse laji", null, false));
-        for (Sport s : treeniAppService.getSports()) {
+        treeniAppService.getSports().forEach((s) -> {
             sportsDropdown.add(s);
-        }
+        });
         return sportsDropdown;
     }
     
@@ -136,9 +158,104 @@ public class TreeniUi extends Application {
         return list;
     }
     
+    public Scene viewWorkout(Workout workout, Stage primaryStage, Scene mainScene) {
+        
+        // Header
+        
+        HBox headerViewWorkoutPane = new HBox();
+        Label viewWorkoutHeader = new Label("Treenisi " + workout.getDayMonthYear() + " klo " + workout.getTime());
+        viewWorkoutHeader.setFont(new Font(20.0));
+        headerViewWorkoutPane.setPadding(new Insets(10));
+        headerViewWorkoutPane.setAlignment(Pos.CENTER);
+        headerViewWorkoutPane.getChildren().addAll(viewWorkoutHeader);
+        
+        // Icon
+        
+        HBox iconViewWorkoutPane = new HBox();
+        ImageView viewWorkoutSportIconView = new ImageView(getSportsIcon(workout.getSport()));
+        viewWorkoutSportIconView.setFitHeight(36);
+        viewWorkoutSportIconView.setFitWidth(36);
+        iconViewWorkoutPane.setPadding(new Insets(0, 0, 10, 0));
+        iconViewWorkoutPane.setAlignment(Pos.CENTER);
+        iconViewWorkoutPane.getChildren().addAll(viewWorkoutSportIconView);
+        
+        Label viewWorkoutSportLabel = new Label("Laji:");
+        Label viewWorkoutSport = new Label(workout.getSport().getName());
+        Label viewWorkoutDurationLabel = new Label("Kesto:");
+        Label viewWorkoutDuration = new Label(workout.getDurationFormatted());
+        Label viewWorkoutDistanceLabel = new Label("Matka:");
+        Label viewWorkoutDistance = new Label(workout.getDistanceFormatted());
+        Label viewWorkoutMhrLabel = new Label("Keskisyke:");
+        Label viewWorkoutMhr = new Label(workout.getMhr() + " bpm");
+        Text viewWorkoutNotes = new Text(workout.getNotes());
+        
+        int gridRowCounter = 0;
+        
+        GridPane workoutPane = new GridPane();
+        workoutPane.setAlignment(Pos.CENTER);
+        workoutPane.setVgap(10);
+        workoutPane.setHgap(10);
+        workoutPane.setPadding(new Insets(20, 20, 20, 20));
+        workoutPane.add(viewWorkoutSportLabel, 0, gridRowCounter);
+        workoutPane.add(viewWorkoutSport, 1, gridRowCounter);
+        gridRowCounter++;
+        workoutPane.add(viewWorkoutDurationLabel, 0, gridRowCounter);
+        workoutPane.add(viewWorkoutDuration, 1, gridRowCounter);
+        gridRowCounter++;        
+        if (workout.getSport().isShowDistance()) {
+            workoutPane.add(viewWorkoutDistanceLabel, 0, gridRowCounter);
+            workoutPane.add(viewWorkoutDistance, 1, gridRowCounter);
+            gridRowCounter++;
+        }
+        if (workout.getMhr() != 0) {
+            workoutPane.add(viewWorkoutMhrLabel, 0, gridRowCounter);
+            workoutPane.add(viewWorkoutMhr, 1, gridRowCounter);
+            gridRowCounter++;
+        }
+        if (!workout.getNotes().trim().equals("")) {
+            gridRowCounter++;
+            workoutPane.add(viewWorkoutNotes, 0, gridRowCounter, 2, 1);
+        }
+        
+        // Buttons
+        
+        Button closeViewWorkoutButton = new Button("Takaisin");
+        Button deleteWorkoutButton = new Button("Poista treeni");
+        
+        HBox buttonsViewWorkoutPane = new HBox();
+        buttonsViewWorkoutPane.setPadding(new Insets(10));
+        Region buttonsSpacer = new Region();
+        HBox.setHgrow(buttonsSpacer, Priority.ALWAYS);
+        buttonsViewWorkoutPane.getChildren().addAll(deleteWorkoutButton, buttonsSpacer, closeViewWorkoutButton);
+        
+        // Collect Workout View
+        
+        VBox viewWorkoutPane = new VBox();
+        Region viewWorkoutSpacer = new Region();
+        VBox.setVgrow(viewWorkoutSpacer, Priority.ALWAYS);
+        viewWorkoutPane.getChildren().addAll(headerViewWorkoutPane, iconViewWorkoutPane, workoutPane, viewWorkoutSpacer, buttonsViewWorkoutPane);
+        
+        // Close Workout View
+        
+        closeViewWorkoutButton.setOnAction((event) -> {
+            primaryStage.setScene(mainScene);
+        });
+        
+        // Delete Workout
+        
+        deleteWorkoutButton.setOnAction((event) -> {
+            Alert notInUseAlert = new Alert(AlertType.INFORMATION);
+            notInUseAlert.setHeaderText("Toiminto ei ole käytössä!");
+            notInUseAlert.setContentText("Treenien poistaminen lisätään tulevissa versioissa. Toistaiseksi poistaminen ei ole mahdollista.");
+            notInUseAlert.show();
+        });
+
+        return new Scene(viewWorkoutPane, 330, 330);
+        
+    }
+    
     @Override
     public void start(Stage primaryStage) {
-        
         
         /**
         * LOGIN SCREEN
@@ -150,13 +267,19 @@ public class TreeniUi extends Application {
         TextField loginUsername = new TextField();
         Label loginNote = new Label("Testitunnus: 'testaaja'"); //REMOVE
         loginNote.setTextFill(Color.RED);
-
         GridPane loginPane = new GridPane();
-        loginPane.add(loginInstruction, 0, 0);
-        loginPane.add(loginUsername, 0, 1);
-        loginPane.add(loginButton, 0, 2);
-        loginPane.add(loginNote, 0, 3);
-        loginPane.add(loginNewUserButton, 0, 4);
+        
+        Image treeniAppIcon = new Image(getClass().getResourceAsStream("/treeniapp.png"));
+        ImageView treeniAppIconView = new ImageView(treeniAppIcon);
+        treeniAppIconView.setFitHeight(54);
+        treeniAppIconView.setFitWidth(240);
+        
+        loginPane.add(treeniAppIconView, 0, 0);
+        loginPane.add(loginInstruction, 0, 2);
+        loginPane.add(loginUsername, 0, 3);
+        loginPane.add(loginButton, 0, 4);
+        loginPane.add(loginNote, 0, 5);
+        loginPane.add(loginNewUserButton, 0, 6);
         loginPane.setPrefSize(300, 300);
         loginPane.setAlignment(Pos.CENTER);
         loginPane.setVgap(10);
@@ -201,34 +324,54 @@ public class TreeniUi extends Application {
         /**
         * MAIN SCREEN
         */
-
-        Label welcomeLabel = new Label("");
-        Button addWorkoutButton = new Button("Lisää treeni");
-        Button logoutButton = new Button("Kirjaudu ulos");
-
-        ScrollPane mainPaneScroller = new ScrollPane();
-        BorderPane mainPane = new BorderPane(mainPaneScroller);
-        mainPane.setPadding(new Insets(10, 10, 10, 10));
+        
+        // Top
         HBox topMainPane = new HBox();
+        Label welcomeLabel = new Label("");
+        welcomeLabel.setFont(new Font(30.0));
+        
         topMainPane.setPadding(new Insets(0, 0, 10, 0));
         topMainPane.setAlignment(Pos.CENTER);
         topMainPane.getChildren().addAll(welcomeLabel);
-        HBox bottomMainPane = new HBox();
-        bottomMainPane.setPadding(new Insets(10, 0, 0, 0));
-        Region menuSpacer = new Region();
-        HBox.setHgrow(menuSpacer, Priority.ALWAYS);
-        bottomMainPane.getChildren().addAll(addWorkoutButton, menuSpacer, logoutButton);
-        mainPane.setTop(topMainPane);
-        mainPane.setBottom(bottomMainPane);
         
+        // Workouts
+        ScrollPane workoutsMainPane = new ScrollPane();
         workoutNodes = new VBox(10);
         workoutNodes.setPadding(new Insets(10, 10, 10, 10));
         workoutNodes.setMaxWidth(310);
         workoutNodes.setMinWidth(300);
-        redrawWorkouts();
-        mainPaneScroller.setContent(workoutNodes);
+        workoutsMainPane.setContent(workoutNodes);
 
+        // Bottom
+        Button addWorkoutButton = new Button("Lisää treeni");
+        Button logoutButton = new Button("Kirjaudu ulos");
+        Label totalLabel = new Label("Treenit yhteensä:");
+        totalLabel.setFont(new Font(15.0));
+        workoutsTotal = new Label("");
+        workoutsTotal.setFont(new Font(15.0));
+        
+        HBox totalMainPane = new HBox();
+        totalMainPane.setPadding(new Insets(10, 0, 0, 0));
+        Region totalSpacer = new Region();
+        HBox.setHgrow(totalSpacer, Priority.ALWAYS);
+        totalMainPane.getChildren().addAll(totalLabel, totalSpacer, workoutsTotal);
+        
+        HBox buttonsMainPane = new HBox();
+        buttonsMainPane.setPadding(new Insets(10, 0, 0, 0));
+        Region buttonsSpacer = new Region();
+        HBox.setHgrow(buttonsSpacer, Priority.ALWAYS);
+        buttonsMainPane.getChildren().addAll(addWorkoutButton, buttonsSpacer, logoutButton);
+        
+        VBox bottomMainPane = new VBox();
+        bottomMainPane.getChildren().addAll(totalMainPane, buttonsMainPane);
+        
+        // Collect the main screen
+        BorderPane mainPane = new BorderPane(workoutsMainPane);
+        mainPane.setPadding(new Insets(10, 10, 10, 10));
+        mainPane.setTop(topMainPane);
+        mainPane.setBottom(bottomMainPane);
         Scene mainScene = new Scene(mainPane, 330, 600);
+        redrawWorkouts(primaryStage, mainScene);
         
         
         /**
@@ -248,14 +391,14 @@ public class TreeniUi extends Application {
             return null;
         };
         
-        Label newWorkoutSportInstruction = new Label("Laji:");
+        Label workoutSportInstruction = new Label("Laji:");
         ComboBox<Sport> newWorkoutSport = new ComboBox<>(formatSportsDropdown());
         newWorkoutSport.getSelectionModel().select(0);
         newWorkoutSport.setTooltip(new Tooltip("Valitse urheilulaji"));
         ImageView newWorkoutSportIconView = new ImageView();
         newWorkoutSportIconView.setFitHeight(36);
         newWorkoutSportIconView.setFitWidth(36);
-        Label newWorkoutDayInstruction = new Label("Päivä:");
+        Label workoutDayInstruction = new Label("Päivä:");
         DatePicker newWorkoutDay = new DatePicker(LocalDate.now());
         newWorkoutDay.setEditable(false);
         newWorkoutDay.setDayCellFactory(d -> new DateCell() {
@@ -263,34 +406,34 @@ public class TreeniUi extends Application {
                    super.updateItem(item, empty);
                    setDisable(item.isAfter(LocalDate.now()));
                }});
-        Label newWorkoutTimeInstruction = new Label("Kello:");
+        Label workoutTimeInstruction = new Label("Kello:");
         ComboBox<String> newWorkoutTimeHour = new ComboBox<>(hours);
         newWorkoutTimeHour.getSelectionModel().select(LocalDateTime.now().getHour());
-        Label newWorkoutTimeSeparator = new Label(":");
+        Label timeSeparator = new Label(":");
         ComboBox<String> newWorkoutTimeMin = new ComboBox<>(mins);
         newWorkoutTimeMin.getSelectionModel().select(LocalDateTime.now().getMinute());
-        Label newWorkoutDurationInstruction = new Label("Kesto:");
+        Label workoutDurationInstruction = new Label("Kesto:");
         Spinner<Integer> newWorkoutDurationHour = new Spinner<>(0, 24, 0);
-        Label newWorkoutDurationHourLabel = new Label("t");
+        Label workoutDurationHourLabel = new Label("t");
         Spinner<Integer> newWorkoutDurationMin = new Spinner<>(0, 59, 0);
-        Label newWorkoutDurationMinLabel = new Label("min");
-        Label newWorkoutDistanceInstruction = new Label("Matka:");
-        newWorkoutDistanceInstruction.setVisible(false);
+        Label workoutDurationMinLabel = new Label("min");
+        Label workoutDistanceInstruction = new Label("Matka:");
+        workoutDistanceInstruction.setVisible(false);
         TextField newWorkoutDistanceKm = new TextField();
-        newWorkoutDistanceKm.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), null, integerFilter));
+        newWorkoutDistanceKm.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
         newWorkoutDistanceKm.setVisible(false);
-        Label newWorkoutDistanceKmLabel = new Label("km");
-        newWorkoutDistanceKmLabel.setVisible(false);
+        Label workoutDistanceKmLabel = new Label("km");
+        workoutDistanceKmLabel.setVisible(false);
         TextField newWorkoutDistanceM = new TextField();
-        newWorkoutDistanceM.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), null, integerFilter));
+        newWorkoutDistanceM.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
         newWorkoutDistanceM.setVisible(false);
-        Label newWorkoutDistanceMLabel = new Label("m");
-        newWorkoutDistanceMLabel.setVisible(false);
-        Label newWorkoutMhrInstruction = new Label("Keskisyke:");
+        Label workoutDistanceMLabel = new Label("m");
+        workoutDistanceMLabel.setVisible(false);
+        Label workoutMhrInstruction = new Label("Keskisyke:");
         TextField newWorkoutMhr = new TextField();
-        newWorkoutMhr.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), null, integerFilter));
-        Label newWorkoutMhrLabel = new Label("bpm");
-        Label newWorkoutNotesInstruction = new Label("Muistiinpano:");
+        newWorkoutMhr.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), null, integerFilter));
+        Label workoutMhrLabel = new Label("bpm");
+        Label workoutNotesInstruction = new Label("Muistiinpano:");
         TextField newWorkoutNotes = new TextField();
         Label newWorkoutWarning = new Label("");
         newWorkoutWarning.setTextFill(Color.RED);
@@ -307,29 +450,29 @@ public class TreeniUi extends Application {
                 new ColumnConstraints(80), new ColumnConstraints(20), new ColumnConstraints(80),
                 new ColumnConstraints(36), addWorkoutCol6);
         addWorkoutPane.add(addWorkoutLabel, 0, 0, 7, 1);
-        addWorkoutPane.add(newWorkoutSportInstruction, 1, 2);
+        addWorkoutPane.add(workoutSportInstruction, 1, 2);
         addWorkoutPane.add(newWorkoutSport, 2, 2, 3, 1);
         addWorkoutPane.add(newWorkoutSportIconView, 5, 2);
-        addWorkoutPane.add(newWorkoutDayInstruction, 1, 3);
+        addWorkoutPane.add(workoutDayInstruction, 1, 3);
         addWorkoutPane.add(newWorkoutDay, 2, 3, 4, 1);
-        addWorkoutPane.add(newWorkoutTimeInstruction, 1, 4);
+        addWorkoutPane.add(workoutTimeInstruction, 1, 4);
         addWorkoutPane.add(newWorkoutTimeHour, 2, 4);
-        addWorkoutPane.add(newWorkoutTimeSeparator, 3, 4);
+        addWorkoutPane.add(timeSeparator, 3, 4);
         addWorkoutPane.add(newWorkoutTimeMin, 4, 4);
-        addWorkoutPane.add(newWorkoutDurationInstruction, 1, 5);
+        addWorkoutPane.add(workoutDurationInstruction, 1, 5);
         addWorkoutPane.add(newWorkoutDurationHour, 2, 5);
-        addWorkoutPane.add(newWorkoutDurationHourLabel, 3, 5);
+        addWorkoutPane.add(workoutDurationHourLabel, 3, 5);
         addWorkoutPane.add(newWorkoutDurationMin, 4, 5);
-        addWorkoutPane.add(newWorkoutDurationMinLabel, 5, 5);
-        addWorkoutPane.add(newWorkoutDistanceInstruction, 1, 6);
+        addWorkoutPane.add(workoutDurationMinLabel, 5, 5);
+        addWorkoutPane.add(workoutDistanceInstruction, 1, 6);
         addWorkoutPane.add(newWorkoutDistanceKm, 2, 6);
-        addWorkoutPane.add(newWorkoutDistanceKmLabel, 3, 6);
+        addWorkoutPane.add(workoutDistanceKmLabel, 3, 6);
         addWorkoutPane.add(newWorkoutDistanceM, 4, 6);
-        addWorkoutPane.add(newWorkoutDistanceMLabel, 5, 6);
-        addWorkoutPane.add(newWorkoutMhrInstruction, 1, 7);
+        addWorkoutPane.add(workoutDistanceMLabel, 5, 6);
+        addWorkoutPane.add(workoutMhrInstruction, 1, 7);
         addWorkoutPane.add(newWorkoutMhr, 2, 7, 3, 1);
-        addWorkoutPane.add(newWorkoutMhrLabel, 5, 7);
-        addWorkoutPane.add(newWorkoutNotesInstruction, 1, 8);
+        addWorkoutPane.add(workoutMhrLabel, 5, 7);
+        addWorkoutPane.add(workoutNotesInstruction, 1, 8);
         addWorkoutPane.add(newWorkoutNotes, 2, 8, 4, 1);
         addWorkoutPane.add(createWorkoutButton, 2, 10);
         addWorkoutPane.add(cancelWorkoutButton, 4, 10, 2, 1);
@@ -340,9 +483,9 @@ public class TreeniUi extends Application {
         addWorkoutPane.setHgap(10);
         addWorkoutPane.setPadding(new Insets(20, 20, 20, 20));
         
-        Scene workoutScene = new Scene(addWorkoutPane, 400, 450);
+        Scene addWorkoutScene = new Scene(addWorkoutPane, 400, 450);
         
-        Stage workoutWindow = new Stage();
+        Stage addWorkoutWindow = new Stage();
         
         
         /**
@@ -354,8 +497,8 @@ public class TreeniUi extends Application {
         loginButton.setOnAction((event) -> {
             String username = loginUsername.getText();
             if (treeniAppService.login(username)) {
-                welcomeLabel.setText("Tervetuloa, " + treeniAppService.getLoggedInUser().getName() + "!");
-                redrawWorkouts();
+                welcomeLabel.setText(treeniAppService.getLoggedInUser().getName());
+                redrawWorkouts(primaryStage, mainScene);
                 primaryStage.setScene(mainScene);
                 loginNote.setText("");
                 loginUsername.setText("");
@@ -415,9 +558,9 @@ public class TreeniUi extends Application {
         // Open Add Workout Window
         
         addWorkoutButton.setOnAction((event) -> {
-            workoutWindow.setTitle("Lisää treeni - TreeniApp");
-            workoutWindow.setScene(workoutScene);
-            workoutWindow.show();
+            addWorkoutWindow.setTitle("Lisää treeni - TreeniApp");
+            addWorkoutWindow.setScene(addWorkoutScene);
+            addWorkoutWindow.show();
         });
         
         // Choose Sport in Workout Window
@@ -427,11 +570,11 @@ public class TreeniUi extends Application {
             Image selectedSportIcon = getSportsIcon(selectedSport);
             newWorkoutSportIconView.setImage(selectedSportIcon);
             Boolean showDistance = selectedSport.isShowDistance();
-            newWorkoutDistanceInstruction.setVisible(showDistance);
+            workoutDistanceInstruction.setVisible(showDistance);
             newWorkoutDistanceKm.setVisible(showDistance);
-            newWorkoutDistanceKmLabel.setVisible(showDistance);
+            workoutDistanceKmLabel.setVisible(showDistance);
             newWorkoutDistanceM.setVisible(showDistance);
-            newWorkoutDistanceMLabel.setVisible(showDistance);
+            workoutDistanceMLabel.setVisible(showDistance);
         });
         
         // Create new workout
@@ -484,8 +627,8 @@ public class TreeniUi extends Application {
                 Workout workout = new Workout(0, Timestamp.valueOf(workoutDateTime), treeniAppService.getLoggedInUser(), treeniAppService.getSportById(workoutSport), workoutDuration, workoutDistance, workoutMhr, workoutNotes);
                 
                 if (treeniAppService.newWorkout(workout)) {
-                    redrawWorkouts();
-                    workoutWindow.close();
+                    redrawWorkouts(primaryStage, mainScene);
+                    addWorkoutWindow.close();
                     newWorkoutSport.getSelectionModel().select(0);
                     newWorkoutDay.setValue(LocalDate.now());
                     newWorkoutTimeHour.getSelectionModel().select(LocalDateTime.now().getHour());
@@ -524,9 +667,8 @@ public class TreeniUi extends Application {
         // Close Workout Window
         
         closeWorkoutWindowButton.setOnAction((event) -> {
-            workoutWindow.close();
+            addWorkoutWindow.close();
         });
-        
 
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("TreeniApp");

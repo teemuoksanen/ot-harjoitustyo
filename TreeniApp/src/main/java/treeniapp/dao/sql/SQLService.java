@@ -12,6 +12,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class offers SQL related services for other classes 
+ */
 public class SQLService {
     
     private String database;
@@ -33,6 +36,11 @@ public class SQLService {
         password = passwordDB;
     }
     
+    /**
+    * Method to open SQL connection.
+    *
+    * @return <code>Connection</code> object.
+    */
     public Connection getConnection() {
         Connection connection = null;
         try {
@@ -43,6 +51,11 @@ public class SQLService {
         return connection;
     }
     
+    /**
+    * Method to close SQL connection.
+    *
+    * @param    connection  The <code>Connection</code> object to close.
+    */
     public static void closeConnection(Connection connection) {        
         try {
             if (connection != null) {
@@ -53,6 +66,11 @@ public class SQLService {
         }
     }
     
+    /**
+    * Method to (clear and) initialise all application's basic database tables.
+    *
+    * @param    clear   <code>true</code> to first clear all database tables; <code>false</code> to just run initialisation.
+    */
     public void initialiseDatabases(Boolean clear) {
         if (clear) {
             clearDatabase("Users");
@@ -64,6 +82,9 @@ public class SQLService {
         initialiseSportDatabase();
     }
     
+    /**
+    * Method to initialise the user database table.
+    */
     public void initialiseUserDatabase() {
         Connection connection = getConnection();
         try {
@@ -78,6 +99,9 @@ public class SQLService {
         closeConnection(connection);
     }
     
+    /**
+    * Method to initialise the workout database table.
+    */
     public void initialiseWorkoutDatabase() {
         Connection connection = getConnection();
         try {
@@ -97,6 +121,9 @@ public class SQLService {
         closeConnection(connection);
     }
     
+    /**
+    * Method to initialise the sport database table.
+    */
     public void initialiseSportDatabase() {
         Connection connection = getConnection();
         try {
@@ -116,6 +143,11 @@ public class SQLService {
         closeConnection(connection);
     }
     
+    /**
+    * Method to clear the named database table.
+    * 
+    * @param table  The name of the database table to clear.
+    */
     public void clearDatabase(String table) {
         Connection connection = getConnection();
         try {
@@ -126,6 +158,11 @@ public class SQLService {
         closeConnection(connection);
     }
 
+    /**
+    * Method to log the SQL exceptions.
+    * 
+    * @param ex  The SQL exception to handle.
+    */
     public static void handleSQLException(SQLException ex) {
         Logger.getLogger(SQLService.class.getName()).log(Level.SEVERE, null, ex);
         System.err.println("SQL ERROR");

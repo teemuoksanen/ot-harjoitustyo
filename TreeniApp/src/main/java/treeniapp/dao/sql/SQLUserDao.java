@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 import treeniapp.dao.UserDao;
 import treeniapp.domain.User;
 
+/**
+ * Class contains methods to get and store <code>User</code> objects from and into SQL database
+ */
 public class SQLUserDao implements UserDao {
     
     private SQLService sql;
@@ -29,6 +32,9 @@ public class SQLUserDao implements UserDao {
         getInitialUsers();
     }
     
+    /**
+    * Method to initially fetch all users from the database and stored to an ArrayList and a HashMap.
+    */
     private void getInitialUsers() {
         try {
             Connection connection = sql.getConnection();
@@ -51,17 +57,36 @@ public class SQLUserDao implements UserDao {
         }
     }
     
+    /**
+    * Method to list all users.
+    * 
+    * @return ArrayList containing all <code>User</code> objects.
+    */
     @Override
     public List<User> getAll() {
         return users;
     }
     
+    /**
+    * Method to find a user by its username.
+    * 
+    * @param    username   The username of the <code>User</code> object to be fetched.
+    * 
+    * @return <code>User</code> object with the named username; <code>null</code> if not found.
+    */
     @Override
     public User findByUsername(String username) {
         User user = userMap.getOrDefault(username, null);
         return user;
     }
     
+    /**
+    * Method to store a new user to the database.
+    * 
+    * @param    user   The <code>User</code> object to be stored to the database.
+    * 
+    * @return <code>User</code> object that was stored to the database.
+    */
     @Override
     public User create(User user) {
         try {

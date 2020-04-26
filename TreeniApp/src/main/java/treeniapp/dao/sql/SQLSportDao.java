@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 import treeniapp.dao.SportDao;
 import treeniapp.domain.Sport;
 
+/**
+ * Class contains methods to get and store <code>Sport</code> objects from and into SQL database
+ */
 public class SQLSportDao implements SportDao {
     
     private SQLService sql;
@@ -29,6 +32,9 @@ public class SQLSportDao implements SportDao {
         getInitialSports();
     }
     
+    /**
+    * Method to initially fetch all sports from the database and stored to an ArrayList and a HashMap.
+    */
     private void getInitialSports() {
         try {
             Connection connection = sql.getConnection();
@@ -52,6 +58,13 @@ public class SQLSportDao implements SportDao {
         }
     }
 
+    /**
+    * Method to store a new sport to the database.
+    * 
+    * @param    sport   The <code>Sport</code> object to be stored to the database.
+    * 
+    * @return <code>Sport</code> object that was stored to the database.
+    */
     @Override
     public Sport create(Sport sport) {
         try {
@@ -77,11 +90,23 @@ public class SQLSportDao implements SportDao {
         return null;
     }
 
+    /**
+    * Method to find a sport by its id number.
+    * 
+    * @param    id   The id number of the <code>Sport</code> object to be fetched.
+    * 
+    * @return <code>Sport</code> object with the named id; <code>null</code> if not found.
+    */
     @Override
     public Sport findById(int id) {
         return sportMap.getOrDefault(id, null);
     }
 
+    /**
+    * Method to list all sports.
+    * 
+    * @return ArrayList containing all <code>Sport</code> objects.
+    */
     @Override
     public List<Sport> getAll() {
         return sports;
