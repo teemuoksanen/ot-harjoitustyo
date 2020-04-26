@@ -57,11 +57,24 @@ import treeniapp.domain.Workout;
  */
 public class TreeniUi extends Application {
     
+    // Stages
+    private static Stage pStage;
+    private Stage addWorkoutWindow;
+    
+    // Scenes
+    private Scene mainScene;
+    private Scene loginScene;
+    private Scene newUserScene;
+    private Scene addWorkoutScene;
+    private Scene viewWorkoutScene;
+    
+    // Services
     private TreeniAppService treeniAppService;
     private UserDao userDao;
     private WorkoutDao workoutDao;
     private SportDao sportDao;
     
+    // General variables
     private VBox workoutNodes;
     private Label workoutsTotal;
     private ObservableList hours;
@@ -86,7 +99,14 @@ public class TreeniUi extends Application {
         mins = generateNumberList(0, 59);
     }
     
-    public Node createWorkoutNode(Workout workout, Stage primaryStage, Scene mainScene) {
+    /**
+    * Method to create a workout node for the workout list in the application's main view.
+    * 
+    * @param    workout   The <code>Workout</code> object for which the node is created.
+    * 
+    * @return <code>Node</code> containing the workout information.
+    */
+    public Node createWorkoutNode(Workout workout) {
         HBox workoutBox = new HBox(10);
         Label workoutDate = new Label(workout.getDayMonth());
         Image workoutIcon = getSportsIcon(workout.getSport());
@@ -96,10 +116,10 @@ public class TreeniUi extends Application {
         Image moreIcon = new Image(getClass().getResourceAsStream("/more.png"));
         ImageView workoutMore = new ImageView(moreIcon);
         
-        Scene viewWorkoutScene = viewWorkout(workout, primaryStage, mainScene);
+        viewWorkoutScene = viewWorkout(workout);
         
         workoutMore.setOnMouseClicked((event) -> {
-            primaryStage.setScene(viewWorkoutScene);
+            pStage.setScene(viewWorkoutScene);
         });
         
         workoutDate.setMaxWidth(40);
@@ -117,18 +137,26 @@ public class TreeniUi extends Application {
         return workoutBox;
     }
     
-    public void redrawWorkouts(Stage primaryStage, Scene mainScene) {
+    /**
+    * Method to redraw <code>User</code>'s all workout nodes in the application's main view.
+    */
+    public void redrawWorkouts() {
         workoutNodes.getChildren().clear();
         
         if (treeniAppService.getLoggedInUser() != null) {
             List<Workout> workouts = treeniAppService.getWorkouts(treeniAppService.getLoggedInUser());
             workouts.forEach(workout->{
-                workoutNodes.getChildren().add(createWorkoutNode(workout, primaryStage, mainScene));
+                workoutNodes.getChildren().add(createWorkoutNode(workout));
             }); 
             workoutsTotal.setText(treeniAppService.getTotalTimeFormatted(treeniAppService.getLoggedInUser()));
         }
     }
     
+    /**
+    * Method to create a list of all <code>Sport</code> objects for the add workout view's drop down list.
+    * 
+    * @return <code>ObservableList</code> consisting of all <code>Sport</code> objects.
+    */
     public ObservableList<Sport> formatSportsDropdown() {
         ObservableList<Sport> sportsDropdown = FXCollections.observableArrayList();
         sportsDropdown.add(new Sport(0, "Valitse laji", null, false));
@@ -138,12 +166,14 @@ public class TreeniUi extends Application {
         return sportsDropdown;
     }
     
-    public Image getSportsIcon(Sport sport) {
-        String iconFileName = "/sporticons/" + sport.getIcon() + ".png";
-        Image icon = new Image(getClass().getResourceAsStream(iconFileName));
-        return icon;
-    }
-    
+    /**
+    * Method to create a list of consecutive numbers to be used in the add workout view's drop down lists.
+    * 
+    * @param    start   The first number of the list.
+    * @param    last    The last number of the list.
+    * 
+    * @return <code>ObservableList</code> consisting of numbers from <code>start</code> to <code>last</code>.
+    */
     public ObservableList generateNumberList(int start, int last) {
         ObservableList<String> list = FXCollections.observableArrayList();
         for (int i = start; i <= last; i++) {
@@ -158,10 +188,29 @@ public class TreeniUi extends Application {
         return list;
     }
     
-    public Scene viewWorkout(Workout workout, Stage primaryStage, Scene mainScene) {
+    /**
+    * Method to create a list of all <code>Sport</code> objects for the add workout view.
+    * 
+    * @param    sport   The <code>Sport</code> object for which an icon is requested.
+    * 
+    * @return The named <code>Sport</code>'s icon as an <code>Image</code>.
+    */
+    public Image getSportsIcon(Sport sport) {
+        String iconFileName = "/sporticons/" + sport.getIcon() + ".png";
+        Image icon = new Image(getClass().getResourceAsStream(iconFileName));
+        return icon;
+    }
+    
+    /**
+    * Method to create a view of one workout.
+    * 
+    * @param    workout   The <code>Workout</code> object for which the view is created.
+    * 
+    * @return The <code>Scene</code> containing the requested <code>Workout</code>'s view.
+    */
+    public Scene viewWorkout(Workout workout) {
         
         // Header
-        
         HBox headerViewWorkoutPane = new HBox();
         Label viewWorkoutHeader = new Label("Treenisi " + workout.getDayMonthYear() + " klo " + workout.getTime());
         viewWorkoutHeader.setFont(new Font(20.0));
@@ -170,7 +219,6 @@ public class TreeniUi extends Application {
         headerViewWorkoutPane.getChildren().addAll(viewWorkoutHeader);
         
         // Icon
-        
         HBox iconViewWorkoutPane = new HBox();
         ImageView viewWorkoutSportIconView = new ImageView(getSportsIcon(workout.getSport()));
         viewWorkoutSportIconView.setFitHeight(36);
@@ -179,6 +227,7 @@ public class TreeniUi extends Application {
         iconViewWorkoutPane.setAlignment(Pos.CENTER);
         iconViewWorkoutPane.getChildren().addAll(viewWorkoutSportIconView);
         
+        // Workout View
         Label viewWorkoutSportLabel = new Label("Laji:");
         Label viewWorkoutSport = new Label(workout.getSport().getName());
         Label viewWorkoutDurationLabel = new Label("Kesto:");
@@ -218,7 +267,6 @@ public class TreeniUi extends Application {
         }
         
         // Buttons
-        
         Button closeViewWorkoutButton = new Button("Takaisin");
         Button deleteWorkoutButton = new Button("Poista treeni");
         
@@ -229,20 +277,17 @@ public class TreeniUi extends Application {
         buttonsViewWorkoutPane.getChildren().addAll(deleteWorkoutButton, buttonsSpacer, closeViewWorkoutButton);
         
         // Collect Workout View
-        
         VBox viewWorkoutPane = new VBox();
         Region viewWorkoutSpacer = new Region();
         VBox.setVgrow(viewWorkoutSpacer, Priority.ALWAYS);
         viewWorkoutPane.getChildren().addAll(headerViewWorkoutPane, iconViewWorkoutPane, workoutPane, viewWorkoutSpacer, buttonsViewWorkoutPane);
         
         // Close Workout View
-        
         closeViewWorkoutButton.setOnAction((event) -> {
-            primaryStage.setScene(mainScene);
+            pStage.setScene(mainScene);
         });
         
         // Delete Workout
-        
         deleteWorkoutButton.setOnAction((event) -> {
             Alert notInUseAlert = new Alert(AlertType.INFORMATION);
             notInUseAlert.setHeaderText("Toiminto ei ole käytössä!");
@@ -251,11 +296,13 @@ public class TreeniUi extends Application {
         });
 
         return new Scene(viewWorkoutPane, 330, 330);
-        
     }
     
     @Override
     public void start(Stage primaryStage) {
+        
+        setPrimaryStage(primaryStage);
+        pStage = primaryStage;
         
         /**
         * LOGIN SCREEN
@@ -286,7 +333,7 @@ public class TreeniUi extends Application {
         loginPane.setHgap(10);
         loginPane.setPadding(new Insets(20, 20, 20, 20));
 
-        Scene loginScene = new Scene(loginPane);
+        loginScene = new Scene(loginPane);
         
         
         /**
@@ -318,7 +365,7 @@ public class TreeniUi extends Application {
         newUserPane.setHgap(10);
         newUserPane.setPadding(new Insets(20, 20, 20, 20));
 
-        Scene newUserScene = new Scene(newUserPane);
+        newUserScene = new Scene(newUserPane);
         
         
         /**
@@ -370,8 +417,8 @@ public class TreeniUi extends Application {
         mainPane.setPadding(new Insets(10, 10, 10, 10));
         mainPane.setTop(topMainPane);
         mainPane.setBottom(bottomMainPane);
-        Scene mainScene = new Scene(mainPane, 330, 600);
-        redrawWorkouts(primaryStage, mainScene);
+        mainScene = new Scene(mainPane, 330, 600);
+        redrawWorkouts();
         
         
         /**
@@ -483,9 +530,9 @@ public class TreeniUi extends Application {
         addWorkoutPane.setHgap(10);
         addWorkoutPane.setPadding(new Insets(20, 20, 20, 20));
         
-        Scene addWorkoutScene = new Scene(addWorkoutPane, 400, 450);
+        addWorkoutScene = new Scene(addWorkoutPane, 400, 450);
         
-        Stage addWorkoutWindow = new Stage();
+        addWorkoutWindow = new Stage();
         
         
         /**
@@ -498,8 +545,8 @@ public class TreeniUi extends Application {
             String username = loginUsername.getText();
             if (treeniAppService.login(username)) {
                 welcomeLabel.setText(treeniAppService.getLoggedInUser().getName());
-                redrawWorkouts(primaryStage, mainScene);
-                primaryStage.setScene(mainScene);
+                redrawWorkouts();
+                pStage.setScene(mainScene);
                 loginNote.setText("");
                 loginUsername.setText("");
             } else if (username.length() < 1) {
@@ -516,19 +563,19 @@ public class TreeniUi extends Application {
         logoutButton.setOnAction((event) -> {
             loginNote.setTextFill(Color.BLACK);
             loginNote.setText("Uloskirjautuminen onnistui!");
-            primaryStage.setScene(loginScene);
+            pStage.setScene(loginScene);
         });
         
         // To New User Screen
         
         loginNewUserButton.setOnAction((event) -> {
-            primaryStage.setScene(newUserScene);
+            pStage.setScene(newUserScene);
         });
         
         // Back To Login Screen
         
         newUserBackButton.setOnAction((event) -> {
-            primaryStage.setScene(loginScene);
+            pStage.setScene(loginScene);
         });
         
         // Create new user
@@ -547,7 +594,7 @@ public class TreeniUi extends Application {
                 newUserName.setText("");
                 loginNote.setText("Uusi käyttäjä '" + username + "' luotu!");
                 loginNote.setTextFill(Color.BLACK);
-                primaryStage.setScene(loginScene);
+                pStage.setScene(loginScene);
                 newUserNote.setText("");
             } else {
                 newUserNote.setText("Tunnus '" + username + "'\n"
@@ -627,7 +674,7 @@ public class TreeniUi extends Application {
                 Workout workout = new Workout(0, Timestamp.valueOf(workoutDateTime), treeniAppService.getLoggedInUser(), treeniAppService.getSportById(workoutSport), workoutDuration, workoutDistance, workoutMhr, workoutNotes);
                 
                 if (treeniAppService.newWorkout(workout)) {
-                    redrawWorkouts(primaryStage, mainScene);
+                    redrawWorkouts();
                     addWorkoutWindow.close();
                     newWorkoutSport.getSelectionModel().select(0);
                     newWorkoutDay.setValue(LocalDate.now());
@@ -670,9 +717,17 @@ public class TreeniUi extends Application {
             addWorkoutWindow.close();
         });
 
-        primaryStage.setScene(loginScene);
-        primaryStage.setTitle("TreeniApp");
-        primaryStage.show();
+        pStage.setScene(loginScene);
+        pStage.setTitle("TreeniApp");
+        pStage.show();
+    }
+    
+    public static Stage getPrimaryStage() {
+        return pStage;
+    }
+
+    private void setPrimaryStage(Stage pStage) {
+        TreeniUi.pStage = pStage;
     }
 
     @Override
