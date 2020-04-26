@@ -16,4 +16,5 @@
 | 19.4. | 8      | SQLSportDaon luominen ja käyttöönotto, treenin lisäysikkunan työstäminen, treenien lisääminen mahdolliseksi, dokumentaation tekeminen |
 | 20.4. | 4      | uusien testien rakentamista, virheiden korjausta, viikko5-releasen julkaiseminen |
 | 24.4. | 1      | JavaDocin aloittaminen |
-| yht.  | 44     | | 
+| 26.4. | 8      | JavaDocin täydentäminen, yksittäisen treenin näkymä, pientä refaktorointia, dokumentaation päivittäminen |
+| yht.  | 52     | | 
