@@ -64,6 +64,10 @@ Kun käyttäjä kirjautumisnäkymässä painaa painiketta _loginNewUSerButton_, 
 
 ![Sekvenssikaavio: New User](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/sekvenssikaavio-newuser.png)
 
+### Uuden treenin luominen
+
+_TULOSSA_
+
 ## Ohjelman rakenteeseen jääneet heikkoudet
 
 ### Käyttöliittymä
