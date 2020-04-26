@@ -23,6 +23,19 @@ Käyttöliittymä on rakennettu ohjelmallisesti luokkaan [treeniapp.ui.TreeniUi]
 
 ## Sovelluslogiikka
 
+Sovelluksen loogisen datamallin muodostavat [User](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/domain/User.java)-, [Workout](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/domain/Workout.java)-, ja [Sport](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/domain/Sport.java)-luokat. User-luokka kuvaa ohjelman rekisteröityneitä käyttäjiä, Workout-luokka käyttäjien tekemiä yksittäisiä treenejä ja Sport-luokka eri urheilulajeja, joita treeneihin voi merkitä.
+
+Toiminnallisista kokonaisuuksista vastaa luokka [TreeniAppService](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/domain/TreeniAppService.java). Luokka tarjoaa käyttöliittymän toiminnoille esimerkiksi seruaavat metodit:
+- boolean login(String username)
+- void logout()
+- boolean newUser(String username, String name)
+- boolean newWorkout(Workout workout)
+- List<Workout> getWorkouts(User user)
+- Workout getWorkoutById(int id)
+- String getTotalTimeFormatted(User user)
+
+_TreeniAppService_ pääsee käsiksi käyttäjiin, treeneihin ja lajeihin pakkauksen _treeniapp.dao_ rajapintojen UserDao, WorkOutDao ja SportDao kautta. Nämä rajapinnat toteuttavat luokat injektoidaan sovelluslogiikalle sen konstruktorikutsun yhteydessä.
+
 ### Luokka- ja pakkauskaavio
 
 Ohjelman eri osien suhde on järjestetty seuraavan luokka- ja pakkauskaavion mukaisesti:
