@@ -16,7 +16,7 @@ Normaalitilanteessa käyttäjä voi käyttää yllä mainittuja oletusarvoja.
 
 Sovellus käynnistyy kirjautumisnäkymään:
 
-KUVA
+![Kirjautumisnäkymä](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohje-kirjautuminen.png)
 
 Voit kirjautua sisään syöttämällä käyttäjänimesi ja painamalla _Kirjaudu_.
 
@@ -24,7 +24,7 @@ Voit kirjautua sisään syöttämällä käyttäjänimesi ja painamalla _Kirjaud
 
 Uuden käyttäjän voit luoda painamalla kirjautumisnäkymässä _Luo uusi käyttäjä_. Tällöin avautuu uuden käyttäjän luomisnäkymä:
 
-KUVA
+![Uuden käyttäjän luomisnäkymä](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohje-uusikayttaja.png)
 
 Syötä uuden käyttäjän käyttäjätunnus (enintään X merkkiä) sekä nimi (enintään X merkkiä). Uusi käyttäjä luodaan, kun painat _Luo käyttäjä_.
 
@@ -34,11 +34,11 @@ Halutessasi voit palata kirjautumisnäkymään uutta käyttäjää luomatta pain
 
 Kun olet kirjautunut sisään oikealla käyttäjätunnuksella, näet kaikki kirjaamasi treenit sekä yhteenvedon treeneistäsi:
 
-KUVA
+![Treenilistanäkymä](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohje-treenilista.png)
 
 Voit tarkastella yksittäisen treenin tarkempia tietoja painamalla kyseisen treenirivin oikeassa reunassa olevaa **+**-painiketta:
 
-KUVA
+![Yksittäisen treenin näkymä](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohje-treeni.png)
 
 Pääset takaisin treenilistasi painamalla _Takaisin_.
 
@@ -48,7 +48,7 @@ Voit kirjautua ulos ohelmasta painamalla treeninäkymän alareunassa olevaa _Kir
 
 Uuden treenin voit lisätä painamalla treeninäkymässä _Lisää treeni_. Tällöin sovellus avaa uuden ikkunan, jossa voit syöttää uuden treenin tiedot:
 
-KUVA
+![Uuden treenin lisäämisnäkymä](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohje-lisaatreeni.png)
 
 Treenin lisääminen kannattaa aloittaa valitsemalla urheilulaji. Valitusta lajista riippuen _matka_-kenttä joko näytetään tai ei näytetä - esimerkiksi kuntosalitreenissä matkan lisääminen ei ole tarpeen.
 
