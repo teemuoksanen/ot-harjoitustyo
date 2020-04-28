@@ -29,24 +29,30 @@ public class TreeniServiceWorkoutTest {
     }
     
     @Test
-    public void newWorkoutCreatedSuccesfully() {
+    public void noWorkoutsIfNoUserLoggedIn() throws Exception {
+        assertEquals(0, service.getWorkouts(null).size());
+    }
+    
+    @Test
+    public void newWorkoutCreatedSuccesfully() throws Exception {
         service.login("testi");
         Workout wo1 = new Workout(3, Timestamp.valueOf("2019-05-19 09:03:03.123456789"), userDao.findByUsername("testi"), sportDao.findById(1), 9, 1500, 125, "Testi");
         
         assertEquals(1, service.getWorkouts(userDao.findByUsername("testi")).size());
         assertTrue(service.newWorkout(wo1));
         assertEquals(2, service.getWorkouts(userDao.findByUsername("testi")).size());
+        assertEquals(wo1, service.getWorkoutById(3));
     }
     
     @Test
-    public void totalWorkoutTimeIsEmptyForNewUser() {
+    public void totalWorkoutTimeIsEmptyForNewUser() throws Exception {
         User u = new User("uusi", "Uusi Testikäyttäjä");
         
         assertEquals("0:00", service.getTotalTimeFormatted(u));
     }
     
     @Test
-    public void totalWorkoutTimeIsCorrectAfterNewWorkoutsAreCreated() {
+    public void totalWorkoutTimeIsCorrectAfterNewWorkoutsAreCreated() throws Exception {
         User u = new User("uusi", "Uusi Testikäyttäjä");
         Workout wo1 = new Workout(3, Timestamp.valueOf("2019-05-19 09:03:03.123456789"), u, sportDao.findById(1), 61, 1500, 125, "Testi1");
         service.newWorkout(wo1);
