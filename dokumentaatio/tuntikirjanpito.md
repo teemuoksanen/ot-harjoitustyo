@@ -17,4 +17,5 @@
 | 20.4. | 4      | uusien testien rakentamista, virheiden korjausta, viikko5-releasen julkaiseminen |
 | 24.4. | 1      | JavaDocin aloittaminen |
 | 26.4. | 8      | JavaDocin täydentäminen, yksittäisen treenin näkymä, pientä refaktorointia, dokumentaation päivittäminen |
-| yht.  | 52     | | 
+| 26.4. | 2      | käyttöliittymän refaktorointia, parannettu poikkeusten käsittelyä |
+| yht.  | 54     | | 
