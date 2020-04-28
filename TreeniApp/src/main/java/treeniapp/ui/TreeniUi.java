@@ -1,12 +1,18 @@
 
 package treeniapp.ui;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -80,18 +86,33 @@ public class TreeniUi extends Application {
     private ObservableList mins;
     
     @Override
-    public void init() throws Exception {
+    public void init() {
         
         // Set 'clearDatabases' to true if want to clear databases
         Boolean clearDatabases = false;
         
         // Start services
-        SQLService sql = new SQLService();
-        sql.initialiseDatabases(clearDatabases);
-        userDao = new SQLUserDao(sql);
-        sportDao = new SQLSportDao(sql);
-        workoutDao = new SQLWorkoutDao(sql, userDao, sportDao);
-        treeniAppService = new TreeniAppService(userDao, workoutDao, sportDao);
+        SQLService sql;
+        try {
+            sql = new SQLService();
+            sql.initialiseDatabases(clearDatabases);
+            userDao = new SQLUserDao(sql);
+            sportDao = new SQLSportDao(sql);
+            workoutDao = new SQLWorkoutDao(sql, userDao, sportDao);
+            treeniAppService = new TreeniAppService(userDao, workoutDao, sportDao);
+        } catch (SQLException e) {
+            System.out.println("VIRHE! Tietokannan alustaminen ei onnistunut. Ohjelma suljetaan.");
+            Platform.exit();
+        } catch (FileNotFoundException e) {
+            System.out.println("VIRHE! Asetustiedostoa (config.properties) ei löytynyt. Ohjelma suljetaan.");
+            Platform.exit();
+        } catch (IOException e) {
+            System.out.println("VIRHE! Asetustiedoston (config.properties) lataaminen ei onnistunut. Ohjelma suljetaan.");
+            Platform.exit();
+        } catch (Exception e) {
+            System.out.println("VIRHE! Tapahtui tuntematon virhe. Ohjelma suljetaan.");
+            Platform.exit();
+        }
         
         // Format basic variables
         hours = generateNumberList(0, 23);
@@ -143,11 +164,19 @@ public class TreeniUi extends Application {
         workoutNodes.getChildren().clear();
         
         if (treeniAppService.getLoggedInUser() != null) {
-            List<Workout> workouts = treeniAppService.getWorkouts(treeniAppService.getLoggedInUser());
-            workouts.forEach(workout->{
-                workoutNodes.getChildren().add(createWorkoutNode(workout));
-            }); 
-            workoutsTotal.setText(treeniAppService.getTotalTimeFormatted(treeniAppService.getLoggedInUser()));
+            try {
+                List<Workout> workouts = treeniAppService.getWorkouts(treeniAppService.getLoggedInUser());
+                workouts.forEach(workout->{
+                    workoutNodes.getChildren().add(createWorkoutNode(workout));
+                });
+                workoutsTotal.setText(treeniAppService.getTotalTimeFormatted(treeniAppService.getLoggedInUser()));
+            } catch (SQLException e) {
+                showError("Käyttäjän treenien haku tietokannasta epäonnistui. Ohjelma suljetaan.");
+                Platform.exit();
+            } catch (Exception e) {
+                showError("Tapahtui tuntematon virhe. Ohjelma suljetaan.");
+                Platform.exit();
+            }
         }
     }
     
@@ -588,16 +617,24 @@ public class TreeniUi extends Application {
             } else if (name.length() < 1 || name.length() > 20) {
                 newUserNote.setText("Nimen on oltava\n"
                         + "1-20 merkin pituinen.");
-            } else if (treeniAppService.newUser(username, name)) {
-                newUserUsername.setText("");
-                newUserName.setText("");
-                loginNote.setText("Uusi käyttäjä '" + username + "' luotu!");
-                loginNote.setTextFill(Color.BLACK);
-                pStage.setScene(loginScene);
-                newUserNote.setText("");
-            } else {
-                newUserNote.setText("Tunnus '" + username + "'\n"
-                        + "on jo käytössä!");
+            } else try {
+                if (treeniAppService.newUser(username, name)) {
+                    newUserUsername.setText("");
+                    newUserName.setText("");
+                    loginNote.setText("Uusi käyttäjä '" + username + "' luotu!");
+                    loginNote.setTextFill(Color.BLACK);
+                    pStage.setScene(loginScene);
+                    newUserNote.setText("");
+                } else {
+                    newUserNote.setText("Tunnus '" + username + "'\n"
+                            + "on jo käytössä!");
+                }
+            } catch (SQLException e) {
+                showError("Käyttäjän treenien haku tietokannasta epäonnistui. Ohjelma suljetaan.");
+                Platform.exit();
+            } catch (Exception e) {
+                showError("Tapahtui tuntematon virhe. Ohjelma suljetaan.");
+                Platform.exit();
             }
         });
         
@@ -672,23 +709,31 @@ public class TreeniUi extends Application {
             } else {
                 Workout workout = new Workout(0, Timestamp.valueOf(workoutDateTime), treeniAppService.getLoggedInUser(), treeniAppService.getSportById(workoutSport), workoutDuration, workoutDistance, workoutMhr, workoutNotes);
                 
-                if (treeniAppService.newWorkout(workout)) {
-                    redrawWorkouts();
-                    addWorkoutWindow.close();
-                    newWorkoutSport.getSelectionModel().select(0);
-                    newWorkoutDay.setValue(LocalDate.now());
-                    newWorkoutTimeHour.getSelectionModel().select(LocalDateTime.now().getHour());
-                    newWorkoutTimeMin.getSelectionModel().select(LocalDateTime.now().getMinute());
-                    newWorkoutDurationHour.getValueFactory().setValue(0);
-                    newWorkoutDurationMin.getValueFactory().setValue(0);
-                    newWorkoutDistanceKm.setText("");
-                    newWorkoutDistanceM.setText("");
-                    newWorkoutMhr.setText("");
-                    newWorkoutNotes.setText("");
-                    newWorkoutWarning.setText("");
-                    newWorkoutWarning.setText("");
-                } else {
-                    newWorkoutWarning.setText("Virhe: Lisääminen ei onnistunut!");
+                try {
+                    if (treeniAppService.newWorkout(workout)) {
+                        redrawWorkouts();
+                        addWorkoutWindow.close();
+                        newWorkoutSport.getSelectionModel().select(0);
+                        newWorkoutDay.setValue(LocalDate.now());
+                        newWorkoutTimeHour.getSelectionModel().select(LocalDateTime.now().getHour());
+                        newWorkoutTimeMin.getSelectionModel().select(LocalDateTime.now().getMinute());
+                        newWorkoutDurationHour.getValueFactory().setValue(0);
+                        newWorkoutDurationMin.getValueFactory().setValue(0);
+                        newWorkoutDistanceKm.setText("");
+                        newWorkoutDistanceM.setText("");
+                        newWorkoutMhr.setText("");
+                        newWorkoutNotes.setText("");
+                        newWorkoutWarning.setText("");
+                        newWorkoutWarning.setText("");
+                    } else {
+                        newWorkoutWarning.setText("Virhe: Lisääminen ei onnistunut!");
+                    }
+                } catch (SQLException e) {
+                    showError("Käyttäjän treenien haku tietokannasta epäonnistui. Ohjelma suljetaan.");
+                    Platform.exit();
+                } catch (Exception e) {
+                    showError("Tapahtui tuntematon virhe. Ohjelma suljetaan.");
+                    Platform.exit();
                 }
                 
             }
@@ -719,6 +764,18 @@ public class TreeniUi extends Application {
         pStage.setScene(loginScene);
         pStage.setTitle("TreeniApp");
         pStage.show();
+    }
+    
+    /**
+    * Method to show error message.
+    * 
+    * @param    message   The error message to show.
+    */
+    public void showError(String message) {
+        Alert error = new Alert(AlertType.ERROR);
+                error.setTitle("Virhe");
+                error.setHeaderText(message);
+                error.showAndWait();
     }
     
     public static Stage getPrimaryStage() {

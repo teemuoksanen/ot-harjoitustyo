@@ -39,25 +39,20 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @return <code>Workout</code> object that was stored to the database.
     */
     @Override
-    public Workout create(Workout workout) {
-        try {
-            Connection connection = sql.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Workouts"
-                    + "(datetime, user, sport, duration, distance, mhr, notes) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            stmt.setTimestamp(1, workout.getDatetime());
-            stmt.setString(2, workout.getUser().getUsername());
-            stmt.setInt(3, workout.getSport().getId());
-            stmt.setInt(4, workout.getDuration());
-            stmt.setInt(5, workout.getDistance());
-            stmt.setInt(6, workout.getMhr());
-            stmt.setString(7, workout.getNotes());
-            stmt.executeUpdate();
-            connection.close();
-            return workout;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
-        }
-        return null;
+    public Workout create(Workout workout) throws Exception {
+        Connection connection = sql.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Workouts"
+                + "(datetime, user, sport, duration, distance, mhr, notes) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        stmt.setTimestamp(1, workout.getDatetime());
+        stmt.setString(2, workout.getUser().getUsername());
+        stmt.setInt(3, workout.getSport().getId());
+        stmt.setInt(4, workout.getDuration());
+        stmt.setInt(5, workout.getDistance());
+        stmt.setInt(6, workout.getMhr());
+        stmt.setString(7, workout.getNotes());
+        stmt.executeUpdate();
+        connection.close();
+        return workout;
     }
 
     /**
@@ -80,28 +75,23 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @return <code>Workout</code> object with the named id; <code>null</code> if not found.
     */
     @Override
-    public Workout findById(int id) {
-        try {
-            Connection connection = sql.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts WHERE id = ?");
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            
-            if (!rs.next()) { 
-                return null; 
-            }
-            
-            Workout workout = new Workout(rs.getInt("id"), rs.getTimestamp("datetime"), 
-                    userDao.findByUsername(rs.getString("user")), sportDao.findById(rs.getInt("sport")), 
-                    rs.getInt("duration"), rs.getInt("distance"), rs.getInt("mhr"), rs.getString("notes"));
+    public Workout findById(int id) throws Exception {
+        Connection connection = sql.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts WHERE id = ?");
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
 
-            connection.close();
-            
-            return workout;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
+        if (!rs.next()) { 
+            return null; 
         }
-        return null;
+
+        Workout workout = new Workout(rs.getInt("id"), rs.getTimestamp("datetime"), 
+                userDao.findByUsername(rs.getString("user")), sportDao.findById(rs.getInt("sport")), 
+                rs.getInt("duration"), rs.getInt("distance"), rs.getInt("mhr"), rs.getString("notes"));
+
+        connection.close();
+
+        return workout;
     }
 
     /**
@@ -110,30 +100,24 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @return ArrayList containing all <code>Workout</code> objects; <code>null</code> if cannot be listed.
     */
     @Override
-    public List<Workout> getAll() {
+    public List<Workout> getAll() throws Exception {
         List<Workout> workouts = new ArrayList<>();
         
-        try {
-            Connection connection = sql.getConnection();
+        Connection connection = sql.getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts");
-            ResultSet rs = stmt.executeQuery();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts");
+        ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                Workout workout = new Workout(rs.getInt("id"), rs.getTimestamp("datetime"), 
-                        userDao.findByUsername(rs.getString("user")), sportDao.findById(rs.getInt("sport")), 
-                        rs.getInt("duration"), rs.getInt("distance"), rs.getInt("mhr"), rs.getString("notes"));
-                workouts.add(workout);
-            }
-
-            connection.close(); 
-
-            return workouts;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
+        while (rs.next()) {
+            Workout workout = new Workout(rs.getInt("id"), rs.getTimestamp("datetime"), 
+                    userDao.findByUsername(rs.getString("user")), sportDao.findById(rs.getInt("sport")), 
+                    rs.getInt("duration"), rs.getInt("distance"), rs.getInt("mhr"), rs.getString("notes"));
+            workouts.add(workout);
         }
-        
-        return null;
+
+        connection.close(); 
+
+        return workouts;
     }
 
     /**
@@ -144,31 +128,25 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @return ArrayList containing all <code>Workout</code> objects by a <code>User</code>; <code>null</code> if cannot be listed.
     */
     @Override
-    public List<Workout> getAllByUser(User user) {
+    public List<Workout> getAllByUser(User user) throws Exception {
         List<Workout> workouts = new ArrayList<>();
         
-        try {
-            Connection connection = sql.getConnection();
+        Connection connection = sql.getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts WHERE user = ? ORDER BY datetime ASC");
-            stmt.setString(1, user.getUsername());
-            ResultSet rs = stmt.executeQuery();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts WHERE user = ? ORDER BY datetime ASC");
+        stmt.setString(1, user.getUsername());
+        ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                Workout workout = new Workout(rs.getInt("id"), rs.getTimestamp("datetime"), user, 
-                        sportDao.findById(rs.getInt("sport")), rs.getInt("duration"), rs.getInt("distance"), 
-                        rs.getInt("mhr"), rs.getString("notes"));
-                workouts.add(workout);
-            }
-
-            connection.close(); 
-
-            return workouts;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
+        while (rs.next()) {
+            Workout workout = new Workout(rs.getInt("id"), rs.getTimestamp("datetime"), user, 
+                    sportDao.findById(rs.getInt("sport")), rs.getInt("duration"), rs.getInt("distance"), 
+                    rs.getInt("mhr"), rs.getString("notes"));
+            workouts.add(workout);
         }
-        
-        return null;
+
+        connection.close(); 
+
+        return workouts;
     }
     
 }

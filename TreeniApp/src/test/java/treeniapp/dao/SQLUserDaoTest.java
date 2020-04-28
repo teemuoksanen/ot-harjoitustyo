@@ -3,6 +3,8 @@ package treeniapp.dao;
 
 import treeniapp.dao.sql.SQLUserDao;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,8 +67,12 @@ public class SQLUserDaoTest {
     
     @After
     public void tearDown() {
-        // Delete testing database
-        sql.clearDatabase("Users");
+        try {
+            // Delete testing database
+            sql.clearDatabase("Users");
+        } catch (Exception ex) {
+            Logger.getLogger(SQLUserDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

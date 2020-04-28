@@ -24,7 +24,7 @@ public class SQLSportDao implements SportDao {
     private Map<Integer, Sport> sportMap;
     private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
-    public SQLSportDao(SQLService sql) {
+    public SQLSportDao(SQLService sql) throws Exception {
         this.sql = sql;
         this.sports = new ArrayList<>();
         this.sportMap = new HashMap<>();
@@ -35,7 +35,7 @@ public class SQLSportDao implements SportDao {
     /**
     * Method to initially fetch all sports from the database and stored to an ArrayList and a HashMap.
     */
-    private void getInitialSports() {
+    private void getInitialSports() throws Exception {
         try {
             Connection connection = sql.getConnection();
 
@@ -66,28 +66,23 @@ public class SQLSportDao implements SportDao {
     * @return <code>Sport</code> object that was stored to the database.
     */
     @Override
-    public Sport create(Sport sport) {
-        try {
-            Connection connection = sql.getConnection();
+    public Sport create(Sport sport) throws Exception {
+        Connection connection = sql.getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Sports"
-                + " (id, name, icon, showdist) VALUES (?, ?, ?, ?)");
-            stmt.setInt(1, sport.getId());
-            stmt.setString(2, sport.getName());
-            stmt.setString(3, sport.getIcon());
-            stmt.setBoolean(4, sport.isShowDistance());
-            stmt.executeUpdate();
-            stmt.close();
-            connection.close();
-            
-            sports.add(sport);
-            sportMap.put(sport.getId(), sport);
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Sports"
+            + " (id, name, icon, showdist) VALUES (?, ?, ?, ?)");
+        stmt.setInt(1, sport.getId());
+        stmt.setString(2, sport.getName());
+        stmt.setString(3, sport.getIcon());
+        stmt.setBoolean(4, sport.isShowDistance());
+        stmt.executeUpdate();
+        stmt.close();
+        connection.close();
 
-            return sport;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
-        }
-        return null;
+        sports.add(sport);
+        sportMap.put(sport.getId(), sport);
+
+        return sport;
     }
 
     /**

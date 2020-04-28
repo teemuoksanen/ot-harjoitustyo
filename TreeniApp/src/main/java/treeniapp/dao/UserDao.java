@@ -7,5 +7,5 @@ import treeniapp.domain.User;
 public interface UserDao {
     List<User> getAll();
     User findByUsername(String username);
-    User create(User user);
+    User create(User user) throws Exception;
 }

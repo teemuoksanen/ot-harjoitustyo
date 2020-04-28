@@ -67,8 +67,10 @@ public class TreeniAppService {
     * @param    name        real name of the new user
     *
     * @return <code>false</code> if username is already in use; <code>true</code> if the new user is created.
+    *
+    * @throws java.lang.Exception
     */
-    public boolean newUser(String username, String name) {
+    public boolean newUser(String username, String name) throws Exception {
         
         // Check that there is no user with same username
         if (userDao.findByUsername(username) != null) {
@@ -87,8 +89,10 @@ public class TreeniAppService {
     * @param    workout     <code>Workout</code> object for the new workout
     *
     * @return <code>true</code> if the workout was created.
+    * 
+    * @throws java.lang.Exception
     */
-    public boolean newWorkout(Workout workout) {
+    public boolean newWorkout(Workout workout) throws Exception {
         workoutDao.create(workout);
         return true;
     }
@@ -99,8 +103,10 @@ public class TreeniAppService {
     * @param    user     <code>User</code> object for which workouts should be listed
     * 
     * @return ArrayList of <code>Workout</code> objects for the user; empty list is <code>User</code> is null.
+    * 
+    * @throws java.lang.Exception
     */
-    public List<Workout> getWorkouts(User user) {
+    public List<Workout> getWorkouts(User user) throws Exception {
         List<Workout> workouts = new ArrayList<>();
         if (user != null) {
             workouts = workoutDao.getAllByUser(user);
@@ -114,8 +120,10 @@ public class TreeniAppService {
     * @param    id     id number of the <code>Workout</code> object
     * 
     * @return <code>Workout</code> object for the given id.
+    * 
+    * @throws java.lang.Exception
     */
-    public Workout getWorkoutById(int id) {
+    public Workout getWorkoutById(int id) throws Exception {
         return workoutDao.findById(id);
     }
     
@@ -125,8 +133,10 @@ public class TreeniAppService {
     * @param    user     <code>User</code> object for which total workout time should be fetched
     * 
     * @return Total amount of workout minutes for the user.
+    * 
+    * @throws java.lang.Exception
     */
-    public int getTotalTime(User user) {
+    public int getTotalTime(User user) throws Exception {
         List<Workout> workouts = getWorkouts(user);
         int total = 0;
         total = workouts.stream().map((w) -> w.getDuration()).reduce(total, Integer::sum);
@@ -139,8 +149,10 @@ public class TreeniAppService {
     * @param    user     <code>User</code> object for which total workout time should be fetched
     * 
     * @return Total amount of workout minutes for the user.
+    * 
+    * @throws java.lang.Exception
     */
-    public String getTotalTimeFormatted(User user) {
+    public String getTotalTimeFormatted(User user) throws Exception {
         int total = getTotalTime(user);
         return format.minutesIntoHoursAndMinutes(total);
     }
@@ -151,8 +163,7 @@ public class TreeniAppService {
     * @return ArrayList of <code>Sport</code> objects.
     */
     public List<Sport> getSports() {
-        List<Sport> sports = new ArrayList<>();
-        sports = sportDao.getAll();
+        List<Sport> sports = sportDao.getAll();
         return sports;
     }
     

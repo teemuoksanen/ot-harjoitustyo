@@ -24,7 +24,7 @@ public class SQLUserDao implements UserDao {
     private Map<String, User> userMap;
     private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
-    public SQLUserDao(SQLService sql) {
+    public SQLUserDao(SQLService sql) throws Exception {
         this.sql = sql;
         this.users = new ArrayList<>();
         this.userMap = new HashMap<>();
@@ -35,26 +35,22 @@ public class SQLUserDao implements UserDao {
     /**
     * Method to initially fetch all users from the database and stored to an ArrayList and a HashMap.
     */
-    private void getInitialUsers() {
-        try {
-            Connection connection = sql.getConnection();
+    private void getInitialUsers() throws Exception {
+        Connection connection = sql.getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users");
-            ResultSet rs = stmt.executeQuery();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users");
+        ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                String username = rs.getString("username");
-                User user = new User(username, rs.getString("name"));
-                users.add(user);
-                userMap.put(username, user);
-            }
-
-            stmt.close();
-            rs.close();
-            connection.close();
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
+        while (rs.next()) {
+            String username = rs.getString("username");
+            User user = new User(username, rs.getString("name"));
+            users.add(user);
+            userMap.put(username, user);
         }
+
+        stmt.close();
+        rs.close();
+        connection.close();
     }
     
     /**
@@ -88,27 +84,22 @@ public class SQLUserDao implements UserDao {
     * @return <code>User</code> object that was stored to the database.
     */
     @Override
-    public User create(User user) {
-        try {
-            Connection connection = sql.getConnection();
+    public User create(User user) throws Exception {
+        Connection connection = sql.getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Users"
-                + " (username, name)"
-                + " VALUES (?, ?)");
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getName());
-            stmt.executeUpdate();
-            stmt.close();
-            connection.close();
-            
-            users.add(user);
-            userMap.put(user.getUsername(), user);
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Users"
+            + " (username, name)"
+            + " VALUES (?, ?)");
+        stmt.setString(1, user.getUsername());
+        stmt.setString(2, user.getName());
+        stmt.executeUpdate();
+        stmt.close();
+        connection.close();
 
-            return user;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
-        }
-        return null;
+        users.add(user);
+        userMap.put(user.getUsername(), user);
+
+        return user;
     }
     
 }
