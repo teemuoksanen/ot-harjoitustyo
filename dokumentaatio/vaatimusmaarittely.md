@@ -10,7 +10,7 @@ Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli (normaali käytt
 
 ## Käyttöliittymäluonnos
 
-Sovellus koostuu kirjautumisikkunasta, perusnäytöstä ja treenin lisäämisnäytöstä.
+Sovellus koostuu kirjautumisikkunasta, perusnäytöstä, treenin lisäämisnäytöstä ja yksittäisen treenin näytöstä.
 
 Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen aukeaa perusnäyttö. Perusnäytöllä on listattu käyttäjän treenit sekä muutamia perustilastoja, kuten treenien yhteismäärä. Uusi treeni lisätään erilliseltä näytöltä.
 
@@ -34,7 +34,7 @@ Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen au
 - [x] valitusta lajista riippuen kysytään olennaiset tiedot
 - [x] virheellisten syötteiden antaminen pyritään estämään (esim. päivän valinta kalenterin avulla)
 
-### Treenin lisätiedot
+### Yksittäisen treenin lisätiedot
 
 - [x] treenin kaikki tiedot näkyvissä (jos syötetty)
 - [x] treenin poistaminen mahdollista
