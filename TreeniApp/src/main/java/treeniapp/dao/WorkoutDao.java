@@ -12,5 +12,6 @@ public interface WorkoutDao {
     Workout findById(int id) throws Exception;
     List<Workout> getAll() throws Exception;
     List<Workout> getAllByUser(User user) throws Exception;
+    boolean remove(Workout workout);
 
 }

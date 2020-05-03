@@ -50,5 +50,14 @@ public class FakeWorkoutDao implements WorkoutDao {
         }
         return filtered;
     }
+
+    @Override
+    public boolean remove(Workout workout) {
+        if (workouts.contains(workout)) {
+            workouts.remove(workout);
+        return true;
+        }
+        return false;
+    }
     
 }

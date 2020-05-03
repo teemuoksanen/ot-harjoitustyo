@@ -96,6 +96,17 @@ public class TreeniAppService {
         workoutDao.create(workout);
         return true;
     }
+   
+    /**
+    * Method to delete a new workout. 
+    *
+    * @param    workout     <code>Workout</code> object for the new workout
+    *
+    * @return <code>true</code> if the workout was deleted; false otherwise.
+    */
+    public boolean deleteWorkout(Workout workout) {
+        return workoutDao.remove(workout);
+    }
     
     /**
     * Method to list all workouts for the named user.

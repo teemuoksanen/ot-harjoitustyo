@@ -148,5 +148,27 @@ public class SQLWorkoutDao implements WorkoutDao {
 
         return workouts;
     }
+
+    /**
+    * Method to remove a <code>Workout</code>.
+    * 
+    * @param workout   The <code>Workout</code> object that should be removed.
+    * 
+    * @return <code>true</code> if successfully removed; <code>false</code> otherwise.
+    */
+    @Override
+    public boolean remove(Workout workout) {
+        try {
+            System.out.println("Poistetaan treeni " + workout.getId());
+            Connection connection = sql.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM Workouts WHERE ID = ?");
+            stmt.setInt(1, workout.getId());
+            stmt.executeUpdate();
+            connection.close();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
     
 }

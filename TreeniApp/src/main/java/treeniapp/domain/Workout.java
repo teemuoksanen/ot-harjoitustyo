@@ -103,6 +103,16 @@ public class Workout {
     }
     
     /**
+    * Method to get the year from the <code>Workout</code>'s Datetime field
+    *
+    * @return Year as <code>String</code> in the format "yyyy".
+    */
+    public String getYear() {
+        String date = new SimpleDateFormat("yyyy").format(this.datetime);
+        return date;
+    }
+    
+    /**
     * Method to get the hour number from the <code>Workout</code>'s Datetime field
     *
     * @return Hour number as <code>String</code>.
