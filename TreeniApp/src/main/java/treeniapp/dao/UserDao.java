@@ -11,12 +11,14 @@ public interface UserDao {
     
     /**
     * Lists all <code>User</code> objects.
-    * @return  A <code>List</code> containing all <code>User</code> objects.
+    * 
+    * @return   A <code>List</code> containing all <code>User</code> objects.
     */
     List<User> getAll();
     
     /**
     * Finds a <code>User</code> object by its username.
+    * 
     * @param    username   Username of the <code>User</code> object.
     * @return   The <code>User</code> object.
     */
@@ -24,7 +26,10 @@ public interface UserDao {
     
     /**
     * Saves the <code>User</code> object.
+    * 
     * @param    user   The <code>User</code> object to be saved.
+    * @return   The created <code>User</code> object.
+    * @throws   java.lang.Exception if <code>User</code> object cannot be saved.
     */
     User create(User user) throws Exception;
     

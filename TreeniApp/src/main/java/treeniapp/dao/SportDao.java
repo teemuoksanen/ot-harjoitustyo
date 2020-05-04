@@ -11,12 +11,16 @@ public interface SportDao {
 
     /**
     * Saves the <code>Sport</code> object.
+    * 
     * @param    sport   The <code>Sport</code> object to be saved.
+    * @return   The <code>Sport</code> object.
+    * @throws   java.lang.Exception if <code>Sport</code> object cannot be saved.
     */
     Sport create(Sport sport) throws Exception;
     
     /**
     * Finds a <code>Sport</code> object by its ID number.
+    * 
     * @param    id   ID number of the <code>Sport</code> object.
     * @return   The <code>Sport</code> object.
     */
@@ -24,7 +28,8 @@ public interface SportDao {
     
     /**
     * Lists all <code>Sport</code> objects.
-    * @return  A <code>List</code> containing all <code>Sport</code> objects.
+    * 
+    * @return   A <code>List</code> containing all <code>Sport</code> objects.
     */
     List<Sport> getAll();
     

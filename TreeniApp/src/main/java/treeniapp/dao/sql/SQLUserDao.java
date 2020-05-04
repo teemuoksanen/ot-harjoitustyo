@@ -9,21 +9,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import treeniapp.dao.UserDao;
 import treeniapp.domain.User;
 
 /**
- * Class contains methods to get and store <code>User</code> objects from and into SQL database
+ * Class contains methods to get and store <code>User</code> objects from and into SQL database.
  */
 public class SQLUserDao implements UserDao {
     
     private SQLService sql;
     private List<User> users;
     private Map<String, User> userMap;
-    private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
+    /**
+    * Constructor for <code>SQLUserDao</code> with the <code>SQLService</code> injected.
+    *
+    * @param sql       <code>SQLService</code> class.
+    * @throws java.lang.Exception if the SQL query leads to an error.
+    */
     public SQLUserDao(SQLService sql) throws Exception {
         this.sql = sql;
         this.users = new ArrayList<>();
@@ -35,7 +38,7 @@ public class SQLUserDao implements UserDao {
     /**
     * Method to initially fetch all users from the database and stored to an ArrayList and a HashMap.
     */
-    private void getInitialUsers() throws Exception {
+    private void getInitialUsers() throws SQLException {
         Connection connection = sql.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users");
@@ -84,7 +87,7 @@ public class SQLUserDao implements UserDao {
     * @return <code>User</code> object that was stored to the database.
     */
     @Override
-    public User create(User user) throws Exception {
+    public User create(User user) throws SQLException {
         Connection connection = sql.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Users"

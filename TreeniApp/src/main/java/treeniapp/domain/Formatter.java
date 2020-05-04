@@ -2,7 +2,7 @@
 package treeniapp.domain;
 
 /**
- * Class offers formatting services for other classes
+ * Class offers formatting services for other classes.
  */
 public class Formatter {
     

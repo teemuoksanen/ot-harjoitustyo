@@ -8,7 +8,7 @@ import treeniapp.dao.WorkoutDao;
 import treeniapp.dao.SportDao;
 
 /**
- * Class handles the application logic
+ * Class handles the application logic.
  */
 public class TreeniAppService {
     
@@ -18,6 +18,13 @@ public class TreeniAppService {
     private User userLoggedIn;
     private Formatter format;
     
+    /**
+    * Constructor for <code>TreeniAppService</code> with the application DAOs injected.
+    *
+    * @param userDao       Class implementing <code>UserDao</code> interface.
+    * @param workoutDao    Class implementing <code>WorkoutDao</code> interface.
+    * @param sportDao      Class implementing <code>SportDao</code> interface.
+    */
     public TreeniAppService(UserDao userDao, WorkoutDao workoutDao, SportDao sportDao) {
         this.userDao = userDao;
         this.workoutDao = workoutDao;
@@ -68,7 +75,7 @@ public class TreeniAppService {
     *
     * @return <code>false</code> if username is already in use; <code>true</code> if the new user is created.
     *
-    * @throws java.lang.Exception
+    * @throws java.lang.Exception if the new user cannot be saved.
     */
     public boolean newUser(String username, String name) throws Exception {
         
@@ -90,7 +97,7 @@ public class TreeniAppService {
     *
     * @return <code>true</code> if the workout was created.
     * 
-    * @throws java.lang.Exception
+    * @throws java.lang.Exception if the new workout cannot be saved.
     */
     public boolean newWorkout(Workout workout) throws Exception {
         workoutDao.create(workout);
@@ -115,7 +122,7 @@ public class TreeniAppService {
     * 
     * @return ArrayList of <code>Workout</code> objects for the user; empty list is <code>User</code> is null.
     * 
-    * @throws java.lang.Exception
+    * @throws java.lang.Exception if the workouts cannot be fetched.
     */
     public List<Workout> getWorkouts(User user) throws Exception {
         List<Workout> workouts = new ArrayList<>();
@@ -132,20 +139,20 @@ public class TreeniAppService {
     * 
     * @return <code>Workout</code> object for the given id.
     * 
-    * @throws java.lang.Exception
+    * @throws java.lang.Exception if the workout cannot be fetched.
     */
     public Workout getWorkoutById(int id) throws Exception {
         return workoutDao.findById(id);
     }
     
     /**
-    * Method to get total workout time for a named user.
+    * Method to get total workout time for a named user as minutes.
     * 
     * @param    user     <code>User</code> object for which total workout time should be fetched
     * 
     * @return Total amount of workout minutes for the user.
     * 
-    * @throws java.lang.Exception
+    * @throws java.lang.Exception if the workouts cannot be fetched.
     */
     public int getTotalTime(User user) throws Exception {
         List<Workout> workouts = getWorkouts(user);
@@ -155,13 +162,13 @@ public class TreeniAppService {
     }
     
     /**
-    * Method to get total workout time for a named user.
+    * Method to get total workout time for a named user as hours and minutes.
     * 
     * @param    user     <code>User</code> object for which total workout time should be fetched
     * 
-    * @return Total amount of workout minutes for the user.
+    * @return Total amount of workout time (in hours and minutes) for the user.
     * 
-    * @throws java.lang.Exception
+    * @throws java.lang.Exception if the workouts cannot be fetched.
     */
     public String getTotalTimeFormatted(User user) throws Exception {
         int total = getTotalTime(user);

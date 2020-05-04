@@ -2,13 +2,19 @@
 package treeniapp.domain;
 
 /**
- * Class handles the User objects representing the application's registered users
+ * Class handles the User objects representing the application's registered users.
  */
 public class User {
     
     private String username;
     private String name;
 
+    /**
+    * Constructor for <code>User</code> object.
+    * 
+    * @param username   Username (for login) of the user.
+    * @param name       Real name of the user as shown in the application.
+    */
     public User(String username, String name) {
         this.username = username;
         this.name = name;

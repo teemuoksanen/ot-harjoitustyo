@@ -1,5 +1,5 @@
 /**
- * GUI of the application
+ * GUI of the application.
  */
 
 package treeniapp.ui;

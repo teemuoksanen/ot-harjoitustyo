@@ -1,5 +1,5 @@
 /**
- * Application logic
+ * Application logic.
  */
 
 package treeniapp.domain;

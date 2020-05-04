@@ -9,21 +9,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import treeniapp.dao.SportDao;
 import treeniapp.domain.Sport;
 
 /**
- * Class contains methods to get and store <code>Sport</code> objects from and into SQL database
+ * Class contains methods to get and store <code>Sport</code> objects from and into SQL database.
  */
 public class SQLSportDao implements SportDao {
     
     private SQLService sql;
     private List<Sport> sports;
     private Map<Integer, Sport> sportMap;
-    private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
+    /**
+    * Constructor for <code>SQLSportDao</code> with the <code>SQLService</code> injected.
+    *
+    * @param sql       <code>SQLService</code> class.
+    * @throws java.lang.Exception if the SQL query leads to an error.
+    */
     public SQLSportDao(SQLService sql) throws Exception {
         this.sql = sql;
         this.sports = new ArrayList<>();
@@ -35,27 +38,23 @@ public class SQLSportDao implements SportDao {
     /**
     * Method to initially fetch all sports from the database and stored to an ArrayList and a HashMap.
     */
-    private void getInitialSports() throws Exception {
-        try {
-            Connection connection = sql.getConnection();
+    private void getInitialSports() throws SQLException {
+        Connection connection = sql.getConnection();
 
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Sports");
-            ResultSet rs = stmt.executeQuery();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Sports");
+        ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String icon = rs.getString("icon");
-                Boolean showDistance = rs.getBoolean("showdist");
-                Sport sport = new Sport(id, name, icon, showDistance);
-                sports.add(sport);
-                sportMap.put(id, sport);
-            }
-
-            connection.close();
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, null, ex);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String icon = rs.getString("icon");
+            Boolean showDistance = rs.getBoolean("showdist");
+            Sport sport = new Sport(id, name, icon, showDistance);
+            sports.add(sport);
+            sportMap.put(id, sport);
         }
+
+        connection.close();
     }
 
     /**
@@ -66,7 +65,7 @@ public class SQLSportDao implements SportDao {
     * @return <code>Sport</code> object that was stored to the database.
     */
     @Override
-    public Sport create(Sport sport) throws Exception {
+    public Sport create(Sport sport) throws SQLException {
         Connection connection = sql.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Sports"

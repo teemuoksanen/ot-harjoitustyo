@@ -6,11 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 /**
- * Class offers SQL related services for other classes 
+ * Class offers SQL related services for other classes.
  */
 public class SQLService {
     
@@ -20,6 +21,10 @@ public class SQLService {
     
     /**
     * Constructor that fetches the database's details from 'config.properties' file.
+    * 
+    * @throws FileNotFoundException if file 'config.properties' cannot be found.
+    * @throws IOException if file 'config.properties' could not be read.
+    * @throws InvalidPropertiesFormatException if file 'config.properties' is invalid.
     */
     public SQLService() throws FileNotFoundException, IOException, InvalidPropertiesFormatException {
         Properties properties = new Properties();
@@ -31,6 +36,10 @@ public class SQLService {
     
     /**
     * Constructor where the database's details are given as parameters.
+    * 
+    * @param databaseDB    Name of the database.
+    * @param usernameDB    Username to access the database.
+    * @param passwordDB    Password to access the database.
     */
     public SQLService(String databaseDB, String usernameDB, String passwordDB) {
         database = databaseDB;
@@ -42,9 +51,10 @@ public class SQLService {
     * Method to open SQL connection.
     *
     * @return <code>Connection</code> object.
-    * @throws java.lang.Exception
+    * 
+    * @throws SQLException if the SQL connection cannot be opened.
     */
-    public Connection getConnection() throws Exception {
+    public Connection getConnection() throws SQLException {
         Connection connection = DriverManager.getConnection(this.database, this.username, this.password);
         return connection;
     }
@@ -53,9 +63,9 @@ public class SQLService {
     * Method to (clear and) initialise all application's basic database tables.
     *
     * @param    clear   <code>true</code> to first clear all database tables; <code>false</code> to just run initialisation.
-    * @throws java.lang.Exception
+    * @throws   SQLException if there is an error when initialising the database tables.
     */
-    public void initialiseDatabases(Boolean clear) throws Exception {
+    public void initialiseDatabases(Boolean clear) throws SQLException {
         if (clear) {
             clearDatabase("Users");
             clearDatabase("Workouts");
@@ -68,9 +78,10 @@ public class SQLService {
     
     /**
     * Method to initialise the user database table.
-    * @throws java.lang.Exception
+    * 
+    * @throws   SQLException if there is an error when initialising the user database table.
     */
-    public void initialiseUserDatabase() throws Exception {
+    public void initialiseUserDatabase() throws SQLException {
         Connection connection = getConnection();
         connection.prepareStatement("CREATE TABLE IF NOT EXISTS Users ("
                 + "    username VARCHAR(15) PRIMARY KEY,    name VARCHAR(20) NOT NULL"
@@ -82,9 +93,10 @@ public class SQLService {
     
     /**
     * Method to initialise the workout database table.
-    * @throws java.lang.Exception
+    * 
+    * @throws   SQLException if there is an error when initialising the workout database table.
     */
-    public void initialiseWorkoutDatabase() throws Exception {
+    public void initialiseWorkoutDatabase() throws SQLException {
         Connection connection = getConnection();
         connection.prepareStatement("CREATE TABLE IF NOT EXISTS Workouts ("
                 + "    id INT AUTO_INCREMENT PRIMARY KEY,   user VARCHAR(15) NOT NULL,"
@@ -101,9 +113,10 @@ public class SQLService {
     
     /**
     * Method to initialise the sport database table.
-    * @throws java.lang.Exception
+    * 
+    * @throws   SQLException if there is an error when initialising the sport database table.
     */
-    public void initialiseSportDatabase() throws Exception {
+    public void initialiseSportDatabase() throws SQLException {
         Connection connection = getConnection();
         connection.prepareStatement("CREATE TABLE IF NOT EXISTS Sports ("
                 + "    id INT AUTO_INCREMENT PRIMARY KEY,   name VARCHAR(15) NOT NULL,"
@@ -121,10 +134,10 @@ public class SQLService {
     /**
     * Method to clear the named database table.
     * 
-    * @param table  The name of the database table to clear.
-    * @throws java.lang.Exception
+    * @param    table  The name of the database table to clear.
+    * @throws   SQLException if there is an error when clearing the database table.
     */
-    public void clearDatabase(String table) throws Exception {
+    public void clearDatabase(String table) throws SQLException {
         Connection connection = getConnection();
         connection.prepareStatement("DROP TABLE " + table + " IF EXISTS;").executeUpdate();
         connection.close();

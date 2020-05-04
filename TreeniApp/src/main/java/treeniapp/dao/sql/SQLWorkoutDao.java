@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import treeniapp.dao.SportDao;
 import treeniapp.dao.UserDao;
 import treeniapp.dao.WorkoutDao;
@@ -16,15 +14,22 @@ import treeniapp.domain.User;
 import treeniapp.domain.Workout;
 
 /**
- * Class contains methods to get and store <code>Workout</code> objects from and into SQL database
+ * Class contains methods to get and store <code>Workout</code> objects from and into SQL database.
  */
 public class SQLWorkoutDao implements WorkoutDao {
     
     private SQLService sql;
     private UserDao userDao;
     private SportDao sportDao;
-    private static Logger logger = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
     
+    /**
+    * Constructor for <code>SQLWorkoutDao</code> with the <code>SQLService</code> injected.
+    *
+    * @param sql       <code>SQLService</code> class.
+    * @param userDao   Class implementing <code>UserDao</code> interface.
+    * @param sportDao  Class implementing <code>SportDao</code> class.
+    * @throws java.lang.Exception if the SQL query leads to an error.
+    */
     public SQLWorkoutDao(SQLService sql, UserDao userDao, SportDao sportDao) {
         this.sql = sql;
         this.userDao = userDao;
@@ -39,7 +44,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @return <code>Workout</code> object that was stored to the database.
     */
     @Override
-    public Workout create(Workout workout) throws Exception {
+    public Workout create(Workout workout) throws SQLException {
         Connection connection = sql.getConnection();
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Workouts"
                 + "(datetime, user, sport, duration, distance, mhr, notes) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -63,7 +68,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @return <code>Workout</code> object with the named id; <code>null</code> if not found.
     */
     @Override
-    public Workout findById(int id) throws Exception {
+    public Workout findById(int id) throws SQLException {
         Connection connection = sql.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Workouts WHERE id = ?");
         stmt.setInt(1, id);
@@ -88,7 +93,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @return ArrayList containing all <code>Workout</code> objects; <code>null</code> if cannot be listed.
     */
     @Override
-    public List<Workout> getAll() throws Exception {
+    public List<Workout> getAll() throws SQLException {
         List<Workout> workouts = new ArrayList<>();
         
         Connection connection = sql.getConnection();
@@ -116,7 +121,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @return ArrayList containing all <code>Workout</code> objects by a <code>User</code>; <code>null</code> if cannot be listed.
     */
     @Override
-    public List<Workout> getAllByUser(User user) throws Exception {
+    public List<Workout> getAllByUser(User user) throws SQLException {
         List<Workout> workouts = new ArrayList<>();
         
         Connection connection = sql.getConnection();
@@ -154,7 +159,7 @@ public class SQLWorkoutDao implements WorkoutDao {
             stmt.executeUpdate();
             connection.close();
             return true;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             return false;
         }
     }

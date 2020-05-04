@@ -1,5 +1,5 @@
 /**
- * Main package with no actual functionalities
+ * Main package with no actual functionalities.
  */
 
 package treeniapp;
