@@ -32,6 +32,9 @@ import treeniapp.domain.Sport;
 import treeniapp.domain.TreeniAppService;
 import treeniapp.domain.Workout;
 
+/**
+ * Class handles the GUI for adding a workout
+ */
 public class AddWorkoutUi {
     
     private TreeniAppService treeniAppService;
@@ -51,6 +54,11 @@ public class AddWorkoutUi {
         mins = uiService.generateNumberList(0, 59);
     }
     
+    /**
+    * Method for GUI for adding a workout
+     * @param addWorkoutWindow  <code>Stage</code> to which the new workout form is injected.
+     * @return  The <code>Scene</code> containing the form for adding a new workout.
+    */
     public Scene addWorkoutScene(Stage addWorkoutWindow) {
         
         Label addWorkoutLabel = new Label("Lisää uusi treeni");

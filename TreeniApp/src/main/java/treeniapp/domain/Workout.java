@@ -34,32 +34,16 @@ public class Workout {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Sport getSport() {
         return sport;
     }
 
-    public void setSport(Sport sport) {
-        this.sport = sport;
-    }
-
     public Timestamp getDatetime() {
         return datetime;
-    }
-
-    public void setDatetime(Timestamp datetime) {
-        this.datetime = datetime;
     }
     
     /**
@@ -155,10 +139,6 @@ public class Workout {
         return format.minutesIntoHoursAndMinutes(this.duration);
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
     public int getDistance() {
         return distance;
     }
@@ -172,24 +152,12 @@ public class Workout {
         return format.metersIntoKmsAndMeters(this.distance);
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
     public int getMhr() {
         return mhr;
     }
 
-    public void setMhr(int mhr) {
-        this.mhr = mhr;
-    }
-
     public String getNotes() {
         return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
     
 }

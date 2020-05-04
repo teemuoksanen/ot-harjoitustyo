@@ -30,22 +30,4 @@ public class UserTest {
         assertFalse(user1.equals(object));
     }
     
-    @Test
-    public void nameCanBeChanged() {
-        User user = new User("user", "User 1");
-        assertEquals("User 1", user.getName());
-        
-        user.setName("User 2");
-        assertEquals("User 2", user.getName());
-    }
-    
-    @Test
-    public void usernameCanBeChanged() {
-        User user = new User("user", "User 1");
-        assertEquals("user", user.getUsername());
-        
-        user.setUsername("newuser");
-        assertEquals("newuser", user.getUsername());
-    }
-    
 }

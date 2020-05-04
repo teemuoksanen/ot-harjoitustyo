@@ -56,18 +56,6 @@ public class SQLWorkoutDao implements WorkoutDao {
     }
 
     /**
-    * Method to update a workout in the database.
-    * 
-    * @param    workout   The <code>Workout</code> object to be updated.
-    * 
-    * @return <code>Workout</code> object of the updated workout.
-    */
-    @Override
-    public Workout update(Workout workout) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    /**
     * Method to find a workout by its id number.
     * 
     * @param    id   The id number of the <code>Workout</code> object to be fetched.

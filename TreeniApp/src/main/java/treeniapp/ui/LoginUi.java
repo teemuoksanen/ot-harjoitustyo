@@ -27,7 +27,7 @@ import treeniapp.dao.sql.SQLService;
 import treeniapp.domain.TreeniAppService;
 
 /**
- * Class handles the GUI of the application
+ * Class handles the GUI for login and new user creation
  */
 public class LoginUi extends Application {
     

@@ -9,6 +9,9 @@ import javafx.scene.image.Image;
 import treeniapp.domain.Sport;
 import treeniapp.domain.TreeniAppService;
 
+/**
+ * Class offers general methods for other UI classes
+ */
 public class UiService {
     
     private TreeniAppService treeniAppService;

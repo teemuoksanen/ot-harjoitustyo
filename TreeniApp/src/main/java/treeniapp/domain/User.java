@@ -22,14 +22,6 @@ public class User {
         return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof User)) {

@@ -6,11 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class offers SQL related services for other classes 
@@ -21,6 +18,9 @@ public class SQLService {
     private String username;
     private String password;
     
+    /**
+    * Constructor that fetches the database's details from 'config.properties' file.
+    */
     public SQLService() throws FileNotFoundException, IOException, InvalidPropertiesFormatException {
         Properties properties = new Properties();
         properties.load(new FileInputStream("config.properties"));
@@ -29,7 +29,9 @@ public class SQLService {
         password = properties.getProperty("passwordDB");
     }
     
-    // Replace normal values for testing purposes
+    /**
+    * Constructor where the database's details are given as parameters.
+    */
     public SQLService(String databaseDB, String usernameDB, String passwordDB) {
         database = databaseDB;
         username = usernameDB;

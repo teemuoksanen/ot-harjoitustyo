@@ -26,11 +26,6 @@ public class FakeWorkoutDao implements WorkoutDao {
     }
 
     @Override
-    public Workout update(Workout workout) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public Workout findById(int id) {
         return workouts.stream().filter(w->w.getId()==id).findFirst().orElse(null);
     }

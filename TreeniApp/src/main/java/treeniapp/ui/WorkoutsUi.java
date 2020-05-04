@@ -25,6 +25,9 @@ import javafx.stage.Stage;
 import treeniapp.domain.TreeniAppService;
 import treeniapp.domain.Workout;
 
+/**
+ * Class handles the GUI for workout list and workout details
+ */
 public class WorkoutsUi {
     
     private TreeniAppService treeniAppService;
