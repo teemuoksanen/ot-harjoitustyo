@@ -28,7 +28,6 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @param sql       <code>SQLService</code> class.
     * @param userDao   Class implementing <code>UserDao</code> interface.
     * @param sportDao  Class implementing <code>SportDao</code> class.
-    * @throws java.lang.Exception if the SQL query leads to an error.
     */
     public SQLWorkoutDao(SQLService sql, UserDao userDao, SportDao sportDao) {
         this.sql = sql;
@@ -42,6 +41,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @param    workout   The <code>Workout</code> object to be stored to the database.
     * 
     * @return <code>Workout</code> object that was stored to the database.
+    * @throws SQLException if the new workout cannot be stored.
     */
     @Override
     public Workout create(Workout workout) throws SQLException {
@@ -66,6 +66,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @param    id   The id number of the <code>Workout</code> object to be fetched.
     * 
     * @return <code>Workout</code> object with the named id; <code>null</code> if not found.
+    * @throws SQLException if the workout cannot be fetched.
     */
     @Override
     public Workout findById(int id) throws SQLException {
@@ -91,6 +92,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     * Method to list all workouts.
     * 
     * @return ArrayList containing all <code>Workout</code> objects; <code>null</code> if cannot be listed.
+    * @throws SQLException if the workouts cannot be fetched.
     */
     @Override
     public List<Workout> getAll() throws SQLException {
@@ -119,6 +121,7 @@ public class SQLWorkoutDao implements WorkoutDao {
     * @param user   The <code>User</code> object of the user whose workouts should be listed.
     * 
     * @return ArrayList containing all <code>Workout</code> objects by a <code>User</code>; <code>null</code> if cannot be listed.
+    * @throws SQLException if the workouts cannot be fetched.
     */
     @Override
     public List<Workout> getAllByUser(User user) throws SQLException {
@@ -152,7 +155,6 @@ public class SQLWorkoutDao implements WorkoutDao {
     @Override
     public boolean remove(Workout workout) {
         try {
-            System.out.println("Poistetaan treeni " + workout.getId());
             Connection connection = sql.getConnection();
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM Workouts WHERE ID = ?");
             stmt.setInt(1, workout.getId());

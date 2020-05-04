@@ -105,6 +105,18 @@ public class SQLWorkoutDaoTest {
         }
     }
     
+    @Test
+    public void workoutIsRemoved() {
+        try {
+            assertEquals(2, workoutDao.getAll().size());
+            Workout wo = workoutDao.findById(1);
+            workoutDao.remove(wo);
+            assertEquals(1, workoutDao.getAll().size());
+        } catch (Exception ex) {
+            Logger.getLogger(SQLWorkoutDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @After
     public void tearDown() {
         try {

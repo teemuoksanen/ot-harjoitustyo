@@ -67,6 +67,7 @@ public class WorkoutTest {
         assertEquals("9", wo1.getHour());
         assertEquals("03", wo1.getMinute());
         assertEquals("9.03", wo1.getTime());
+        assertEquals("2019", wo1.getYear());
     }
     
 }
