@@ -19,4 +19,5 @@
 | 26.4. | 8      | JavaDocin täydentäminen, yksittäisen treenin näkymä, pientä refaktorointia, dokumentaation päivittäminen |
 | 28.4. | 2      | käyttöliittymän refaktorointia, parannettu poikkeusten käsittelyä |
 | 2.5.  | 7      | käyttöliittymän jakaminen eri luokkiin ja muuta refaktorointia |
-| yht.  | 61     | | 
+| 4.5.  | 2      | JavaDocin ja testaustan täydentäminen |
+| yht.  | 63     | | 
