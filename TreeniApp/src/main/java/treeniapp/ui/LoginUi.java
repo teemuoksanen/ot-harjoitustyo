@@ -193,23 +193,25 @@ public class LoginUi extends Application {
                 uiService.showError("Vihreellinen tunnus!", "Tunnuksen on oltava 1-15 merkin pituinen. Tarkista tunnus ja yritä uudelleen.");
             } else if (name.length() < 1 || name.length() > 20) {
                 uiService.showError("Vihreellinen nimi!", "Nimen on oltava 1-20 merkin pituinen. Tarkista nimi ja yritä uudelleen.");
-            } else try {
-                if (treeniAppService.newUser(username, name)) {
-                    newUserUsername.setText("");
-                    newUserName.setText("");
-                    loginNote.setText("Uusi käyttäjä '" + username + "' luotu!");
-                    loginNote.setTextFill(Color.BLACK);
-                    pStage.setScene(loginScene);
-                    newUserNote.setText("");
-                } else {
-                    uiService.showError("Tunnus '" + username + "' on jo käytössä!", "Valitse uusi käyttäjätunnus ja yritä uudelleen.");
+            } else {
+                try {
+                    if (treeniAppService.newUser(username, name)) {
+                        newUserUsername.setText("");
+                        newUserName.setText("");
+                        loginNote.setText("Uusi käyttäjä '" + username + "' luotu!");
+                        loginNote.setTextFill(Color.BLACK);
+                        pStage.setScene(loginScene);
+                        newUserNote.setText("");
+                    } else {
+                        uiService.showError("Tunnus '" + username + "' on jo käytössä!", "Valitse uusi käyttäjätunnus ja yritä uudelleen.");
+                    }
+                } catch (SQLException e) {
+                    uiService.showError("Tietokantavirhe!", "Käyttäjän treenien haku tietokannasta epäonnistui. Ohjelma suljetaan.");
+                    Platform.exit();
+                } catch (Exception e) {
+                    uiService.showError("Tuntematon virhe!", "Tapahtui tuntematon virhe. Ohjelma suljetaan.");
+                    Platform.exit();
                 }
-            } catch (SQLException e) {
-                uiService.showError("Tietokantavirhe!", "Käyttäjän treenien haku tietokannasta epäonnistui. Ohjelma suljetaan.");
-                Platform.exit();
-            } catch (Exception e) {
-                uiService.showError("Tuntematon virhe!", "Tapahtui tuntematon virhe. Ohjelma suljetaan.");
-                Platform.exit();
             }
         });
 
@@ -228,7 +230,7 @@ public class LoginUi extends Application {
 
     @Override
     public void stop() {
-      System.out.println("TreeniApp closed.");
+        System.out.println("TreeniApp closed.");
     }    
     
     public static void main(String[] args) {

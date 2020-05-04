@@ -76,9 +76,9 @@ public class UiService {
     */
     public void showError(String message) {
         Alert error = new Alert(Alert.AlertType.ERROR);
-                error.setTitle("Virhe");
-                error.setHeaderText(message);
-                error.showAndWait();
+        error.setTitle("Virhe");
+        error.setHeaderText(message);
+        error.showAndWait();
     }
     
     /**
@@ -122,9 +122,9 @@ public class UiService {
     */
     public void showInfo(String message) {
         Alert error = new Alert(Alert.AlertType.INFORMATION);
-                error.setTitle("Huomautus");
-                error.setHeaderText(message);
-                error.showAndWait();
+        error.setTitle("Huomautus");
+        error.setHeaderText(message);
+        error.showAndWait();
     }
     
     /**

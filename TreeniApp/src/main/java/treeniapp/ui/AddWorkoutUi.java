@@ -85,10 +85,10 @@ public class AddWorkoutUi {
         DatePicker newWorkoutDay = new DatePicker(LocalDate.now());
         newWorkoutDay.setEditable(false);
         newWorkoutDay.setDayCellFactory(d -> new DateCell() {
-               @Override public void updateItem(LocalDate item, boolean empty) {
-                   super.updateItem(item, empty);
-                   setDisable(item.isAfter(LocalDate.now()));
-               }});
+            @Override public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setDisable(item.isAfter(LocalDate.now()));
+            } });
         Label workoutTimeInstruction = new Label("Kello:");
         ComboBox<String> newWorkoutTimeHour = new ComboBox<>(hours);
         newWorkoutTimeHour.getSelectionModel().select(LocalDateTime.now().getHour());
@@ -219,8 +219,8 @@ public class AddWorkoutUi {
             if (workoutSport == 0) {
                 uiService.showError("Lajia ei ole valittu!", "Valitse treenin urheilulaji valikosta ja yritä uudelleen.");
             } else if (workoutDistanceM > 999) {
-                newWorkoutDistanceKm.setText(String.valueOf(workoutDistance/1000));
-                newWorkoutDistanceM.setText(String.valueOf(workoutDistance%1000));
+                newWorkoutDistanceKm.setText(String.valueOf(workoutDistance / 1000));
+                newWorkoutDistanceM.setText(String.valueOf(workoutDistance % 1000));
                 uiService.showInfo("Päivitin matkan puolestasi.", "Korjasin yli 999 metrin matkan kilometreiksi. Tarkista matka. Jos matka on oikein, paina uudelleen 'Lisää'.");
             } else if (workoutDay.isAfter(LocalDate.now())) {
                 uiService.showError("Virheellinen päivä!", "Valittu päivä on myöhemmin kuin tänään. Tarkista päivä ja yritä uudelleen.");

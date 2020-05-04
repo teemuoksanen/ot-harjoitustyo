@@ -100,7 +100,7 @@ public class WorkoutsUi {
         if (treeniAppService.getLoggedInUser() != null) {
             try {
                 List<Workout> workouts = treeniAppService.getWorkouts(treeniAppService.getLoggedInUser());
-                workouts.forEach(workout->{
+                workouts.forEach(workout-> {
         
                     int workoutYear = Integer.valueOf(workout.getYear());
                     
