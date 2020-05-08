@@ -42,7 +42,7 @@ Voit tarkastella yksittäisen treenin tarkempia tietoja painamalla kyseisen tree
 
 Pääset takaisin treenilistasi painamalla _Takaisin_.
 
-Voit kirjautua ulos ohelmasta painamalla treeninäkymän alareunassa olevaa _Kirjaudu ulos_ -painiketta.
+Treeninäkymästä pääset muokkaamaan myös ohjelman asetuksia painamalla _Asetukset_-painiketta. Voit kirjautua ulos ohelmasta painamalla treeninäkymän alareunassa olevaa _Kirjaudu ulos_ -painiketta.
 
 ## Uuden treenin lisääminen
 
@@ -59,3 +59,13 @@ _Matkan_ kilometri- ja metrimäärät syötetään erikseen. Voit myös syöttä
 Lopuksi voit syöttää myös _keskisykkeen_ sekä vapaamuotoiset _muistiinpanot_ treenistäsi.
 
 Tallenna uusi treenisi painamalla lopuksi _Lisää_. Jos haluat aloittaa täyttämisen alusta, voit painaa _Tyhjennä_. Lisäämisikkunan voit sulkea kokonaan painalla _Sulje_.
+
+## Asetukset
+
+Ohjelman asetuksiin pääset treeninäkymän alalaidassa olevasta _Asetukset_-näppäimestä.
+
+![Asetusnäkymä](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohje-asetukset.png)
+
+Asetuksissa voit vaihtaa treeninäkymässä näytettävää nimeäsi antamalla uuden nimen ja painamlla _Muuta_. Uusi nimi päivittyy, kun suljet asetusikkunan.
+
+Voit lisätä myös uusia lajeja. Anna lajin nimi sekä valitse, haluatko että treeniä lisättäessä kyseisen lajin kohdalla näytetään matka-kenttä. Paina lopuksi _Lisää_-painiketta.
