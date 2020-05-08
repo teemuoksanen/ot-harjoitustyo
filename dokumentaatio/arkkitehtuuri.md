@@ -70,6 +70,12 @@ Kun käyttäjä kirjautumisnäkymässä syöttää käyttäjätunnuksen ja klikk
 
 ![Sekvenssikaavio: Login/Logout](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/sekvenssikaavio-login_logout.png)
 
+### Käyttäjän treenien haku
+
+Kun käyttäjä kirjautuu sisään, lisää uuden treenin tai päivittää asetuksia, päivittää sovellus treeninäkymän tiedot seuraavan mukaisesti;
+
+![Sekvenssikaavio: redrawWorkouts()](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/sekvenssikaavio-redrawworkouts.png)
+
 ### Uuden käyttäjän luominen
 
 Kun käyttäjä kirjautumisnäkymässä painaa painiketta _loginNewUSerButton_, pääsee hän uuden käyttäjän luomisnäkymään. Kun hän syöttää oikemuotoisen käyttäjätunnuksen ja nimen sekä klikkaa painiketta _newUserButton_ , etenee sovelluksen kontrolli seuraavalla tavalla:
@@ -78,7 +84,11 @@ Kun käyttäjä kirjautumisnäkymässä painaa painiketta _loginNewUSerButton_, 
 
 ### Uuden treenin luominen
 
-_TULOSSA_
+Kun käyttäjä luo uuden treenin, etenee sovelluksen kontrolli seuraavalla tavalla:
+
+![Sekvenssikaavio: New Workout](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/sekvenssikaavio-newworkout.png)
+
+Käyttäjän syötteiden tarkistus tapahtuu käyttöliittymän tasolla. Käyttöliittymävalinnat rajaavat jo automaattisesti mahdollisia arvoja.
 
 ## Ohjelman rakenteeseen jääneet heikkoudet
 
