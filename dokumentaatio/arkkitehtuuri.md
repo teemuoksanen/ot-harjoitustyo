@@ -84,10 +84,10 @@ _TULOSSA_
 
 ### Käyttöliittymä
 
-Käyttöliittymän koodi on toistaiseksi yhdessä luokassa ja pääosin sen start-metodissa. Osa käyttöliittymästä on jo erotettu omiksi metodeikseen, mutta työtä olisi syytä jatkaa ja toiminnallisia kokonaisuuksia erottaa mahdollisuuksien mukaan kokonaan omiksi luokikseen.
+Käyttöliittymän koodi on jaettu tällä hetkellä luokkiin "ikkunakohtaisesti". Sovelluksen laajentuessa olisi kuitenkin hyötyä erottaa vielä pienempiä toiminnallisia kokonaisuuksia omiksi luokikseen. Esimerkiksi yksittäiset treenit voisi erottaa omiksi olioluokikseen.
 
 Ylläpidettävyyden kannalta käyttöliittymärakenteen voisi korvata FXML-määrittelyllä.
 
 ### SQL-luokkien ylösheitot
 
-Tietokannan kanssa keskustelevat metodit heittävät nyt exceptionit ylöspäin käsiteltäväksi. Virhetilanteiden käsittelyä olisi syytä parantaa.
+Tietokannan kanssa keskustelevat metodit heittävät nyt exceptioneita osittain käyttöliittymätason käsiteltäväksi. Virhetilanteiden käsittelyä olisi syytä parantaa ja keskittää osaksi sovelluslogiikkaa.
