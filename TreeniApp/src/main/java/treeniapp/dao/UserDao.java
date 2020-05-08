@@ -33,4 +33,13 @@ public interface UserDao {
     */
     User create(User user) throws Exception;
     
+    /**
+    * Updates the <code>User</code> object.
+    * 
+    * @param    user   The <code>User</code> object to be updated.
+    * @return   The updated <code>User</code> object.
+    * @throws   java.lang.Exception if <code>User</code> object cannot be updated.
+    */
+    User update(User user) throws Exception;
+    
 }

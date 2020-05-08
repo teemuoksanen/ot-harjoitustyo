@@ -91,6 +91,23 @@ public class TreeniAppService {
     }
    
     /**
+    * Method is used to update a user's name. 
+    *
+    * @param    user        <code>User</code> object with the username to be updated and the new name
+    *
+    * @return <code>true</code> if the user was updated; <code>false</code> otherwise. 
+    */
+    public boolean updateUser(User user) {
+        try {
+            userDao.update(user);
+            userLoggedIn = user;
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+   
+    /**
     * Method to create a new workout. 
     *
     * @param    workout     <code>Workout</code> object for the new workout
@@ -174,6 +191,27 @@ public class TreeniAppService {
         int total = getTotalTime(user);
         return format.minutesIntoHoursAndMinutes(total);
     }
+   
+    /**
+    * Method is used to create a new sport. 
+    *
+    * @param    name            name of the sport
+    * @param    icon            file name of the sport's icon
+    * @param    showDistance    <code>true</code> if distance is applicable for the sport; <code>false</code> otherwise.
+    *
+    * @return <code>false</code> if username is already in use; <code>true</code> if the new user is created.
+    */
+    public boolean newSport(String name, String icon, boolean showDistance) {
+        if (getSportByName(name) != null) {
+            return false;
+        }
+        try {
+            sportDao.create(new Sport(99, name, icon, showDistance));
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
     
     /**
     * Method to list all sport types.
@@ -194,6 +232,17 @@ public class TreeniAppService {
     */
     public Sport getSportById(int id) {
         return sportDao.findById(id);
+    }
+    
+    /**
+    * Method to get a sport by its name.
+    * 
+    * @param    name     name of the sport
+    * 
+    * @return <code>Sport</code> object.
+    */
+    public Sport getSportByName(String name) {
+        return sportDao.findByName(name);
     }
     
 }

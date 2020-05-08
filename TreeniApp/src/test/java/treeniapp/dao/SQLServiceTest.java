@@ -42,7 +42,7 @@ public class SQLServiceTest {
     @Test
     public void initialDataCanBeRead() throws Exception {
         List<Workout> workouts = workoutDao.getAll();
-        assertEquals(2, workouts.size());
+        assertEquals(3, workouts.size());
         User user = workouts.get(0).getUser();
         assertEquals("Testikäyttäjä", user.getName());
         assertEquals("testaaja", user.getUsername());

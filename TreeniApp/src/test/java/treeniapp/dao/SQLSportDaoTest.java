@@ -34,8 +34,8 @@ public class SQLSportDaoTest {
     @Test
     public void sportsCanBeReadFromDB() throws Exception {
         List<Sport> sports = dao.getAll();
-        assertEquals(4, sports.size());
-        Sport juoksu = sports.get(0);
+        assertEquals(9, sports.size());
+        Sport juoksu = sports.get(1);
         assertEquals("juoksu", juoksu.getName());
         assertEquals(true, juoksu.isShowDistance());
     }
@@ -48,10 +48,10 @@ public class SQLSportDaoTest {
   
     @Test
     public void newSportIsCreatedAndFoundFromDB() throws Exception {
-        Sport newSport = new Sport(5, "testilaji", "test", false);
+        Sport newSport = new Sport(10, "testilaji", "test", false);
         dao.create(newSport);
         
-        Sport sport = dao.findById(5);
+        Sport sport = dao.findById(10);
         assertEquals("testilaji", sport.getName());
         assertEquals(false, sport.isShowDistance());
     }

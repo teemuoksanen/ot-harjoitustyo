@@ -33,17 +33,20 @@ public class WorkoutsUi {
     private TreeniAppService treeniAppService;
     private UiService uiService;
     private AddWorkoutUi addWorkoutUi;
+    private SettingsUi settingsUi;
     
     private Stage workoutsWindow;
     private Scene workoutsScene;
     private VBox workoutNodes;
     private Label workoutsTotal;
     private int yearCounter;
+    private Label welcomeLabel;
     
-    public WorkoutsUi(TreeniAppService treeniAppService, UiService uiService, AddWorkoutUi addWorkoutUi) {
+    public WorkoutsUi(TreeniAppService treeniAppService, UiService uiService, AddWorkoutUi addWorkoutUi, SettingsUi settingsUi) {
         this.treeniAppService = treeniAppService;
         this.uiService = uiService;
         this.addWorkoutUi = addWorkoutUi;
+        this.settingsUi = settingsUi;
     }
     
     /**
@@ -122,6 +125,8 @@ public class WorkoutsUi {
                 Platform.exit();
             }
         }
+        
+        welcomeLabel.setText(treeniAppService.getLoggedInUser().getName());
     }
     
     /**
@@ -235,7 +240,7 @@ public class WorkoutsUi {
     public void workoutsWindow(Stage pStage) {
         // Top
         HBox topMainPane = new HBox();
-        Label welcomeLabel = new Label(treeniAppService.getLoggedInUser().getName());
+        welcomeLabel = new Label(treeniAppService.getLoggedInUser().getName());
         welcomeLabel.setFont(new Font(30.0));
         
         topMainPane.setPadding(new Insets(0, 0, 10, 0));
@@ -252,6 +257,7 @@ public class WorkoutsUi {
 
         // Bottom
         Button addWorkoutButton = new Button("Lisää treeni");
+        Button settingsButton = new Button("Asetukset");
         Button logoutButton = new Button("Kirjaudu ulos");
         Label totalLabel = new Label("Treenit yhteensä:");
         totalLabel.setFont(new Font(15.0));
@@ -268,7 +274,9 @@ public class WorkoutsUi {
         buttonsMainPane.setPadding(new Insets(10, 0, 0, 0));
         Region buttonsSpacer = new Region();
         HBox.setHgrow(buttonsSpacer, Priority.ALWAYS);
-        buttonsMainPane.getChildren().addAll(addWorkoutButton, buttonsSpacer, logoutButton);
+        Region buttonsSpacer2 = new Region();
+        HBox.setHgrow(buttonsSpacer2, Priority.ALWAYS);
+        buttonsMainPane.getChildren().addAll(addWorkoutButton, buttonsSpacer, settingsButton, buttonsSpacer2, logoutButton);
         
         VBox bottomMainPane = new VBox();
         bottomMainPane.getChildren().addAll(totalMainPane, buttonsMainPane);
@@ -297,6 +305,15 @@ public class WorkoutsUi {
             addWorkoutWindow.setTitle("Lisää treeni - TreeniApp");
             addWorkoutWindow.setScene(addWorkoutUi.addWorkoutScene(addWorkoutWindow));
             addWorkoutWindow.showAndWait();
+            redrawWorkouts();
+        });
+        
+        // Open Settings Window
+        settingsButton.setOnAction((event) -> {
+            Stage settingsWindow = new Stage();
+            settingsWindow.setTitle("Asetukset - TreeniApp");
+            settingsWindow.setScene(settingsUi.settingsScene(settingsWindow));
+            settingsWindow.showAndWait();
             redrawWorkouts();
         });
         

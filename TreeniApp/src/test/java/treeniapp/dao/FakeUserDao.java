@@ -29,4 +29,11 @@ public class FakeUserDao implements UserDao {
         return users;
     }
 
+    @Override
+    public User update(User user) throws Exception {
+        int updateIndex = users.indexOf(findByUsername(user.getUsername()));
+        users.set(updateIndex, user);
+        return user;
+    }
+
 }

@@ -41,5 +41,10 @@ public class Sport {
     public boolean isShowDistance() {
         return showDistance;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
     
 }

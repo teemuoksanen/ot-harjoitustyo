@@ -38,5 +38,15 @@ public class FakeSportDao implements SportDao {
         //Not supported yet
         return sports;
     }
+
+    @Override
+    public Sport findByName(String name) {
+        for (Sport s : sports) {
+            if (s.getName().equalsIgnoreCase(name)) {
+                return s;
+            }
+        }
+        return null;
+    }
     
 }

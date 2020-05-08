@@ -39,6 +39,7 @@ public class LoginUi extends Application {
     private Scene newUserScene;
     private WorkoutsUi workoutsUi;
     private AddWorkoutUi addWorkoutUi;
+    private SettingsUi settingsUi;
     
     // Services
     private TreeniAppService treeniAppService;
@@ -78,7 +79,8 @@ public class LoginUi extends Application {
         
         uiService = new UiService(treeniAppService);
         addWorkoutUi = new AddWorkoutUi(treeniAppService, uiService, workoutsUi);
-        workoutsUi = new WorkoutsUi(treeniAppService, uiService, addWorkoutUi);
+        settingsUi = new SettingsUi(treeniAppService, uiService, workoutsUi);
+        workoutsUi = new WorkoutsUi(treeniAppService, uiService, addWorkoutUi, settingsUi);
         
     }
     

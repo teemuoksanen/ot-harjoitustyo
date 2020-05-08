@@ -9,5 +9,6 @@
     <suppress files="treeniapp.ui.LoginUi.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="treeniapp.ui.WorkoutsUi.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="treeniapp.ui.AddWorkoutUi.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="treeniapp.ui.SettingsUi.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="treeniapp.ui.UiService.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

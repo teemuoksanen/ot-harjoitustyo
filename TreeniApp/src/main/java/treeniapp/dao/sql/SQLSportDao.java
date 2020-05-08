@@ -32,16 +32,20 @@ public class SQLSportDao implements SportDao {
         this.sports = new ArrayList<>();
         this.sportMap = new HashMap<>();
         
-        getInitialSports();
+        getSports();
     }
     
     /**
     * Method to initially fetch all sports from the database and stored to an ArrayList and a HashMap.
     */
-    private void getInitialSports() throws SQLException {
+    private void getSports() throws SQLException {
+        
+        this.sports.clear();
+        this.sportMap.clear();
+        
         Connection connection = sql.getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Sports");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Sports ORDER BY name");
         ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
@@ -69,17 +73,15 @@ public class SQLSportDao implements SportDao {
         Connection connection = sql.getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Sports"
-            + " (id, name, icon, showdist) VALUES (?, ?, ?, ?)");
-        stmt.setInt(1, sport.getId());
-        stmt.setString(2, sport.getName());
-        stmt.setString(3, sport.getIcon());
-        stmt.setBoolean(4, sport.isShowDistance());
+            + " (name, icon, showdist) VALUES (?, ?, ?)");
+        stmt.setString(1, sport.getName());
+        stmt.setString(2, sport.getIcon());
+        stmt.setBoolean(3, sport.isShowDistance());
         stmt.executeUpdate();
         stmt.close();
         connection.close();
 
-        sports.add(sport);
-        sportMap.put(sport.getId(), sport);
+        getSports();
 
         return sport;
     }
@@ -94,6 +96,23 @@ public class SQLSportDao implements SportDao {
     @Override
     public Sport findById(int id) {
         return sportMap.getOrDefault(id, null);
+    }
+
+    /**
+    * Method to find a sport by its name.
+    * 
+    * @param    name   The name of the <code>Sport</code> object to be fetched.
+    * 
+    * @return <code>Sport</code> object with the name; <code>null</code> if not found.
+    */
+    @Override
+    public Sport findByName(String name) {
+        for (Sport s : sports) {
+            if (s.getName().equalsIgnoreCase(name)) {
+                return s;
+            }
+        }
+        return null;
     }
 
     /**

@@ -27,6 +27,14 @@ public interface SportDao {
     Sport findById(int id);
     
     /**
+    * Finds a <code>Sport</code> object by its name.
+    * 
+    * @param    name   Name of the <code>Sport</code> object.
+    * @return   The <code>Sport</code> object.
+    */
+    Sport findByName(String name);
+    
+    /**
     * Lists all <code>Sport</code> objects.
     * 
     * @return   A <code>List</code> containing all <code>Sport</code> objects.

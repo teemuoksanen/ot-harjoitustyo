@@ -106,7 +106,8 @@ public class SQLService {
                 + ");").executeUpdate();
         connection.prepareStatement("MERGE INTO Workouts (id, datetime, user, sport, duration, distance, mhr, notes) VALUES\n"
                 + "    (1, '2020-02-15 12:01:01', 'testaaja', 1, 65, 1500, 125, 'Juoksua parvekkeella'),\n"
-                + "    (2, '2020-02-19 14:02:02', 'testaaja', 2, 35, 0, 110, 'Ulkokuntosali')\n"
+                + "    (2, '2020-02-19 14:02:02', 'testaaja', 2, 35, 0, 110, 'Ulkokuntosali'),\n"
+                + "    (3, '2019-04-01 11:22:33', 'testaaja', 3, 49, 2500, 130, '')\n"
                 + ";").executeUpdate();
         connection.close();
     }
@@ -126,7 +127,12 @@ public class SQLService {
                 + "    (1, 'juoksu', 'running', 'TRUE'),"
                 + "    (2, 'kuntosali', 'gym', 'FALSE'),"
                 + "    (3, 'uinti', 'swimming', 'TRUE'),"
-                + "    (4, 'koripallo', 'basketball', 'FALSE')"
+                + "    (4, 'koripallo', 'basketball', 'FALSE'),"
+                + "    (5, 'ryhmäliikunta', 'group', 'FALSE'),"
+                + "    (6, 'pyöräily', 'bike', 'TRUE'),"
+                + "    (7, 'jääkiekko', 'hockey', 'FALSE'),"
+                + "    (8, 'jalkapallo', 'football', 'FALSE'),"
+                + "    (9, 'tennis', 'tennis', 'FALSE')"
                 + ";").executeUpdate();
         connection.close();
     }

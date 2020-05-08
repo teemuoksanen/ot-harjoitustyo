@@ -44,11 +44,11 @@ public class SQLWorkoutDaoTest {
     @Test
     public void newWorkoutIsCreated() {
         try {
-            assertEquals(2, workoutDao.getAll().size());
+            assertEquals(3, workoutDao.getAll().size());
             User user = userDao.findByUsername("testaaja");
             Workout wo1 = new Workout(3, Timestamp.valueOf("2019-05-19 09:03:03.123456789"), user, sportDao.findById(1), 9, 1500, 125, "newWorkoutIsCreated");
             assertEquals("newWorkoutIsCreated", workoutDao.create(wo1).getNotes());
-            assertEquals(3, workoutDao.getAll().size());
+            assertEquals(4, workoutDao.getAll().size());
         } catch (Exception ex) {
             Logger.getLogger(SQLWorkoutDaoTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -95,11 +95,11 @@ public class SQLWorkoutDaoTest {
     public void correctWorkoutIsFoundById() {
         try {
             User user = userDao.findByUsername("testaaja");
-            Workout wo1 = new Workout(3, Timestamp.valueOf("2019-05-19 09:03:03.123456789"), user, sportDao.findById(1), 9, 1500, 99, "Uusi Testaaja - eka treeni");
+            Workout wo1 = new Workout(4, Timestamp.valueOf("2019-05-19 09:03:03.123456789"), user, sportDao.findById(1), 9, 1500, 99, "Uusi Testaaja - eka treeni");
             
             assertEquals(125, workoutDao.findById(1).getMhr());
             workoutDao.create(wo1);
-            assertEquals(99, workoutDao.findById(3).getMhr());
+            assertEquals(99, workoutDao.findById(4).getMhr());
         } catch (Exception ex) {
             Logger.getLogger(SQLWorkoutDaoTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -108,10 +108,10 @@ public class SQLWorkoutDaoTest {
     @Test
     public void workoutIsRemoved() {
         try {
-            assertEquals(2, workoutDao.getAll().size());
+            assertEquals(3, workoutDao.getAll().size());
             Workout wo = workoutDao.findById(1);
             workoutDao.remove(wo);
-            assertEquals(1, workoutDao.getAll().size());
+            assertEquals(2, workoutDao.getAll().size());
         } catch (Exception ex) {
             Logger.getLogger(SQLWorkoutDaoTest.class.getName()).log(Level.SEVERE, null, ex);
         }

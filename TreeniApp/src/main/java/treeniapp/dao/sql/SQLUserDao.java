@@ -104,5 +104,25 @@ public class SQLUserDao implements UserDao {
 
         return user;
     }
+
+    @Override
+    public User update(User user) throws Exception {
+        
+        Connection connection = sql.getConnection();
+
+        PreparedStatement stmt = connection.prepareStatement("UPDATE Users"
+            + " SET name = ? WHERE username = ?");
+        stmt.setString(1, user.getName());
+        stmt.setString(2, user.getUsername());
+        stmt.executeUpdate();
+        stmt.close();
+        connection.close();
+        
+        int updateIndex = users.indexOf(findByUsername(user.getUsername()));
+        users.set(updateIndex, user);
+        userMap.replace(user.getUsername(), user);
+
+        return user;
+    }
     
 }
