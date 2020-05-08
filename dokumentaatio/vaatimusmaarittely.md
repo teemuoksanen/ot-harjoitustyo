@@ -10,11 +10,11 @@ Alkuvaiheessa sovelluksella on ainoastaan yksi käyttäjärooli (normaali käytt
 
 ## Käyttöliittymäluonnos
 
-Sovellus koostuu kirjautumisikkunasta, perusnäytöstä, treenin lisäämisnäytöstä ja yksittäisen treenin näytöstä.
+Sovellus koostuu kirjautumisikkunasta, perusnäytöstä, treenin lisäämisnäytöstä, yksittäisen treenin näytöstä ja asetusnäytöstä.
 
-Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen aukeaa perusnäyttö. Perusnäytöllä on listattu käyttäjän treenit sekä muutamia perustilastoja, kuten treenien yhteismäärä. Uusi treeni lisätään erilliseltä näytöltä.
+Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen aukeaa perusnäyttö. Perusnäytöllä on listattu käyttäjän treenit sekä muutamia perustilastoja, kuten treenien yhteismäärä. Uusi treeni lisätään ja sovelluksen asetuksia muokataan erillisiltä näytöiltä.
 
-## Suunnitellut toiminnallisuudet
+## Toiminnallisuudet
 
 ### Kirjautumisikkuna
 
@@ -34,6 +34,11 @@ Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen au
 - [x] valitusta lajista riippuen kysytään olennaiset tiedot
 - [x] virheellisten syötteiden antaminen pyritään estämään (esim. päivän valinta kalenterin avulla)
 
+### Asetukset
+
+- [x] oman nimen muuttaminen
+- [x] uuden lajin lisääminen (nimi ja matka)
+
 ### Yksittäisen treenin lisätiedot
 
 - [x] treenin kaikki tiedot näkyvissä (jos syötetty)
@@ -43,8 +48,7 @@ Sovellus aukeaa kirjautumisikkunaan, josta onnistuneen kirjautumisen jälkeen au
 
 Perusversion jälkeen ohjelmaa voidaan täydentää ajan salliessa uusilla ominaisuuksilla:
 
-- [ ] asetusten muuttaminen (esim. oma nimi)
 - [ ] kirjautuminen salasanalla
 - [ ] treenisuunnitelmien (tulevat treenit) lisääminen
 - [ ] eri käyttäjäroolit
-- [ ] uuden lajin lisääminen
+- [ ] kuvakkeen lisääminen uudelle lajille
