@@ -90,6 +90,10 @@ Kun käyttäjä luo uuden treenin, etenee sovelluksen kontrolli seuraavalla tava
 
 Käyttäjän syötteiden tarkistus tapahtuu käyttöliittymän tasolla. Käyttöliittymävalinnat rajaavat jo automaattisesti mahdollisia arvoja.
 
+### Muut toiminnot
+
+Muutkin toiminnot noudattavat samaa kaavaa kuin yllä: käyttöliittymässä tehty pyyntö välitetään aina _TreeniAppService_-luokan kautta sovelluksen tietomallista vastaaville luokille. Käyttöliittymä ei ole yhteydessä suoraan tietomalleihin tai erityisesti tietokantoihin.
+
 ## Ohjelman rakenteeseen jääneet heikkoudet
 
 ### Käyttöliittymä
