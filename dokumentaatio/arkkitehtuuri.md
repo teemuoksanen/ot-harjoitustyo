@@ -39,6 +39,7 @@ Toiminnallisista kokonaisuuksista vastaa luokka [TreeniAppService](https://githu
 - void logout()
 - boolean newUser(String username, String name)
 - boolean newWorkout(Workout workout)
+- boolean newSport(Sport sport)
 - List<Workout> getWorkouts(User user)
 - Workout getWorkoutById(int id)
 - String getTotalTimeFormatted(User user)
