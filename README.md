@@ -12,6 +12,8 @@ Sovellus on Helsingin yliopiston tietojenkäsittelytieteen laitoksen **Ohjelmist
 
 [Arkkitehtuurikuvaus](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
+[Testausdokumentti](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/testaus.md)
+
 [Työaikakirjanpito](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 ## Releaset
