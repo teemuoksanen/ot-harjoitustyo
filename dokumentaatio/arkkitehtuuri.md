@@ -10,14 +10,23 @@ JavaFX:llä toteutettu käyttöliittymä sisältyy pakkaukseen _treeniapp.ui_. S
 
 ## Käyttöliittymä
 
-Ohjelman käyttöliittymä sisältää viisi eri näkymää:
+Ohjelman käyttöliittymä sisältää kuusi eri näkymää:
 - kirjautuminen
 - uuden käyttäjän luominen
 - käyttäjän treenilista
 - yksittäinen treeni
 - treenin lisääminen
+- asetukset
 
-Näkymät on toteutettu itsenäisinä Scene-olioina. Treenin lisääminen on toteutettu muista erilliseen Stage-olioon (eli se avautuu erilliseen ikkunaan), muut näkymät ovat näkyvissä yksi kerrallaan yhteisessä Stage-oliossa.
+Näkymät on toteutettu neljänä eri luokkana:
+- [treeniapp.ui.LoginUi](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/ui/LoginUi.java): kirjautuminen ja uuden käyttäjän luominen
+- [treeniapp.ui.WorkoutsUi](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/ui/WorkoutsUi.java): käyttäjän treenilista ja yksittäinen treeni
+- [treeniapp.ui.AddWorkoutUi](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/ui/AddWorkoutUi.java): treenin lisääminen
+- [treeniapp.ui.SettingsUi](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/ui/SettingsUi.java): asetukset
+
+Kukin luokka vastaa yhtä Stage-olioa (eli kukin niistä avautuu erilliseen ikkunaan) ja luokan eri näkymät on toteutettu niissä itsenäisinä Scene-olioina.
+
+Näiden lisäksi käyttöliittymäluokilla on yhteinen luokka [treeniapp.ui.UiService](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/ui/UiService.java), joka tarjoaa yhteisiä, useammassa näkymässä käytettäviä metodeja (esim. virheilmoitukset) varsinaisille käyttöliittymäluokille.
 
 Käyttöliittymä on rakennettu ohjelmallisesti luokkaan [treeniapp.ui.TreeniUi](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/ui/TreeniUi.java). Käyttöliittymä on eriytetty sovelluslogiikasta ohjaamalla käyttöliittymän kutsut _treeniAppService_-olion metodeille.
 
@@ -35,6 +44,8 @@ Toiminnallisista kokonaisuuksista vastaa luokka [TreeniAppService](https://githu
 - String getTotalTimeFormatted(User user)
 
 _TreeniAppService_ pääsee käsiksi käyttäjiin, treeneihin ja lajeihin pakkauksen _treeniapp.dao_ rajapintojen UserDao, WorkOutDao ja SportDao kautta. Nämä rajapinnat toteuttavat luokat injektoidaan sovelluslogiikalle sen konstruktorikutsun yhteydessä.
+
+Lisäksi sovelluslogiikan osana on [Formatter](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/main/java/treeniapp/domain/Formatter.java)-luokka, jonka tarkoituksena on muotoilla tallennettua raakadataa käytettäväksi erityisesti käyttöliittymässä.
 
 ### Luokka- ja pakkauskaavio
 
