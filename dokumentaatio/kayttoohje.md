@@ -12,6 +12,14 @@ passwordDB=                        (tietokannan salasana)
 
 Normaalitilanteessa käyttäjä voi käyttää yllä mainittuja oletusarvoja.
 
+## Ohjelman käynnistäminen
+
+Ohjelma käynnistetään komennolla
+
+```
+java -jar treeniapp.jar
+```
+
 ## Kirjautuminen
 
 Sovellus käynnistyy kirjautumisnäkymään:
