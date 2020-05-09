@@ -218,13 +218,18 @@ public class WorkoutsUi {
         
         // Delete Workout
         deleteWorkoutButton.setOnAction((event) -> {
-            boolean confirmRemove = uiService.showConfirmation("Haluatko varmasti poistaa treenin?");
-            if (confirmRemove) {
-                if (treeniAppService.deleteWorkout(workout)) {
-                    redrawWorkouts();
-                    workoutsWindow.setScene(workoutsScene);
-                } else {
-                    uiService.showError("Treenin poistaminen ei onnistunut!");
+            if (workout.getId() <= 3) {
+                uiService.showInfo("Esimerkkitreeniä ei voi poistaa!", "Testikäyttäjän esimerkkitreenien poistaminen ei ole mahdollista."
+                        + "Voit testata poistamista luomalla testikäyttäjälle uuden treenin ja poistamalla kyseisen uuden treenin.");
+            } else {
+                boolean confirmRemove = uiService.showConfirmation("Haluatko varmasti poistaa treenin?");
+                if (confirmRemove) {
+                    if (treeniAppService.deleteWorkout(workout)) {
+                        redrawWorkouts();
+                        workoutsWindow.setScene(workoutsScene);
+                    } else {
+                        uiService.showError("Treenin poistaminen ei onnistunut!");
+                    }
                 }
             }
         });
