@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import treeniapp.dao.sql.SQLService;
@@ -112,6 +112,7 @@ public class SQLWorkoutDaoTest {
             Workout wo = workoutDao.findById(1);
             workoutDao.remove(wo);
             assertEquals(2, workoutDao.getAll().size());
+            assertEquals(null, workoutDao.findById(1));
         } catch (Exception ex) {
             Logger.getLogger(SQLWorkoutDaoTest.class.getName()).log(Level.SEVERE, null, ex);
         }

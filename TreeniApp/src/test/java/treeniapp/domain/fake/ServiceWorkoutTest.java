@@ -1,9 +1,8 @@
 
-package treeniapp.domain;
+package treeniapp.domain.fake;
 
 import java.sql.Timestamp;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import treeniapp.dao.FakeSportDao;
@@ -12,8 +11,11 @@ import treeniapp.dao.FakeWorkoutDao;
 import treeniapp.dao.SportDao;
 import treeniapp.dao.UserDao;
 import treeniapp.dao.WorkoutDao;
+import treeniapp.domain.TreeniAppService;
+import treeniapp.domain.User;
+import treeniapp.domain.Workout;
 
-public class TreeniServiceWorkoutTest {
+public class ServiceWorkoutTest {
     
     UserDao userDao;
     SportDao sportDao;
@@ -45,6 +47,18 @@ public class TreeniServiceWorkoutTest {
     }
     
     @Test
+    public void workoutCreatedAndDeletedSuccesfully() throws Exception {
+        service.login("testi");
+        Workout wo1 = new Workout(3, Timestamp.valueOf("2019-05-19 09:03:03.123456789"), userDao.findByUsername("testi"), sportDao.findById(1), 9, 1500, 125, "Testi");
+        
+        assertEquals(1, service.getWorkouts(userDao.findByUsername("testi")).size());
+        assertTrue(service.newWorkout(wo1));
+        assertEquals(2, service.getWorkouts(userDao.findByUsername("testi")).size());
+        assertTrue(service.deleteWorkout(wo1));
+        assertEquals(1, service.getWorkouts(userDao.findByUsername("testi")).size());
+    }
+    
+    @Test
     public void totalWorkoutTimeIsEmptyForNewUser() throws Exception {
         User u = new User("uusi", "Uusi Testikäyttäjä");
         
@@ -61,6 +75,5 @@ public class TreeniServiceWorkoutTest {
         
         assertEquals("1:06", service.getTotalTimeFormatted(u));
     }
-    
     
 }

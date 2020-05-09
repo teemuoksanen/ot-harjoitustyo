@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import treeniapp.dao.sql.SQLService;
@@ -45,6 +45,11 @@ public class SQLSportDaoTest {
         Sport koris = dao.findById(4);
         assertEquals("koripallo", koris.getName());
     }
+    
+    @Test
+    public void nonexistingSportIsNotFoundFromDB() {
+        assertEquals(null, dao.findByName("virheellinen"));
+    }
   
     @Test
     public void newSportIsCreatedAndFoundFromDB() throws Exception {
@@ -52,7 +57,7 @@ public class SQLSportDaoTest {
         dao.create(newSport);
         
         Sport sport = dao.findById(10);
-        assertEquals("testilaji", sport.getName());
+        assertEquals(sport.getName(), dao.findByName("testilaji").getName());
         assertEquals(false, sport.isShowDistance());
     }
     
