@@ -82,4 +82,6 @@ Voit lisätä myös uusia lajeja. Anna lajin nimi sekä valitse, haluatko että 
 
 Sovelluksen käyttöä voi testata ilman uuden käyttäjän luomista käyttämällä tunnusta _testaaja_. Käyttäjälle on luotu valmiiksi kolme esimerkkitreeniä.
 
-Testikäyttäjän luomat uudet treenit ja lajit tallentuvat normaalisti tietokantaan, mutta sovelluksen uudelleenkäynnistyksen yhteydessä testikäyttäjän nimi palautetaan aina alkuperäiseen muotoonsa. Testikäyttäjän kolmea esimerkkitreeniä ei pysty käyttöliittymästä myöskään poistamaan, millä pyritään estämään mahdollista tietokannan vaurioitumista, koska nämä esimerkkitreenit palautetaan aina sovelluksen uudelleenkäynnistyksen yhteydessä.
+Testikäyttäjän luomat uudet treenit ja lajit tallentuvat normaalisti tietokantaan, mutta sovelluksen uudelleenkäynnistyksen yhteydessä testikäyttäjän nimi palautetaan aina alkuperäiseen muotoonsa. Testikäyttäjän kolmea esimerkkitreeniä ei pysty käyttöliittymästä myöskään poistamaan, millä pyritään estämään mahdollista tietokannan vaurioitumista, koska nämä esimerkkitreenit uudelleenkirjoitetaan aina sovelluksen uudelleenkäynnistyksen yhteydessä.
+
+![Esimerkkitreenin poisto](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/ohje-testikayttaja.png)
