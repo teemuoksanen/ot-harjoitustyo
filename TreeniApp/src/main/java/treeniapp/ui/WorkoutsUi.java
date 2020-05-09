@@ -235,7 +235,7 @@ public class WorkoutsUi {
             }
         });
 
-        return new Scene(viewWorkoutPane, 330, 330);
+        return new Scene(viewWorkoutPane, 330, 370);
     }
     
     /**
