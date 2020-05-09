@@ -12,11 +12,13 @@ Sovelluslogiikan (eli [treeniapp.domain](https://github.com/teemuoksanen/ot-harj
 
 - Testipakkauksessa [treeniapp.domain.fake](https://github.com/teemuoksanen/ot-harjoitustyo/tree/master/TreeniApp/src/test/java/treeniapp/domain/fake) olevat testiluokat sisältävät koko sovelluslogiikan integraatiotestauksen lukuunottamatta SQL-tietokantayhteyksiä. Näissä testeissä datan pysyväistallennukseen käytetään DAO-rajapintojen keskusmuistitoteutuksia [FakeSportDao](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/test/java/treeniapp/dao/FakeSportDao.java), [FakeWorkoutDao](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/test/java/treeniapp/dao/FakeWorkoutDao.java) ja [FakeUserDao](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/test/java/treeniapp/dao/FakeUserDao.java). Tämä mahdollistaa sovelluslogiikan testaamisen silloinkin, kun varsinaista pysyväistallennusta ei sovelluksella ole käytössä.
 
-- Testipakkauksessa [treeniapp.domain.sql](https://github.com/teemuoksanen/ot-harjoitustyo/tree/master/TreeniApp/src/test/java/treeniapp/domain/fake) olevat testiluokat vastaavat pääosin vastaavat testit kuin _treeniapp.domain.fake_, mutta se käyttää datan pysyväistallennuksen testaamiseen DAO-rajapintojen oikeita SQL-toteutuksia. Nämä integraatiotestit kattavat siis lähes koko nykyisen sovelluslogiikan.
+- Testipakkauksessa [treeniapp.domain.sql](https://github.com/teemuoksanen/ot-harjoitustyo/tree/master/TreeniApp/src/test/java/treeniapp/domain/fake) olevat testiluokat vastaavat pääosin vastaavat testit kuin _treeniapp.domain.fake_, mutta se käyttää datan pysyväistallennuksen testaamiseen DAO-rajapintojen oikeita SQL-toteutuksia. Nämä integraatiotestit kattavat siis lähes koko nykyisen sovelluslogiikan. SQL-yhteyden testaamisessa käytetään testiluokissa määriteltyä testitietokantaa _treeniapptest_, joten testit eivät vaikuta varsinaisen sovelluksen käyttämien tietokantojen sisältöön.
 
 ### DAO-luokat
 
-_TULOSSA_
+Testipakkauksessa [treeniapp.dao](https://github.com/teemuoksanen/ot-harjoitustyo/tree/master/TreeniApp/src/test/java/treeniapp/dao) olevat luokat testaavat kunkin DAO-rajapinnan SQL-toteutukset sekä yksikkötestinä sellaiset _SQLService_-luokan osat, jotka jäisivät integraatiotestien ulkopuolelle.
+
+Lisäksi testipakkaukseen on tallennettu _treeniapp.domain.fake_-testipakkauksen käyttämät DAO-rajapintojen keskusmuistitoteutukset, jotka eivät siis ole varsinaisia testiluokkia.
 
 ### Testauskattavuus
 
