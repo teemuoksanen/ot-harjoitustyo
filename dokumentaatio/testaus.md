@@ -34,7 +34,9 @@ Sovelluksen järjestelmätestaus suoritettiin manuaalisesti kolmella eri tietoko
 
 ### Asennus ja konfigurointi
 
-_TULOSSA_
+Sovellus on haettu ja sitä on testattu käyttöohjeen kuvaamalla tavalla mainituilla kolmella tietokoneella MacOS- ja Linux-ympäristöissä. Käyttöohjeessa mainitulla tavalla sovelluksen käynnistyshakemistossa on ollut esimerkin mukainen _config.properties_-tiedosto, jossa on käytettävän tietokannan tiedot.
+
+Lisäksi testattiin tilannetta, jossa _config.properties_-tiedostoon muutettiin käytettävän tietokannan nimeä, jolloin sovelluksen pitäisi luoda uudet tietokantataulut sekä niihin yhdeksän eri oletuslajia, käyttäjä _"testaaja"_ sekä muutamia esimerkkitreenejä.
 
 ### Toiminnallisuudet
 
@@ -42,8 +44,6 @@ Toiminnallisuuksia testattiin käymällä manuaalisesti läpi [vaatimusmääritt
 
 Toiminnallisuuksien yhteydessä yritettiin antaa tyhjiä, liian lyhyitä, liian pitkiä tai muutoin virheellisiä syötteitä sovelluksen kenttiin.
 
-## Sovellukseen jäänee laatuongelmat
+## Sovellukseen jääneet laatuongelmat
 
-Sovelluksen virheilmoituksia olisi hyvä parantaa ainakin seuraavissa tilanteissa:
-
-- _TULOSSA_
+Sovelluksen poikkeusten käsittelyä ja niistä johdettavia virheilmoituksia olisi hyvä parantaa niin, että virheilmoituksista selviää paremmin ongelman syy. Toisaalta ongelmatilanteiden syntyä on pyritty estämään mahdollisuuksien mukaan rajoittamalla käyttöliittymässä esimerkiksi syötteiden muotoa. Sen sijaan käyttäjän _config.properties_-tiedostoon tekemät muutokset (tai tiedoston puute) voivat aiheuttaa virhetilanteita, joissa sovellusta ei voi käyttää.
