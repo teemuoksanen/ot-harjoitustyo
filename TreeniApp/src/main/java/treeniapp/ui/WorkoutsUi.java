@@ -220,7 +220,7 @@ public class WorkoutsUi {
         deleteWorkoutButton.setOnAction((event) -> {
             if (workout.getId() <= 3) {
                 uiService.showInfo("Esimerkkitreeniä ei voi poistaa!", "Testikäyttäjän esimerkkitreenien poistaminen ei ole mahdollista."
-                        + "Voit testata poistamista luomalla testikäyttäjälle uuden treenin ja poistamalla kyseisen uuden treenin.");
+                        + " Voit testata poistamista luomalla testikäyttäjälle uuden treenin ja poistamalla kyseisen uuden treenin.");
             } else {
                 boolean confirmRemove = uiService.showConfirmation("Haluatko varmasti poistaa treenin?");
                 if (confirmRemove) {
