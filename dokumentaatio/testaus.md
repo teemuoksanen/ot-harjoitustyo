@@ -14,9 +14,11 @@ _TULOSSA_
 
 ### Testauskattavuus
 
-_TULOSSA_
+![Testauskattavuus](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/dokumentaatio/kuvat/testikattavuus.png)
 
-Testauskattavuudessa ei otettu huomioon käyttöliittymäkerroksen luokkia.
+Testit kattavat koko sovelluslogiikan sekä DAO-luokat lukuunottamatta mahdollisten heittojen käsittelyä.
+
+Testauskattavuudessa ei otettu huomioon ainoastaan sovelluksen käynnistämiseen tarkoitettua Main-luokkaa sekä käyttöliittymäkerroksen luokkia.
 
 ## Järjestelmätestaus
 
