@@ -52,3 +52,4 @@ Perusversion jälkeen ohjelmaa voidaan täydentää ajan salliessa uusilla omina
 - [ ] treenisuunnitelmien (tulevat treenit) lisääminen
 - [ ] eri käyttäjäroolit
 - [ ] kuvakkeen lisääminen uudelle lajille
+- [ ] lajien tietojen muokkaaminen ja turhien lajien poistaminen tai piilottaminen hallitusti niin, ettei vaikuta tallennettuihin treeneihin
