@@ -21,4 +21,5 @@
 | 2.5.  | 7      | käyttöliittymän jakaminen eri luokkiin ja muuta refaktorointia |
 | 4.5.  | 2      | JavaDocin ja testaustan täydentäminen |
 | 8.5.  | 5      | Asetukset-toiminnon lisääminen, koodin refaktorointia, dokumentaation täydentäminen |
-| yht.  | 68     | | 
+| 9.5.  | 3      | testien sekä dokumentaation täydentäminen |
+| yht.  | 71     | | 
