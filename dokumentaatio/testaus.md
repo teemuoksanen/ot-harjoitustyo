@@ -6,7 +6,13 @@ Sovellusta on pyritty testaamaan kattavasti sekä automatisoiduin yksikkö- ja i
 
 ### Sovelluslogiikka
 
-_TULOSSA_
+Sovelluslogiikan (eli [treeniapp.domain](https://github.com/teemuoksanen/ot-harjoitustyo/tree/master/TreeniApp/src/main/java/treeniapp/domain)-pakkauksen luokkien) testaus on jaettu seuraavasti:
+
+- Testipakkauksen [treeniapp.domain](https://github.com/teemuoksanen/ot-harjoitustyo/tree/master/TreeniApp/src/test/java/treeniapp/domain) juuressa olevat testiluokat sisältävät Sport-, Workout- ja User-olioluokkien yksikkötestit.
+
+- Testipakkauksessa [treeniapp.domain.fake](https://github.com/teemuoksanen/ot-harjoitustyo/tree/master/TreeniApp/src/test/java/treeniapp/domain/fake) olevat testiluokat sisältävät koko sovelluslogiikan integraatiotestauksen lukuunottamatta SQL-tietokantayhteyksiä. Näissä testeissä datan pysyväistallennukseen käytetään DAO-rajapintojen keskusmuistitoteutuksia [FakeSportDao](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/test/java/treeniapp/dao/FakeSportDao.java), [FakeWorkoutDao](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/test/java/treeniapp/dao/FakeWorkoutDao.java) ja [FakeUserDao](https://github.com/teemuoksanen/ot-harjoitustyo/blob/master/TreeniApp/src/test/java/treeniapp/dao/FakeUserDao.java). Tämä mahdollistaa sovelluslogiikan testaamisen silloinkin, kun varsinaista pysyväistallennusta ei sovelluksella ole käytössä.
+
+- Testipakkauksessa [treeniapp.domain.sql](https://github.com/teemuoksanen/ot-harjoitustyo/tree/master/TreeniApp/src/test/java/treeniapp/domain/fake) olevat testiluokat vastaavat pääosin vastaavat testit kuin _treeniapp.domain.fake_, mutta se käyttää datan pysyväistallennuksen testaamiseen DAO-rajapintojen oikeita SQL-toteutuksia. Nämä integraatiotestit kattavat siis lähes koko nykyisen sovelluslogiikan.
 
 ### DAO-luokat
 
