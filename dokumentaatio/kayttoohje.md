@@ -17,7 +17,7 @@ Normaalitilanteessa käyttäjä voi käyttää yllä mainittuja oletusarvoja.
 Ohjelma käynnistetään komennolla
 
 ```
-java -jar treeniapp.jar
+java -jar TreeniApp.jar
 ```
 
 ## Kirjautuminen
