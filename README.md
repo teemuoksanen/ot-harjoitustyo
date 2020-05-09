@@ -18,6 +18,8 @@ Sovellus on Helsingin yliopiston tietojenkäsittelytieteen laitoksen **Ohjelmist
 
 ## Releaset
 
+[Loppupalautus](https://github.com/teemuoksanen/ot-harjoitustyo/releases/tag/loppupalautus)
+
 [Viikko 6](https://github.com/teemuoksanen/ot-harjoitustyo/releases/tag/viikko6)
 
 [Viikko 5](https://github.com/teemuoksanen/ot-harjoitustyo/releases/tag/viikko5)
