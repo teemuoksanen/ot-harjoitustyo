@@ -165,6 +165,7 @@ public class WorkoutsUi {
         Label viewWorkoutMhrLabel = new Label("Keskisyke:");
         Label viewWorkoutMhr = new Label(workout.getMhr() + " bpm");
         Text viewWorkoutNotes = new Text(workout.getNotes());
+        viewWorkoutNotes.setWrappingWidth(300);
         
         int gridRowCounter = 0;
         

@@ -123,12 +123,12 @@ public class AddWorkoutUi {
         ColumnConstraints addWorkoutCol0 = new ColumnConstraints();
         addWorkoutCol0.setHgrow(Priority.ALWAYS);
         addWorkoutCol0.setHalignment(HPos.CENTER);
-        ColumnConstraints addWorkoutCol1 = new ColumnConstraints(80);
+        ColumnConstraints addWorkoutCol1 = new ColumnConstraints(90);
         addWorkoutCol1.setHalignment(HPos.RIGHT);
         ColumnConstraints addWorkoutCol6 = new ColumnConstraints();
         addWorkoutCol6.setHgrow(Priority.ALWAYS);
         addWorkoutPane.getColumnConstraints().addAll(addWorkoutCol0, addWorkoutCol1,
-                new ColumnConstraints(80), new ColumnConstraints(20), new ColumnConstraints(80),
+                new ColumnConstraints(80), new ColumnConstraints(10), new ColumnConstraints(80),
                 new ColumnConstraints(36), addWorkoutCol6);
         addWorkoutPane.add(addWorkoutLabel, 0, 0, 7, 1);
         addWorkoutPane.add(workoutSportInstruction, 1, 2);
@@ -230,6 +230,8 @@ public class AddWorkoutUi {
                 uiService.showError("Matka ei voi olla yli 1.000 km!", "Tarkista matkan pituus ja yritä uudelleen.");
             } else if (workoutMhr > 250) {
                 uiService.showError("Keskisyke ei voi olla yli 250 bpm!", "Tarkista keskisyke ja yritä uudelleen.");
+            } else if (workoutNotes.length() > 250) {
+                uiService.showError("Muistiinpano on liian pitkä!", "Muistiinpanon maksimipituus on 250 merkkiä. Lyhennä muistiinpanoa ja yritä uudelleen.");
             } else {
                 Workout workout = new Workout(0, Timestamp.valueOf(workoutDateTime), treeniAppService.getLoggedInUser(), treeniAppService.getSportById(workoutSport), workoutDuration, workoutDistance, workoutMhr, workoutNotes);
                 
