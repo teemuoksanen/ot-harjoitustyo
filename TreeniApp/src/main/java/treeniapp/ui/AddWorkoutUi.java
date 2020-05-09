@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import treeniapp.domain.Sport;
@@ -62,6 +63,7 @@ public class AddWorkoutUi {
     public Scene addWorkoutScene(Stage addWorkoutWindow) {
         
         Label addWorkoutLabel = new Label("Lisää uusi treeni");
+        addWorkoutLabel.setFont(new Font(20.0));
         Button createWorkoutButton = new Button("Lisää");
         Button cancelWorkoutButton = new Button("Tyhjennä");
         Button closeWorkoutWindowButton = new Button("Sulje");

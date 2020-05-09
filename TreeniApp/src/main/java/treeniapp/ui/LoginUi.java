@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import treeniapp.dao.UserDao;
 import treeniapp.dao.sql.SQLUserDao;
@@ -127,6 +128,7 @@ public class LoginUi extends Application {
         */
         
         Label newUserInstruction = new Label("Uusi käyttäjä");
+        newUserInstruction.setFont(new Font(20.0));
         Label newUserUsernameInstruction = new Label("Tunnus:");
         TextField newUserUsername = new TextField();
         Label newUserNameInstruction = new Label("Nimi:");
@@ -137,7 +139,7 @@ public class LoginUi extends Application {
         newUserNote.setTextFill(Color.RED);
 
         GridPane newUserPane = new GridPane();
-        newUserPane.add(newUserInstruction, 0, 0);
+        newUserPane.add(newUserInstruction, 0, 0, 2, 1);
         newUserPane.add(newUserUsernameInstruction, 0, 1);
         newUserPane.add(newUserUsername, 1, 1);
         newUserPane.add(newUserNameInstruction, 0, 2);
